@@ -1,0 +1,7 @@
+{
+  "enabled": true,
+  "command": "python notifier.py",
+  "message": "OpenCode 会话已完成！",
+  "notifyOnError": true,
+  "errorMessage": "OpenCode 会话出错！"
+}

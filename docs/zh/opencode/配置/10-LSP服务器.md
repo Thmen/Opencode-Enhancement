@@ -1,3 +1,5 @@
+[首页](../README.md) / [配置](README.md) / LSP 服务器
+
 # LSP 服务器
 
 OpenCode 与你的 LSP 服务器集成。

@@ -1,3 +1,5 @@
+[首页](../README.md) / [开发](README.md) / SDK
+
 # SDK
 
 opencode 服务器的类型安全 JS 客户端。
@@ -5,7 +7,7 @@ opencode 服务器的类型安全 JS 客户端。
 opencode JS/TS SDK 提供了一个类型安全的客户端，用于与服务器进行交互。
 你可以用它来构建集成方案，并以编程方式控制 opencode。
 
-[了解更多](02-服务器.md)关于服务器的工作原理。如需示例，请查看社区构建的[项目](/docs/ecosystem#projects)。
+[了解更多](02-服务器.md)关于服务器的工作原理。如需示例，请查看社区构建的[项目](04-生态系统.md#projects)。
 
 ---
 

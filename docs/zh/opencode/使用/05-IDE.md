@@ -1,3 +1,5 @@
+[首页](../README.md) / [使用](README.md) / IDE
+
 # IDE
 
 适用于 VS Code、Cursor 及其他 IDE 的 OpenCode 扩展
@@ -23,7 +25,7 @@ OpenCode 可与 VS Code、Cursor 或任何支持终端的 IDE 集成。只需在
 2. 打开集成终端
 3. 运行 `opencode`——扩展将自动安装
 
-如果你希望在 TUI 中执行 `/editor` 或 `/export` 时使用自己的 IDE，需要设置 `export EDITOR="code --wait"`。[了解更多](/docs/tui/#editor-setup)。
+如果你希望在 TUI 中执行 `/editor` 或 `/export` 时使用自己的 IDE，需要设置 `export EDITOR="code --wait"`。[了解更多](02-TUI.md#editor-setup)。
 
 ---
 

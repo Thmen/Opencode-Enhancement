@@ -1,3 +1,5 @@
+[首页](../README.md) / [配置](README.md) / ACP 支持
+
 # ACP 支持
 
 在任何兼容 ACP 的编辑器中使用 OpenCode。

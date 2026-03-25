@@ -1,3 +1,5 @@
+[首页](../README.md) / [使用](README.md) / GitLab
+
 # GitLab
 
 在 GitLab issue 和合并请求中使用 OpenCode。

@@ -1,3 +1,5 @@
+[首页](../README.md) / [使用](README.md) / GitHub
+
 # GitHub
 
 在 GitHub Issue 和 Pull Request 中使用 OpenCode。

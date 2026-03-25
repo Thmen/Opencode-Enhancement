@@ -1,3 +1,5 @@
+[首页](../README.md) / [使用](README.md) / TUI
+
 # TUI
 
 使用 OpenCode 终端用户界面。
@@ -272,7 +274,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
 
 ### unshare
 
-取消分享当前会话。[了解更多](/docs/share#un-sharing)。
+取消分享当前会话。[了解更多](07-分享.md#un-sharing)。
 
 ```bash
 /unshare

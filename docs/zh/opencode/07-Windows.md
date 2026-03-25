@@ -1,3 +1,5 @@
+[首页](README.md) / Windows
+
 # Windows (WSL)
 
 通过 WSL 在 Windows 上运行 OpenCode 以获得最佳体验。

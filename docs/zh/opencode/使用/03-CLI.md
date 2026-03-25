@@ -1,3 +1,5 @@
+[首页](../README.md) / [使用](README.md) / CLI
+
 # CLI
 
 OpenCode CLI 选项和命令。
@@ -283,7 +285,7 @@ opencode models [provider]
 
 此命令以 `provider/model` 的格式显示所有已配置提供商中可用的模型。
 
-这对于确定在[配置文件](/docs/config/)中使用的确切模型名称非常有用。
+这对于确定在[配置文件](../02-配置.md)中使用的确切模型名称非常有用。
 
 您可以选择传入提供商 ID 来按提供商筛选模型。
 
@@ -585,7 +587,7 @@ OpenCode 可以通过环境变量进行配置。
 这些环境变量用于启用可能会更改或移除的实验性功能。
 
 | 变量 | 类型 | 描述 |
-| --- | --- | --- |
+| ----------------------------------------------- | ------- | ------------------------------- | --- | -------------------------------- | ------- | ------------------------ |
 | `OPENCODE_EXPERIMENTAL` | boolean | 启用所有实验性功能 |
 | `OPENCODE_EXPERIMENTAL_ICON_DISCOVERY` | boolean | 启用图标发现 |
 | `OPENCODE_EXPERIMENTAL_DISABLE_COPY_ON_SELECT` | boolean | 禁用 TUI 中的选中即复制 |
@@ -596,6 +598,5 @@ OpenCode 可以通过环境变量进行配置。
 | `OPENCODE_EXPERIMENTAL_LSP_TOOL` | boolean | 启用实验性 LSP 工具 |
 | `OPENCODE_EXPERIMENTAL_DISABLE_FILEWATCHER` | boolean | 禁用文件监听器 |
 | `OPENCODE_EXPERIMENTAL_EXA` | boolean | 启用实验性 Exa 功能 |
-| `OPENCODE_EXPERIMENTAL_LSP_TY` | boolean | 启用实验性 LSP 类型检查 |
-| `OPENCODE_EXPERIMENTAL_MARKDOWN` | boolean | 启用实验性 Markdown 功能 |
+| `OPENCODE_EXPERIMENTAL_LSP_TY` | boolean | 为 python 文件启用 TY LSP | | `OPENCODE_EXPERIMENTAL_MARKDOWN` | boolean | 启用实验性 Markdown 功能 |
 | `OPENCODE_EXPERIMENTAL_PLAN_MODE` | boolean | 启用计划模式 |

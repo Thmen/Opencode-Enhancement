@@ -399,12 +399,68 @@ class ClaudeCoreTests(unittest.TestCase):
         self.assertEqual([page.category for page in built_pages], ["", "Getting started"])
         self.assertEqual([page.filename for page in built_pages], ["02-RootPresent.md", "02-GroupPresent.md"])
 
-    def test_scrape_all_exits_nonzero_when_any_page_fails(self) -> None:
+    def test_build_pages_collects_failed_slugs_and_reasons(self) -> None:
+        records = [
+            {"slug": "missing-page", "category": ""},
+            {"slug": "broken-page", "category": "Getting started"},
+        ]
+        failures: list[object] = []
+
+        with patch(
+            "scripts.claudecode_scraper_core.fetch_text",
+            side_effect=[None, "Body only\n\nNo title here.\n"],
+        ):
+            with patch("scripts.claudecode_scraper_core.time.sleep"):
+                pages = _build_pages(records, self.config, failures)
+
+        self.assertEqual(pages, [])
+        self.assertEqual([(failure.slug, failure.reason) for failure in failures], [
+            ("missing-page", "获取失败"),
+            ("broken-page", "生成失败: 标题解析失败 (Markdown 缺少一级标题)"),
+        ])
+
+    def test_scrape_all_reports_failed_items_in_summary(self) -> None:
         records = [{"slug": "missing-page", "source_title": "Missing page", "category": ""}]
+
+        def _fake_build_pages(
+            _records: list[dict[str, str]],
+            _config: ScraperConfig,
+            failures: list[object] | None = None,
+        ) -> list[tuple[Page, str]]:
+            if failures is not None:
+                failures.append(Mock(slug="missing-page", reason="获取失败"))
+            return []
+
         with tempfile.TemporaryDirectory() as tmp:
             config = replace(self.config, output_dir=Path(tmp))
             with patch("scripts.claudecode_scraper_core.discover_source_pages", return_value=(records, [])):
-                with patch("scripts.claudecode_scraper_core._build_pages", return_value=[]):
+                with patch("scripts.claudecode_scraper_core._build_pages", side_effect=_fake_build_pages):
+                    with patch("builtins.print") as mock_print:
+                        with self.assertRaises(SystemExit) as ctx:
+                            scrape_all(config)
+
+        printed = "\n".join(" ".join(str(arg) for arg in call.args) for call in mock_print.call_args_list)
+        self.assertEqual(ctx.exception.code, 1)
+        self.assertIn("完成: 成功 0, 失败 1, 共 1 页", printed)
+        self.assertIn("失败项:", printed)
+        self.assertIn("- missing-page: 获取失败", printed)
+
+    def test_scrape_all_exits_nonzero_when_any_page_fails(self) -> None:
+        records = [{"slug": "missing-page", "source_title": "Missing page", "category": ""}]
+
+        def _fake_build_pages(
+            _records: list[dict[str, str]],
+            _config: ScraperConfig,
+            failures: list[object] | None = None,
+        ) -> list[tuple[Page, str]]:
+            if failures is not None:
+                failures.append(Mock(slug="missing-page", reason="获取失败"))
+            return []
+
+        with tempfile.TemporaryDirectory() as tmp:
+            config = replace(self.config, output_dir=Path(tmp))
+            with patch("scripts.claudecode_scraper_core.discover_source_pages", return_value=(records, [])):
+                with patch("scripts.claudecode_scraper_core._build_pages", side_effect=_fake_build_pages):
                     with self.assertRaises(SystemExit) as ctx:
                         scrape_all(config)
         self.assertEqual(ctx.exception.code, 1)

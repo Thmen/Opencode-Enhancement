@@ -191,6 +191,24 @@ class NavigationTests(unittest.TestCase):
                 scrape_all(config)
         self.assertEqual(ctx.exception.code, 1)
 
+    def test_scrape_all_reports_failed_items_in_summary(self) -> None:
+        page = Page(slug="missing", title="Missing", category="", filename="01-Missing.md")
+        with tempfile.TemporaryDirectory() as tmp:
+            config = replace(self.config, output_dir=Path(tmp))
+            with (
+                patch("scripts.scraper_core.discover_pages", return_value=[page]),
+                patch("scripts.scraper_core.fetch_html", return_value=None),
+                patch("builtins.print") as mock_print,
+                self.assertRaises(SystemExit) as ctx,
+            ):
+                scrape_all(config)
+
+        printed = "\n".join(" ".join(str(arg) for arg in call.args) for call in mock_print.call_args_list)
+        self.assertEqual(ctx.exception.code, 1)
+        self.assertIn("完成: 成功 0, 跳过 0, 失败 1, 共 1 页", printed)
+        self.assertIn("失败项:", printed)
+        self.assertIn("- Missing: 获取失败", printed)
+
 
 if __name__ == "__main__":
     unittest.main()

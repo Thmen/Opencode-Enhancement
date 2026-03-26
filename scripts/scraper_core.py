@@ -32,6 +32,12 @@ class Page:
     filename: str
 
 
+@dataclass(frozen=True)
+class PageFailure:
+    title: str
+    reason: str
+
+
 def _make_filename(index: int, title: str) -> str:
     safe = re.sub(r"[\\/:*?\"<>|\s]+", "", title)
     return f"{index:02d}-{safe}.md"
@@ -325,6 +331,7 @@ def scrape_all(config: ScraperConfig, update_only: bool = False) -> None:
     success = 0
     skipped = 0
     failed = 0
+    failures: list[PageFailure] = []
     total = len(pages)
 
     for index, page in enumerate(pages, 1):
@@ -341,6 +348,7 @@ def scrape_all(config: ScraperConfig, update_only: bool = False) -> None:
         html = fetch_html(url, config)
         if html is None:
             failed += 1
+            failures.append(PageFailure(title=page.title, reason="获取失败"))
             continue
 
         content_html = extract_content(html)
@@ -359,4 +367,7 @@ def scrape_all(config: ScraperConfig, update_only: bool = False) -> None:
     generate_category_indexes(pages, config)
     print(f"\n完成: 成功 {success}, 跳过 {skipped}, 失败 {failed}, 共 {total} 页")
     if failed:
+        print("失败项:")
+        for failure in failures:
+            print(f"- {failure.title}: {failure.reason}")
         raise SystemExit(1)

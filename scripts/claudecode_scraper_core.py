@@ -29,6 +29,12 @@ class Page:
     filename: str
 
 
+@dataclass(frozen=True)
+class PageFailure:
+    slug: str
+    reason: str
+
+
 def _make_filename(index: int, title: str) -> str:
     safe = re.sub(r"[\\/:*?\"<>|\s]+", "", title)
     return f"{index:02d}-{safe}.md"
@@ -420,8 +426,13 @@ def discover_source_pages(config: ScraperConfig) -> tuple[list[dict[str, str]], 
     return merged, [group["title"] for group in sidebar_groups]
 
 
-def _build_pages(records: list[dict[str, str]], config: ScraperConfig) -> list[tuple[Page, str]]:
+def _build_pages(
+    records: list[dict[str, str]],
+    config: ScraperConfig,
+    failures: list[PageFailure] | None = None,
+) -> list[tuple[Page, str]]:
     fetched: list[dict[str, str]] = []
+    failure_bucket = failures if failures is not None else []
     total = len(records)
     reserved_counters: dict[str, int] = {}
     reserved_indices: list[int] = []
@@ -437,12 +448,19 @@ def _build_pages(records: list[dict[str, str]], config: ScraperConfig) -> list[t
         print(f"[{index}/{total}] 抓取 {record['slug']}  ← {url}")
         markdown = fetch_text(url, config)
         if markdown is None:
+            failure_bucket.append(PageFailure(slug=record["slug"], reason="获取失败"))
             continue
         cleaned = clean_markdown(markdown)
         try:
             title = extract_title(cleaned)
         except ValueError as exc:
             print(f"  [跳过] 标题解析失败: {record['slug']} ({exc})")
+            failure_bucket.append(
+                PageFailure(
+                    slug=record["slug"],
+                    reason=f"生成失败: 标题解析失败 ({exc})",
+                )
+            )
             continue
         fetched.append(
             {
@@ -488,7 +506,8 @@ def scrape_all(config: ScraperConfig, update_only: bool = False) -> None:
         print(f"[清理] 已删除 {config.output_dir}")
     config.output_dir.mkdir(parents=True, exist_ok=True)
 
-    pages_with_content = _build_pages(records, config)
+    failures: list[PageFailure] = []
+    pages_with_content = _build_pages(records, config, failures)
     pages = [page for page, _ in pages_with_content]
     slug_map = {page.slug: page for page in pages}
 
@@ -499,6 +518,9 @@ def scrape_all(config: ScraperConfig, update_only: bool = False) -> None:
 
     generate_index(pages, config, category_order=category_order)
     generate_category_indexes(pages, config)
-    print(f"\n完成: 成功 {len(pages)}, 失败 {len(records) - len(pages)}, 共 {len(records)} 页")
-    if len(pages) != len(records):
+    print(f"\n完成: 成功 {len(pages)}, 失败 {len(failures)}, 共 {len(records)} 页")
+    if failures:
+        print("失败项:")
+        for failure in failures:
+            print(f"- {failure.slug}: {failure.reason}")
         raise SystemExit(1)

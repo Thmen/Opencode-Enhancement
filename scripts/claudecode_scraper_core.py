@@ -117,7 +117,153 @@ def clean_markdown(text: str) -> str:
             index += 1
         lines = lines[index:]
 
-    return "\n".join(lines).strip() + "\n"
+    def _dedent_wrapper_line(line: str) -> str:
+        return re.sub(r"^ {1,4}", "", line)
+
+    def _callout_label(kind: str, title: str | None = None) -> str:
+        suffix = f" ({title})" if title else ""
+        return f"**{kind}{suffix}:**"
+
+    def _replace_inline_callouts(line: str) -> str:
+        def _repl(match: re.Match[str]) -> str:
+            kind = match.group(1)
+            attrs = match.group(2) or ""
+            body = match.group(3).strip()
+            title_match = re.search(r'title="([^"]+)"', attrs)
+            title = title_match.group(1) if title_match else None
+            prefix = _callout_label(kind, title)
+            return f"{prefix} {body}" if body else prefix
+
+        return re.sub(
+            r"<(Tip|Note|Warning|Info|Danger|Callout)\b([^>]*)>(.*?)</\1>",
+            _repl,
+            line,
+        )
+
+    cleaned_lines: list[str] = []
+    wrapper_depth = 0
+    in_fence = False
+    card_context: dict[str, object] | None = None
+
+    for raw_line in lines:
+        stripped = raw_line.strip()
+
+        if card_context is not None and not in_fence:
+            if stripped == "</Card>":
+                title = str(card_context["title"])
+                href = str(card_context["href"])
+                body = " ".join(part for part in card_context["body"] if part)
+                bullet = f"- [{title}]({href})"
+                if body:
+                    bullet += f": {body}"
+                cleaned_lines.append(bullet)
+                card_context = None
+                continue
+
+            line = _replace_inline_callouts(_dedent_wrapper_line(raw_line)).rstrip()
+            if line:
+                card_context["body"].append(line.strip())
+            continue
+
+        if not in_fence:
+            if match := re.match(r"^<Frame\b([^>]*)>$", stripped):
+                caption_match = re.search(r'caption="([^"]+)"', match.group(1) or "")
+                if caption_match:
+                    cleaned_lines.append(f"*{caption_match.group(1)}*")
+                continue
+
+            if stripped in {
+                "<Tabs>",
+                "</Tabs>",
+                "<Steps>",
+                "</Steps>",
+                "<AccordionGroup>",
+                "</AccordionGroup>",
+                "<CardGroup>",
+                "</CardGroup>",
+                "<CodeGroup>",
+                "</CodeGroup>",
+                "</Frame>",
+            } or stripped.startswith("<CardGroup"):
+                continue
+
+            if stripped.startswith("<Card "):
+                title_match = re.search(r'title="([^"]+)"', stripped)
+                href_match = re.search(r'href="([^"]+)"', stripped)
+                if title_match and href_match:
+                    card_context = {
+                        "title": title_match.group(1),
+                        "href": href_match.group(1),
+                        "body": [],
+                    }
+                    continue
+
+            if re.match(r"^<[A-Z][A-Za-z0-9]*\b.*?/\s*>$", stripped):
+                continue
+
+            if match := re.match(r'^<Tab\b[^>]*title="([^"]+)"[^>]*>$', stripped):
+                cleaned_lines.append(f"#### {match.group(1)}")
+                wrapper_depth += 1
+                continue
+            if stripped == "</Tab>":
+                wrapper_depth = max(0, wrapper_depth - 1)
+                continue
+
+            if match := re.match(r'^<Step\b[^>]*title="([^"]+)"[^>]*>$', stripped):
+                cleaned_lines.append(f"#### {match.group(1)}")
+                wrapper_depth += 1
+                continue
+            if stripped == "</Step>":
+                wrapper_depth = max(0, wrapper_depth - 1)
+                continue
+
+            if match := re.match(r'^<Accordion\b[^>]*title="([^"]+)"[^>]*>$', stripped):
+                cleaned_lines.append(f"### {match.group(1)}")
+                wrapper_depth += 1
+                continue
+            if stripped == "</Accordion>":
+                wrapper_depth = max(0, wrapper_depth - 1)
+                continue
+
+            if match := re.match(r'^<Update\b[^>]*label="([^"]+)"(?:[^>]*description="([^"]+)")?[^>]*>$', stripped):
+                label = match.group(1)
+                description = match.group(2)
+                suffix = f" ({description})" if description else ""
+                cleaned_lines.append(f"### {label}{suffix}")
+                wrapper_depth += 1
+                continue
+            if stripped == "</Update>":
+                wrapper_depth = max(0, wrapper_depth - 1)
+                continue
+
+            if match := re.match(r'^<(Tip|Note|Warning|Info|Danger|Callout)\b([^>]*)>$', stripped):
+                title_match = re.search(r'title="([^"]+)"', match.group(2) or "")
+                title = title_match.group(1) if title_match else None
+                cleaned_lines.append(_callout_label(match.group(1), title))
+                wrapper_depth += 1
+                continue
+            if stripped in {"</Tip>", "</Note>", "</Warning>", "</Info>", "</Danger>", "</Callout>"}:
+                wrapper_depth = max(0, wrapper_depth - 1)
+                continue
+
+        line = raw_line
+        if wrapper_depth > 0 and not in_fence:
+            line = _dedent_wrapper_line(line)
+
+        if not in_fence:
+            line = _replace_inline_callouts(line)
+
+        if line.lstrip().startswith("```"):
+            line = re.sub(r"(?:\s+theme=\{null\})+\s*$", "", line.rstrip())
+            cleaned_lines.append(line)
+            in_fence = not in_fence
+            continue
+
+        cleaned_lines.append(line.rstrip())
+
+    cleaned = "\n".join(cleaned_lines)
+    cleaned = re.sub(r"\n{3,}", "\n\n", cleaned)
+    return cleaned.strip() + "\n"
 
 
 def extract_title(text: str) -> str:
@@ -277,8 +423,16 @@ def discover_source_pages(config: ScraperConfig) -> tuple[list[dict[str, str]], 
 def _build_pages(records: list[dict[str, str]], config: ScraperConfig) -> list[tuple[Page, str]]:
     fetched: list[dict[str, str]] = []
     total = len(records)
+    reserved_counters: dict[str, int] = {}
+    reserved_indices: list[int] = []
 
-    for index, record in enumerate(records, 1):
+    for record in records:
+        category = record["category"]
+        next_index = reserved_counters.get(category, 0) + 1
+        reserved_counters[category] = next_index
+        reserved_indices.append(next_index)
+
+    for index, (record, reserved_index) in enumerate(zip(records, reserved_indices, strict=False), 1):
         url = f"{config.docs_base_url}/{config.lang}/{record['slug']}.md"
         print(f"[{index}/{total}] 抓取 {record['slug']}  ← {url}")
         markdown = fetch_text(url, config)
@@ -296,24 +450,21 @@ def _build_pages(records: list[dict[str, str]], config: ScraperConfig) -> list[t
                 "title": title,
                 "category": record["category"],
                 "content": cleaned,
+                "reserved_index": reserved_index,
             }
         )
         if index < total:
             time.sleep(config.request_delay)
 
-    counters: dict[str, int] = {}
     pages: list[tuple[Page, str]] = []
     for record in fetched:
-        category = record["category"]
-        next_index = counters.get(category, 0) + 1
-        counters[category] = next_index
-        filename = _make_filename(next_index, record["title"])
+        filename = _make_filename(int(record["reserved_index"]), record["title"])
         pages.append(
             (
                 Page(
                     slug=record["slug"],
                     title=record["title"],
-                    category=category,
+                    category=record["category"],
                     filename=filename,
                 ),
                 record["content"],
@@ -349,3 +500,5 @@ def scrape_all(config: ScraperConfig, update_only: bool = False) -> None:
     generate_index(pages, config, category_order=category_order)
     generate_category_indexes(pages, config)
     print(f"\n完成: 成功 {len(pages)}, 失败 {len(records) - len(pages)}, 共 {len(records)} 页")
+    if len(pages) != len(records):
+        raise SystemExit(1)

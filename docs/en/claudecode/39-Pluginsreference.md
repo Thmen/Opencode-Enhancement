@@ -4,9 +4,8 @@
 
 > Complete technical reference for Claude Code plugin system, including schemas, CLI commands, and component specifications.
 
-<Tip>
-  Looking to install plugins? See [Discover and install plugins](17-Discoverandinstallprebuiltpluginsthroughmarketplaces.md). For creating plugins, see [Plugins](38-Createplugins.md). For distributing plugins, see [Plugin marketplaces](37-Createanddistributeapluginmarketplace.md).
-</Tip>
+**Tip:**
+Looking to install plugins? See [Discover and install plugins](17-Discoverandinstallprebuiltpluginsthroughmarketplaces.md). For creating plugins, see [Plugins](38-Createplugins.md). For distributing plugins, see [Plugin marketplaces](37-Createanddistributeapluginmarketplace.md).
 
 This reference provides complete technical specifications for the Claude Code plugin system, including component schemas, CLI commands, and development tools.
 
@@ -24,7 +23,7 @@ Plugins add skills to Claude Code, creating `/name` shortcuts that you or Claude
 
 **Skill structure**:
 
-```text  theme={null}
+```text
 skills/
 ├── pdf-processor/
 │   ├── SKILL.md
@@ -52,7 +51,7 @@ Plugins can provide specialized subagents for specific tasks that Claude can inv
 
 **Agent structure**:
 
-```markdown  theme={null}
+```markdown
 ---
 name: agent-name
 description: What this agent specializes in and when Claude should invoke it
@@ -86,7 +85,7 @@ Plugins can provide event handlers that respond to Claude Code events automatica
 
 **Hook configuration**:
 
-```json  theme={null}
+```json
 {
   "hooks": {
     "PostToolUse": [
@@ -106,30 +105,32 @@ Plugins can provide event handlers that respond to Claude Code events automatica
 
 Plugin hooks respond to the same lifecycle events as [user-defined hooks](24-Hooksreference.md):
 
-| Event                | When it fires                                                                                                                                  |
-| :------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------- |
-| `SessionStart`       | When a session begins or resumes                                                                                                               |
-| `UserPromptSubmit`   | When you submit a prompt, before Claude processes it                                                                                           |
-| `PreToolUse`         | Before a tool call executes. Can block it                                                                                                      |
-| `PermissionRequest`  | When a permission dialog appears                                                                                                               |
-| `PostToolUse`        | After a tool call succeeds                                                                                                                     |
-| `PostToolUseFailure` | After a tool call fails                                                                                                                        |
-| `Notification`       | When Claude Code sends a notification                                                                                                          |
-| `SubagentStart`      | When a subagent is spawned                                                                                                                     |
-| `SubagentStop`       | When a subagent finishes                                                                                                                       |
-| `Stop`               | When Claude finishes responding                                                                                                                |
-| `StopFailure`        | When the turn ends due to an API error. Output and exit code are ignored                                                                       |
-| `TeammateIdle`       | When an [agent team](01-OrchestrateteamsofClaudeCodesessions.md) teammate is about to go idle                                                                             |
-| `TaskCompleted`      | When a task is being marked as completed                                                                                                       |
-| `InstructionsLoaded` | When a CLAUDE.md or `.claude/rules/*.md` file is loaded into context. Fires at session start and when files are lazily loaded during a session |
-| `ConfigChange`       | When a configuration file changes during a session                                                                                             |
-| `WorktreeCreate`     | When a worktree is being created via `--worktree` or `isolation: "worktree"`. Replaces default git behavior                                    |
-| `WorktreeRemove`     | When a worktree is being removed, either at session exit or when a subagent finishes                                                           |
-| `PreCompact`         | Before context compaction                                                                                                                      |
-| `PostCompact`        | After context compaction completes                                                                                                             |
-| `Elicitation`        | When an MCP server requests user input during a tool call                                                                                      |
-| `ElicitationResult`  | After a user responds to an MCP elicitation, before the response is sent back to the server                                                    |
-| `SessionEnd`         | When a session terminates                                                                                                                      |
+| Event                | When it fires                                                                                                                                          |
+| :------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `SessionStart`       | When a session begins or resumes                                                                                                                       |
+| `UserPromptSubmit`   | When you submit a prompt, before Claude processes it                                                                                                   |
+| `PreToolUse`         | Before a tool call executes. Can block it                                                                                                              |
+| `PermissionRequest`  | When a permission dialog appears                                                                                                                       |
+| `PostToolUse`        | After a tool call succeeds                                                                                                                             |
+| `PostToolUseFailure` | After a tool call fails                                                                                                                                |
+| `Notification`       | When Claude Code sends a notification                                                                                                                  |
+| `SubagentStart`      | When a subagent is spawned                                                                                                                             |
+| `SubagentStop`       | When a subagent finishes                                                                                                                               |
+| `Stop`               | When Claude finishes responding                                                                                                                        |
+| `StopFailure`        | When the turn ends due to an API error. Output and exit code are ignored                                                                               |
+| `TeammateIdle`       | When an [agent team](01-OrchestrateteamsofClaudeCodesessions.md) teammate is about to go idle                                                                                     |
+| `TaskCompleted`      | When a task is being marked as completed                                                                                                               |
+| `InstructionsLoaded` | When a CLAUDE.md or `.claude/rules/*.md` file is loaded into context. Fires at session start and when files are lazily loaded during a session         |
+| `ConfigChange`       | When a configuration file changes during a session                                                                                                     |
+| `CwdChanged`         | When the working directory changes, for example when Claude executes a `cd` command. Useful for reactive environment management with tools like direnv |
+| `FileChanged`        | When a watched file changes on disk. The `matcher` field specifies which filenames to watch                                                            |
+| `WorktreeCreate`     | When a worktree is being created via `--worktree` or `isolation: "worktree"`. Replaces default git behavior                                            |
+| `WorktreeRemove`     | When a worktree is being removed, either at session exit or when a subagent finishes                                                                   |
+| `PreCompact`         | Before context compaction                                                                                                                              |
+| `PostCompact`        | After context compaction completes                                                                                                                     |
+| `Elicitation`        | When an MCP server requests user input during a tool call                                                                                              |
+| `ElicitationResult`  | After a user responds to an MCP elicitation, before the response is sent back to the server                                                            |
+| `SessionEnd`         | When a session terminates                                                                                                                              |
 
 **Hook types**:
 
@@ -148,7 +149,7 @@ Plugins can bundle Model Context Protocol (MCP) servers to connect Claude Code w
 
 **MCP server configuration**:
 
-```json  theme={null}
+```json
 {
   "mcpServers": {
     "plugin-database": {
@@ -176,9 +177,8 @@ Plugins can bundle Model Context Protocol (MCP) servers to connect Claude Code w
 
 ### LSP servers
 
-<Tip>
-  Looking to use LSP plugins? Install them from the official marketplace: search for "lsp" in the `/plugin` Discover tab. This section documents how to create LSP plugins for languages not covered by the official marketplace.
-</Tip>
+**Tip:**
+Looking to use LSP plugins? Install them from the official marketplace: search for "lsp" in the `/plugin` Discover tab. This section documents how to create LSP plugins for languages not covered by the official marketplace.
 
 Plugins can provide [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) (LSP) servers to give Claude real-time code intelligence while working on your codebase.
 
@@ -194,7 +194,7 @@ LSP integration provides:
 
 **`.lsp.json` file format**:
 
-```json  theme={null}
+```json
 {
   "go": {
     "command": "gopls",
@@ -208,7 +208,7 @@ LSP integration provides:
 
 **Inline in `plugin.json`**:
 
-```json  theme={null}
+```json
 {
   "name": "my-plugin",
   "lspServers": {
@@ -245,9 +245,8 @@ LSP integration provides:
 | `restartOnCrash`        | Whether to automatically restart the server if it crashes |
 | `maxRestarts`           | Maximum number of restart attempts before giving up       |
 
-<Warning>
-  **You must install the language server binary separately.** LSP plugins configure how Claude Code connects to a language server, but they don't include the server itself. If you see `Executable not found in $PATH` in the `/plugin` Errors tab, install the required binary for your language.
-</Warning>
+**Warning:**
+**You must install the language server binary separately.** LSP plugins configure how Claude Code connects to a language server, but they don't include the server itself. If you see `Executable not found in $PATH` in the `/plugin` Errors tab, install the required binary for your language.
 
 **Available LSP plugins:**
 
@@ -284,7 +283,7 @@ The manifest is optional. If omitted, Claude Code auto-discovers components in [
 
 ### Complete schema
 
-```json  theme={null}
+```json
 {
   "name": "plugin-name",
   "version": "1.2.0",
@@ -336,26 +335,71 @@ agent `agent-creator` for the plugin with name `plugin-dev` will appear as
 
 | Field          | Type                  | Description                                                                                                                                               | Example                                |
 | :------------- | :-------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------- |
-| `commands`     | string\|array         | Additional command files/directories                                                                                                                      | `"./custom/cmd.md"` or `["./cmd1.md"]` |
-| `agents`       | string\|array         | Additional agent files                                                                                                                                    | `"./custom/agents/reviewer.md"`        |
-| `skills`       | string\|array         | Additional skill directories                                                                                                                              | `"./custom/skills/"`                   |
+| `commands`     | string\|array         | Custom command files/directories (replaces default `commands/`)                                                                                           | `"./custom/cmd.md"` or `["./cmd1.md"]` |
+| `agents`       | string\|array         | Custom agent files (replaces default `agents/`)                                                                                                           | `"./custom/agents/reviewer.md"`        |
+| `skills`       | string\|array         | Custom skill directories (replaces default `skills/`)                                                                                                     | `"./custom/skills/"`                   |
 | `hooks`        | string\|array\|object | Hook config paths or inline config                                                                                                                        | `"./my-extra-hooks.json"`              |
 | `mcpServers`   | string\|array\|object | MCP config paths or inline config                                                                                                                         | `"./my-extra-mcp-config.json"`         |
-| `outputStyles` | string\|array         | Additional output style files/directories                                                                                                                 | `"./styles/"`                          |
+| `outputStyles` | string\|array         | Custom output style files/directories (replaces default `output-styles/`)                                                                                 | `"./styles/"`                          |
 | `lspServers`   | string\|array\|object | [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) configs for code intelligence (go to definition, find references, etc.) | `"./.lsp.json"`                        |
+| `userConfig`   | object                | User-configurable values prompted at enable time. See [User configuration](Getting started/02-ClaudeCodeoverview.md#user-configuration)                                                           | See below                              |
+| `channels`     | array                 | Channel declarations for message injection (Telegram, Slack, Discord style). See [Channels](Getting started/02-ClaudeCodeoverview.md#channels)                                                    | See below                              |
+
+### User configuration
+
+The `userConfig` field declares values that Claude Code prompts the user for when the plugin is enabled. Use this instead of requiring users to hand-edit `settings.json`.
+
+```json
+{
+  "userConfig": {
+    "api_endpoint": {
+      "description": "Your team's API endpoint",
+      "sensitive": false
+    },
+    "api_token": {
+      "description": "API authentication token",
+      "sensitive": true
+    }
+  }
+}
+```
+
+Keys must be valid identifiers. Each value is available for substitution as `${user_config.KEY}` in MCP and LSP server configs, hook commands, and (for non-sensitive values only) skill and agent content. Values are also exported to plugin subprocesses as `CLAUDE_PLUGIN_OPTION_<KEY>` environment variables.
+
+Non-sensitive values are stored in `settings.json` under `pluginConfigs[<plugin-id>].options`. Sensitive values go to the system keychain (or `~/.claude/.credentials.json` where the keychain is unavailable). Keychain storage is shared with OAuth tokens and has an approximately 2 KB total limit, so keep sensitive values small.
+
+### Channels
+
+The `channels` field lets a plugin declare one or more message channels that inject content into the conversation. Each channel binds to an MCP server that the plugin provides.
+
+```json
+{
+  "channels": [
+    {
+      "server": "telegram",
+      "userConfig": {
+        "bot_token": { "description": "Telegram bot token", "sensitive": true },
+        "owner_id": { "description": "Your Telegram user ID", "sensitive": false }
+      }
+    }
+  ]
+}
+```
+
+The `server` field is required and must match a key in the plugin's `mcpServers`. The optional per-channel `userConfig` uses the same schema as the top-level field, letting the plugin prompt for bot tokens or owner IDs when the plugin is enabled.
 
 ### Path behavior rules
 
-**Important**: Custom paths supplement default directories - they don't replace them.
+For `commands`, `agents`, `skills`, and `outputStyles`, custom paths replace the default directory. If the manifest specifies `commands`, the default `commands/` directory is not scanned. [Hooks](Getting started/02-ClaudeCodeoverview.md#hooks), [MCP servers](Getting started/02-ClaudeCodeoverview.md#mcp-servers), and [LSP servers](Getting started/02-ClaudeCodeoverview.md#lsp-servers) have different semantics for handling multiple sources.
 
-* If `commands/` exists, it's loaded in addition to custom command paths
-* All paths must be relative to plugin root and start with `./`
-* Commands from custom paths use the same naming and namespacing rules
-* Multiple paths can be specified as arrays for flexibility
+* All paths must be relative to the plugin root and start with `./`
+* Components from custom paths use the same naming and namespacing rules
+* Multiple paths can be specified as arrays
+* To keep the default directory and add more paths for commands, agents, skills, or output styles, include the default in your array: `"commands": ["./commands/", "./extras/deploy.md"]`
 
 **Path examples**:
 
-```json  theme={null}
+```json
 {
   "commands": [
     "./specialized/deploy.md",
@@ -376,7 +420,7 @@ Claude Code provides two variables for referencing plugin paths. Both are substi
 
 **`${CLAUDE_PLUGIN_DATA}`**: a persistent directory for plugin state that survives updates. Use this for installed dependencies such as `node_modules` or Python virtual environments, generated code, caches, and any other files that should persist across plugin versions. The directory is created automatically the first time this variable is referenced.
 
-```json  theme={null}
+```json
 {
   "hooks": {
     "PostToolUse": [
@@ -401,7 +445,7 @@ A common use is installing language dependencies once and reusing them across se
 
 This `SessionStart` hook installs `node_modules` on the first run and again whenever a plugin update includes a changed `package.json`:
 
-```json  theme={null}
+```json
 {
   "hooks": {
     "SessionStart": [
@@ -422,7 +466,7 @@ The `diff` exits nonzero when the stored copy is missing or differs from the bun
 
 Scripts bundled in `${CLAUDE_PLUGIN_ROOT}` can then run against the persisted `node_modules`:
 
-```json  theme={null}
+```json
 {
   "mcpServers": {
     "routines": {
@@ -457,7 +501,7 @@ Installed plugins cannot reference files outside their directory. Paths that tra
 
 If your plugin needs to access files outside its directory, you can create symbolic links to external files within your plugin directory. Symlinks are honored during the copy process:
 
-```bash  theme={null}
+```bash
 # Inside your plugin directory
 ln -s /path/to/shared-utils ./shared-utils
 ```
@@ -472,7 +516,7 @@ The symlinked content will be copied into the plugin cache. This provides flexib
 
 A complete plugin follows this structure:
 
-```text  theme={null}
+```text
 enterprise-plugin/
 ├── .claude-plugin/           # Metadata directory (optional)
 │   └── plugin.json             # plugin manifest
@@ -489,6 +533,8 @@ enterprise-plugin/
 │   └── pdf-processor/
 │       ├── SKILL.md
 │       └── scripts/
+├── output-styles/            # Output style definitions
+│   └── terse.md
 ├── hooks/                    # Hook configurations
 │   ├── hooks.json           # Main hook config
 │   └── security-hooks.json  # Additional hooks
@@ -503,22 +549,22 @@ enterprise-plugin/
 └── CHANGELOG.md             # Version history
 ```
 
-<Warning>
-  The `.claude-plugin/` directory contains the `plugin.json` file. All other directories (commands/, agents/, skills/, hooks/) must be at the plugin root, not inside `.claude-plugin/`.
-</Warning>
+**Warning:**
+The `.claude-plugin/` directory contains the `plugin.json` file. All other directories (commands/, agents/, skills/, output-styles/, hooks/) must be at the plugin root, not inside `.claude-plugin/`.
 
 ### File locations reference
 
-| Component       | Default Location             | Purpose                                                                                                                   |
-| :-------------- | :--------------------------- | :------------------------------------------------------------------------------------------------------------------------ |
-| **Manifest**    | `.claude-plugin/plugin.json` | Plugin metadata and configuration (optional)                                                                              |
-| **Commands**    | `commands/`                  | Skill Markdown files (legacy; use `skills/` for new skills)                                                               |
-| **Agents**      | `agents/`                    | Subagent Markdown files                                                                                                   |
-| **Skills**      | `skills/`                    | Skills with `<name>/SKILL.md` structure                                                                                   |
-| **Hooks**       | `hooks/hooks.json`           | Hook configuration                                                                                                        |
-| **MCP servers** | `.mcp.json`                  | MCP server definitions                                                                                                    |
-| **LSP servers** | `.lsp.json`                  | Language server configurations                                                                                            |
-| **Settings**    | `settings.json`              | Default configuration applied when the plugin is enabled. Only [`agent`](48-Createcustomsubagents.md) settings are currently supported |
+| Component         | Default Location             | Purpose                                                                                                                   |
+| :---------------- | :--------------------------- | :------------------------------------------------------------------------------------------------------------------------ |
+| **Manifest**      | `.claude-plugin/plugin.json` | Plugin metadata and configuration (optional)                                                                              |
+| **Commands**      | `commands/`                  | Skill Markdown files (legacy; use `skills/` for new skills)                                                               |
+| **Agents**        | `agents/`                    | Subagent Markdown files                                                                                                   |
+| **Skills**        | `skills/`                    | Skills with `<name>/SKILL.md` structure                                                                                   |
+| **Output styles** | `output-styles/`             | Output style definitions                                                                                                  |
+| **Hooks**         | `hooks/hooks.json`           | Hook configuration                                                                                                        |
+| **MCP servers**   | `.mcp.json`                  | MCP server definitions                                                                                                    |
+| **LSP servers**   | `.lsp.json`                  | Language server configurations                                                                                            |
+| **Settings**      | `settings.json`              | Default configuration applied when the plugin is enabled. Only [`agent`](48-Createcustomsubagents.md) settings are currently supported |
 
 ***
 
@@ -530,7 +576,7 @@ Claude Code provides CLI commands for non-interactive plugin management, useful 
 
 Install a plugin from available marketplaces.
 
-```bash  theme={null}
+```bash
 claude plugin install <plugin> [options]
 ```
 
@@ -549,7 +595,7 @@ Scope determines which settings file the installed plugin is added to. For examp
 
 **Examples:**
 
-```bash  theme={null}
+```bash
 # Install to user scope (default)
 claude plugin install formatter@my-marketplace
 
@@ -564,7 +610,7 @@ claude plugin install formatter@my-marketplace --scope local
 
 Remove an installed plugin.
 
-```bash  theme={null}
+```bash
 claude plugin uninstall <plugin> [options]
 ```
 
@@ -588,7 +634,7 @@ By default, uninstalling from the last remaining scope also deletes the plugin's
 
 Enable a disabled plugin.
 
-```bash  theme={null}
+```bash
 claude plugin enable <plugin> [options]
 ```
 
@@ -607,7 +653,7 @@ claude plugin enable <plugin> [options]
 
 Disable a plugin without uninstalling it.
 
-```bash  theme={null}
+```bash
 claude plugin disable <plugin> [options]
 ```
 
@@ -626,7 +672,7 @@ claude plugin disable <plugin> [options]
 
 Update a plugin to the latest version.
 
-```bash  theme={null}
+```bash
 claude plugin update <plugin> [options]
 ```
 
@@ -647,7 +693,7 @@ claude plugin update <plugin> [options]
 
 ### Debugging commands
 
-Use `claude --debug` (or `/debug` within the TUI) to see plugin loading details:
+Use `claude --debug` to see plugin loading details:
 
 This shows:
 
@@ -717,7 +763,7 @@ This shows:
 
 **Correct structure**: Components must be at the plugin root, not inside `.claude-plugin/`. Only `plugin.json` belongs in `.claude-plugin/`.
 
-```text  theme={null}
+```text
 my-plugin/
 ├── .claude-plugin/
 │   └── plugin.json      ← Only manifest here
@@ -742,7 +788,7 @@ If your components are inside `.claude-plugin/`, move them to the plugin root.
 
 Follow semantic versioning for plugin releases:
 
-```json  theme={null}
+```json
 {
   "name": "my-plugin",
   "version": "2.1.0"
@@ -762,11 +808,10 @@ Follow semantic versioning for plugin releases:
 * Document changes in a `CHANGELOG.md` file
 * Use pre-release versions like `2.0.0-beta.1` for testing
 
-<Warning>
-  Claude Code uses the version to determine whether to update your plugin. If you change your plugin's code but don't bump the version in `plugin.json`, your plugin's existing users won't see your changes due to caching.
+**Warning:**
+Claude Code uses the version to determine whether to update your plugin. If you change your plugin's code but don't bump the version in `plugin.json`, your plugin's existing users won't see your changes due to caching.
 
-  If your plugin is within a [marketplace](37-Createanddistributeapluginmarketplace.md) directory, you can manage the version through `marketplace.json` instead and omit the `version` field from `plugin.json`.
-</Warning>
+If your plugin is within a [marketplace](37-Createanddistributeapluginmarketplace.md) directory, you can manage the version through `marketplace.json` instead and omit the `version` field from `plugin.json`.
 
 ***
 

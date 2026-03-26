@@ -33,9 +33,8 @@ Claude Code 插件适用于大多数 JetBrains IDE，包括：
 
 如果您还没有安装 Claude Code，请参阅[我们的快速入门指南](../快速开始/02-快速开始.md)了解安装说明。
 
-<Note>
-  安装插件后，您可能需要完全重启 IDE 才能使其生效。
-</Note>
+**Note:**
+安装插件后，您可能需要完全重启 IDE 才能使其生效。
 
 ## 使用
 
@@ -47,11 +46,11 @@ Claude Code 插件适用于大多数 JetBrains IDE，包括：
 
 在任何外部终端中使用 `/ide` 命令将 Claude Code 连接到您的 JetBrains IDE 并激活所有功能：
 
-```bash  theme={null}
+```bash
 claude
 ```
 
-```text  theme={null}
+```text
 /ide
 ```
 
@@ -78,9 +77,8 @@ claude
 * **启用使用 Option+Enter 进行多行提示**（仅 macOS）：启用后，Option+Enter 在 Claude Code 提示中插入新行。如果遇到 Option 键被意外捕获的问题，请禁用（需要终端重启）
 * **启用自动更新**：自动检查并安装插件更新（在重启时应用）
 
-<Tip>
-  对于 WSL 用户：将 `wsl -d Ubuntu -- bash -lic "claude"` 设置为您的 Claude 命令（将 `Ubuntu` 替换为您的 WSL 发行版名称）
-</Tip>
+**Tip:**
+对于 WSL 用户：将 `wsl -d Ubuntu -- bash -lic "claude"` 设置为您的 Claude 命令（将 `Ubuntu` 替换为您的 WSL 发行版名称）
 
 #### ESC 键配置
 
@@ -98,17 +96,15 @@ claude
 
 ### 远程开发
 
-<Warning>
-  使用 JetBrains 远程开发时，您必须通过 **Settings → Plugin (Host)** 在远程主机上安装插件。
-</Warning>
+**Warning:**
+使用 JetBrains 远程开发时，您必须通过 **Settings → Plugin (Host)** 在远程主机上安装插件。
 
 插件必须安装在远程主机上，而不是在您的本地客户端计算机上。
 
 ### WSL 配置
 
-<Warning>
-  WSL 用户可能需要额外配置才能使 IDE 检测正常工作。有关详细设置说明，请参阅我们的 [WSL 故障排除指南](../51-故障排除.md#jetbrains-ide-not-detected-on-wsl2)。
-</Warning>
+**Warning:**
+WSL 用户可能需要额外配置才能使 IDE 检测正常工作。有关详细设置说明，请参阅我们的 [WSL 故障排除指南](../53-故障排除.md#jetbrains-ide-not-detected-on-wsl2)。
 
 WSL 配置可能需要：
 
@@ -130,7 +126,7 @@ WSL 配置可能需要：
 * 验证插件已安装并启用
 * 完全重启 IDE
 * 检查您是否从集成终端运行 Claude Code
-* 对于 WSL 用户，请参阅 [WSL 故障排除指南](../51-故障排除.md#jetbrains-ide-not-detected-on-wsl2)
+* 对于 WSL 用户，请参阅 [WSL 故障排除指南](../53-故障排除.md#jetbrains-ide-not-detected-on-wsl2)
 
 ### 命令未找到
 
@@ -150,4 +146,4 @@ WSL 配置可能需要：
 * 特别小心确保 Claude 仅与受信任的提示一起使用
 * 了解 Claude Code 有权修改哪些文件
 
-如需更多帮助，请参阅我们的[故障排除指南](../51-故障排除.md)。
+如需更多帮助，请参阅我们的[故障排除指南](../53-故障排除.md)。

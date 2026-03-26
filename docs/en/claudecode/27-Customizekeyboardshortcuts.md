@@ -4,9 +4,8 @@
 
 > Customize keyboard shortcuts in Claude Code with a keybindings configuration file.
 
-<Note>
-  Customizable keyboard shortcuts require Claude Code v2.1.18 or later. Check your version with `claude --version`.
-</Note>
+**Note:**
+Customizable keyboard shortcuts require Claude Code v2.1.18 or later. Check your version with `claude --version`.
 
 Claude Code supports customizable keyboard shortcuts. Run `/keybindings` to create or open your configuration file at `~/.claude/keybindings.json`.
 
@@ -14,7 +13,7 @@ Claude Code supports customizable keyboard shortcuts. Run `/keybindings` to crea
 
 The keybindings configuration file is an object with a `bindings` array. Each block specifies a context and a map of keystrokes to actions.
 
-<Note>Changes to the keybindings file are automatically detected and applied without restarting Claude Code.</Note>
+**Note:** Changes to the keybindings file are automatically detected and applied without restarting Claude Code.
 
 | Field      | Description                                        |
 | :--------- | :------------------------------------------------- |
@@ -24,7 +23,7 @@ The keybindings configuration file is an object with a `bindings` array. Each bl
 
 This example binds `Ctrl+E` to open an external editor in the chat context, and unbinds `Ctrl+U`:
 
-```json  theme={null}
+```json
 {
   "$schema": "https://www.schemastore.org/claude-code-keybindings.json",
   "$docs": "https://code.claude.com/docs/en/keybindings",
@@ -94,17 +93,19 @@ Actions for navigating command history:
 
 Actions available in the `Chat` context:
 
-| Action                | Default                   | Description              |
-| :-------------------- | :------------------------ | :----------------------- |
-| `chat:cancel`         | Escape                    | Cancel current input     |
-| `chat:cycleMode`      | Shift+Tab\*               | Cycle permission modes   |
-| `chat:modelPicker`    | Cmd+P / Meta+P            | Open model picker        |
-| `chat:thinkingToggle` | Cmd+T / Meta+T            | Toggle extended thinking |
-| `chat:submit`         | Enter                     | Submit message           |
-| `chat:undo`           | Ctrl+\_                   | Undo last action         |
-| `chat:externalEditor` | Ctrl+G                    | Open in external editor  |
-| `chat:stash`          | Ctrl+S                    | Stash current prompt     |
-| `chat:imagePaste`     | Ctrl+V (Alt+V on Windows) | Paste image              |
+| Action                | Default                   | Description                |
+| :-------------------- | :------------------------ | :------------------------- |
+| `chat:cancel`         | Escape                    | Cancel current input       |
+| `chat:killAgents`     | Ctrl+X Ctrl+K             | Kill all background agents |
+| `chat:cycleMode`      | Shift+Tab\*               | Cycle permission modes     |
+| `chat:modelPicker`    | Cmd+P / Meta+P            | Open model picker          |
+| `chat:fastMode`       | Meta+O                    | Toggle fast mode           |
+| `chat:thinkingToggle` | Cmd+T / Meta+T            | Toggle extended thinking   |
+| `chat:submit`         | Enter                     | Submit message             |
+| `chat:undo`           | Ctrl+\_                   | Undo last action           |
+| `chat:externalEditor` | Ctrl+G, Ctrl+X Ctrl+E     | Open in external editor    |
+| `chat:stash`          | Ctrl+S                    | Stash current prompt       |
+| `chat:imagePaste`     | Ctrl+V (Alt+V on Windows) | Paste image                |
 
 \*On Windows without VT mode (Node \<24.2.0/\<22.17.0, Bun \<1.2.23), defaults to Meta+M.
 
@@ -210,12 +211,14 @@ Actions available in the `Attachments` context:
 
 Actions available in the `Footer` context:
 
-| Action                  | Default | Description               |
-| :---------------------- | :------ | :------------------------ |
-| `footer:next`           | Right   | Next footer item          |
-| `footer:previous`       | Left    | Previous footer item      |
-| `footer:openSelected`   | Enter   | Open selected footer item |
-| `footer:clearSelection` | Escape  | Clear footer selection    |
+| Action                  | Default | Description                              |
+| :---------------------- | :------ | :--------------------------------------- |
+| `footer:next`           | Right   | Next footer item                         |
+| `footer:previous`       | Left    | Previous footer item                     |
+| `footer:up`             | Up      | Navigate up in footer (deselects at top) |
+| `footer:down`           | Down    | Navigate down in footer                  |
+| `footer:openSelected`   | Enter   | Open selected footer item                |
+| `footer:clearSelection` | Escape  | Clear footer selection                   |
 
 ### Message selector actions
 
@@ -302,7 +305,7 @@ Use modifier keys with the `+` separator:
 
 For example:
 
-```text  theme={null}
+```text
 ctrl+k          Single key with modifier
 shift+tab       Shift + Tab
 meta+p          Command/Meta + P
@@ -313,13 +316,13 @@ ctrl+shift+c    Multiple modifiers
 
 A standalone uppercase letter implies Shift. For example, `K` is equivalent to `shift+k`. This is useful for vim-style bindings where uppercase and lowercase keys have different meanings.
 
-Uppercase letters with modifiers (e.g., `ctrl+K`) are treated as stylistic and do **not** imply Shift — `ctrl+K` is the same as `ctrl+k`.
+Uppercase letters with modifiers (e.g., `ctrl+K`) are treated as stylistic and do **not** imply Shift: `ctrl+K` is the same as `ctrl+k`.
 
 ### Chords
 
 Chords are sequences of keystrokes separated by spaces:
 
-```text  theme={null}
+```text
 ctrl+k ctrl+s   Press Ctrl+K, release, then Ctrl+S
 ```
 
@@ -336,7 +339,7 @@ ctrl+k ctrl+s   Press Ctrl+K, release, then Ctrl+S
 
 Set an action to `null` to unbind a default shortcut:
 
-```json  theme={null}
+```json
 {
   "bindings": [
     {
@@ -353,10 +356,11 @@ Set an action to `null` to unbind a default shortcut:
 
 These shortcuts cannot be rebound:
 
-| Shortcut | Reason                     |
-| :------- | :------------------------- |
-| Ctrl+C   | Hardcoded interrupt/cancel |
-| Ctrl+D   | Hardcoded exit             |
+| Shortcut | Reason                                         |
+| :------- | :--------------------------------------------- |
+| Ctrl+C   | Hardcoded interrupt/cancel                     |
+| Ctrl+D   | Hardcoded exit                                 |
+| Ctrl+M   | Identical to Enter in terminals (both send CR) |
 
 ## Terminal conflicts
 

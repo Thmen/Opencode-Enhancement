@@ -6,30 +6,29 @@
 
 ## Keyboard shortcuts
 
-<Note>
-  Keyboard shortcuts may vary by platform and terminal. Press `?` to see available shortcuts for your environment.
+**Note:**
+Keyboard shortcuts may vary by platform and terminal. Press `?` to see available shortcuts for your environment.
 
-  **macOS users**: Option/Alt key shortcuts (`Alt+B`, `Alt+F`, `Alt+Y`, `Alt+M`, `Alt+P`) require configuring Option as Meta in your terminal:
+**macOS users**: Option/Alt key shortcuts (`Alt+B`, `Alt+F`, `Alt+Y`, `Alt+M`, `Alt+P`) require configuring Option as Meta in your terminal:
 
-  * **iTerm2**: settings → Profiles → Keys → set Left/Right Option key to "Esc+"
-  * **Terminal.app**: settings → Profiles → Keyboard → check "Use Option as Meta Key"
-  * **VS Code**: settings → Profiles → Keys → set Left/Right Option key to "Esc+"
+* **iTerm2**: settings → Profiles → Keys → set Left/Right Option key to "Esc+"
+* **Terminal.app**: settings → Profiles → Keyboard → check "Use Option as Meta Key"
+* **VS Code**: settings → Profiles → Keys → set Left/Right Option key to "Esc+"
 
-  See [Terminal configuration](49-Optimizeyourterminalsetup.md) for details.
-</Note>
+See [Terminal configuration](49-Optimizeyourterminalsetup.md) for details.
 
 ### General controls
 
 | Shortcut                                          | Description                                                         | Context                                                                                                                                                              |
 | :------------------------------------------------ | :------------------------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `Ctrl+C`                                          | Cancel current input or generation                                  | Standard interrupt                                                                                                                                                   |
-| `Ctrl+F`                                          | Kill all background agents. Press twice within 3 seconds to confirm | Background agent control                                                                                                                                             |
+| `Ctrl+X Ctrl+K`                                   | Kill all background agents. Press twice within 3 seconds to confirm | Background agent control                                                                                                                                             |
 | `Ctrl+D`                                          | Exit Claude Code session                                            | EOF signal                                                                                                                                                           |
-| `Ctrl+G`                                          | Open in default text editor                                         | Edit your prompt or custom response in your default text editor                                                                                                      |
+| `Ctrl+G` or `Ctrl+X Ctrl+E`                       | Open in default text editor                                         | Edit your prompt or custom response in your default text editor. `Ctrl+X Ctrl+E` is the readline-native binding                                                      |
 | `Ctrl+L`                                          | Clear terminal screen                                               | Keeps conversation history                                                                                                                                           |
 | `Ctrl+O`                                          | Toggle verbose output                                               | Shows detailed tool usage and execution. Also expands MCP read and search calls, which collapse to a single line like "Queried slack" by default                     |
 | `Ctrl+R`                                          | Reverse search command history                                      | Search through previous commands interactively                                                                                                                       |
-| `Ctrl+V` or `Cmd+V` (iTerm2) or `Alt+V` (Windows) | Paste image from clipboard                                          | Pastes an image or path to an image file                                                                                                                             |
+| `Ctrl+V` or `Cmd+V` (iTerm2) or `Alt+V` (Windows) | Paste image from clipboard                                          | Inserts an `[Image #N]` chip at the cursor so you can reference it positionally in your prompt                                                                       |
 | `Ctrl+B`                                          | Background running tasks                                            | Backgrounds bash commands and agents. Tmux users press twice                                                                                                         |
 | `Ctrl+T`                                          | Toggle task list                                                    | Show or hide the [task list](Getting started/02-ClaudeCodeoverview.md#task-list) in the terminal status area                                                                                                 |
 | `Left/Right arrows`                               | Cycle through dialog tabs                                           | Navigate between tabs in permission dialogs and menus                                                                                                                |
@@ -38,6 +37,7 @@
 | `Shift+Tab` or `Alt+M` (some configurations)      | Cycle permission modes                                              | Cycle through `default`, `acceptEdits`, `plan`, and any modes you have enabled, such as `auto` or `bypassPermissions`. See [permission modes](Use Claude Code/04-Chooseapermissionmode.md). |
 | `Option+P` (macOS) or `Alt+P` (Windows/Linux)     | Switch model                                                        | Switch models without clearing your prompt                                                                                                                           |
 | `Option+T` (macOS) or `Alt+T` (Windows/Linux)     | Toggle extended thinking                                            | Enable or disable extended thinking mode. Run `/terminal-setup` first to enable this shortcut                                                                        |
+| `Option+O` (macOS) or `Alt+O` (Windows/Linux)     | Toggle fast mode                                                    | Enable or disable [fast mode](19-Speedupresponseswithfastmode.md)                                                                                                                         |
 
 ### Text editing
 
@@ -56,9 +56,8 @@
 | :------- | :----------------------------------------- | :----------------------------------------------------------------------------------------------------------- |
 | `Ctrl+T` | Toggle syntax highlighting for code blocks | Only works inside the `/theme` picker menu. Controls whether code in Claude's responses uses syntax coloring |
 
-<Note>
-  Syntax highlighting is only available in the native build of Claude Code.
-</Note>
+**Note:**
+Syntax highlighting is only available in the native build of Claude Code.
 
 ### Multiline input
 
@@ -70,9 +69,8 @@
 | Control sequence | `Ctrl+J`       | Line feed character for multiline                       |
 | Paste mode       | Paste directly | For code blocks, logs                                   |
 
-<Tip>
-  Shift+Enter works without configuration in iTerm2, WezTerm, Ghostty, and Kitty. For other terminals (VS Code, Alacritty, Zed, Warp), run `/terminal-setup` to install the binding.
-</Tip>
+**Tip:**
+Shift+Enter works without configuration in iTerm2, WezTerm, Ghostty, and Kitty. For other terminals (VS Code, Alacritty, Zed, Warp), run `/terminal-setup` to install the binding.
 
 ### Quick commands
 
@@ -81,6 +79,15 @@
 | `/` at start | Command or skill  | See [built-in commands](Getting started/02-ClaudeCodeoverview.md#built-in-commands) and [skills](46-ExtendClaudewithskills.md) |
 | `!` at start | Bash mode         | Run commands directly and add execution output to the session        |
 | `@`          | File path mention | Trigger file path autocomplete                                       |
+
+### Transcript viewer
+
+When the transcript viewer is open (toggled with `Ctrl+O`), these shortcuts are available. `Ctrl+E` can be rebound via [`transcript:toggleShowAll`](27-Customizekeyboardshortcuts.md).
+
+| Shortcut             | Description                                                                                                             |
+| :------------------- | :---------------------------------------------------------------------------------------------------------------------- |
+| `Ctrl+E`             | Toggle show all content                                                                                                 |
+| `q`, `Ctrl+C`, `Esc` | Exit transcript view. `Ctrl+C` and `Esc` can be rebound via [`transcript:exit`](27-Customizekeyboardshortcuts.md); `q` is not rebindable |
 
 ### Voice input
 
@@ -130,9 +137,8 @@ Enable vim-style editing with `/vim` command or configure permanently via `/conf
 | `;`             | Repeat last f/F/t/T motion                          |
 | `,`             | Repeat last f/F/t/T motion in reverse               |
 
-<Note>
-  In vim normal mode, if the cursor is at the beginning or end of input and cannot move further, the arrow keys navigate command history instead.
-</Note>
+**Note:**
+In vim normal mode, if the cursor is at the beginning or end of input and cannot move further, the arrow keys navigate command history instead.
 
 ### Editing (NORMAL mode)
 
@@ -208,7 +214,7 @@ To run commands in the background, you can either:
 
 **Key features:**
 
-* Output is buffered and Claude can retrieve it using the TaskOutput tool
+* Output is written to a file and Claude can retrieve it using the Read tool
 * Background tasks have unique IDs for tracking and output retrieval
 * Background tasks are automatically cleaned up when Claude Code exits
 * Background tasks are automatically terminated if output exceeds 5GB, with a note in stderr explaining why
@@ -227,7 +233,7 @@ To disable all background task functionality, set the `CLAUDE_CODE_DISABLE_BACKG
 
 Run bash commands directly without going through Claude by prefixing your input with `!`:
 
-```bash  theme={null}
+```bash
 ! npm test
 ! git status
 ! ls -la
@@ -259,7 +265,7 @@ Suggestions are automatically skipped after the first turn of a conversation, in
 
 To disable prompt suggestions entirely, set the environment variable or toggle the setting in `/config`:
 
-```bash  theme={null}
+```bash
 export CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false
 ```
 
@@ -303,9 +309,8 @@ When working on a branch with an open pull request, Claude Code displays a click
 
 `Cmd+click` (Mac) or `Ctrl+click` (Windows/Linux) the link to open the pull request in your browser. The status updates automatically every 60 seconds.
 
-<Note>
-  PR status requires the `gh` CLI to be installed and authenticated (`gh auth login`).
-</Note>
+**Note:**
+PR status requires the `gh` CLI to be installed and authenticated (`gh auth login`).
 
 ## See also
 

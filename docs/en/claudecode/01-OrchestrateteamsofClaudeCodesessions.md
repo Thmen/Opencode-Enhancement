@@ -4,17 +4,15 @@
 
 > Coordinate multiple Claude Code instances working together as a team, with shared tasks, inter-agent messaging, and centralized management.
 
-<Warning>
-  Agent teams are experimental and disabled by default. Enable them by adding `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` to your [settings.json](44-ClaudeCodesettings.md) or environment. Agent teams have [known limitations](Getting started/02-ClaudeCodeoverview.md#limitations) around session resumption, task coordination, and shutdown behavior.
-</Warning>
+**Warning:**
+Agent teams are experimental and disabled by default. Enable them by adding `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` to your [settings.json](44-ClaudeCodesettings.md) or environment. Agent teams have [known limitations](Getting started/02-ClaudeCodeoverview.md#limitations) around session resumption, task coordination, and shutdown behavior.
 
 Agent teams let you coordinate multiple Claude Code instances working together. One session acts as the team lead, coordinating work, assigning tasks, and synthesizing results. Teammates work independently, each in its own context window, and communicate directly with each other.
 
 Unlike [subagents](48-Createcustomsubagents.md), which run within a single session and can only report back to the main agent, you can also interact with individual teammates directly without going through the lead.
 
-<Note>
-  Agent teams require Claude Code v2.1.32 or later. Check your version with `claude --version`.
-</Note>
+**Note:**
+Agent teams require Claude Code v2.1.32 or later. Check your version with `claude --version`.
 
 This page covers:
 
@@ -38,11 +36,10 @@ Agent teams add coordination overhead and use significantly more tokens than a s
 
 Both agent teams and [subagents](48-Createcustomsubagents.md) let you parallelize work, but they operate differently. Choose based on whether your workers need to communicate with each other:
 
-<Frame caption="Subagents only report results back to the main agent and never talk to each other. In agent teams, teammates share a task list, claim work, and communicate directly with each other.">
+*Subagents only report results back to the main agent and never talk to each other. In agent teams, teammates share a task list, claim work, and communicate directly with each other.*
   <img src="https://mintcdn.com/claude-code/nsvRFSDNfpSU5nT7/images/subagents-vs-agent-teams-light.png?fit=max&auto=format&n=nsvRFSDNfpSU5nT7&q=85&s=2f8db9b4f3705dd3ab931fbe2d96e42a" className="dark:hidden" alt="Diagram comparing subagent and agent team architectures. Subagents are spawned by the main agent, do work, and report results back. Agent teams coordinate through a shared task list, with teammates communicating directly with each other." width="4245" height="1615" data-path="images/subagents-vs-agent-teams-light.png" />
 
   <img src="https://mintcdn.com/claude-code/nsvRFSDNfpSU5nT7/images/subagents-vs-agent-teams-dark.png?fit=max&auto=format&n=nsvRFSDNfpSU5nT7&q=85&s=d573a037540f2ada6a9ae7d8285b46fd" className="hidden dark:block" alt="Diagram comparing subagent and agent team architectures. Subagents are spawned by the main agent, do work, and report results back. Agent teams coordinate through a shared task list, with teammates communicating directly with each other." width="4245" height="1615" data-path="images/subagents-vs-agent-teams-dark.png" />
-</Frame>
 
 |                   | Subagents                                        | Agent teams                                         |
 | :---------------- | :----------------------------------------------- | :-------------------------------------------------- |
@@ -58,7 +55,7 @@ Use subagents when you need quick, focused workers that report back. Use agent t
 
 Agent teams are disabled by default. Enable them by setting the `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` environment variable to `1`, either in your shell environment or through [settings.json](44-ClaudeCodesettings.md):
 
-```json settings.json theme={null}
+```json settings.json
 {
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
@@ -72,7 +69,7 @@ After enabling agent teams, tell Claude to create an agent team and describe the
 
 This example works well because the three roles are independent and can explore the problem without waiting on each other:
 
-```text  theme={null}
+```text
 I'm designing a CLI tool that helps developers track TODO comments across
 their codebase. Create an agent team to explore this from different angles: one
 teammate on UX, one on technical architecture, one playing devil's advocate.
@@ -95,13 +92,12 @@ Agent teams support two display modes:
 * **In-process**: all teammates run inside your main terminal. Use Shift+Down to cycle through teammates and type to message them directly. Works in any terminal, no extra setup required.
 * **Split panes**: each teammate gets its own pane. You can see everyone's output at once and click into a pane to interact directly. Requires tmux, or iTerm2.
 
-<Note>
-  `tmux` has known limitations on certain operating systems and traditionally works best on macOS. Using `tmux -CC` in iTerm2 is the suggested entrypoint into `tmux`.
-</Note>
+**Note:**
+`tmux` has known limitations on certain operating systems and traditionally works best on macOS. Using `tmux -CC` in iTerm2 is the suggested entrypoint into `tmux`.
 
 The default is `"auto"`, which uses split panes if you're already running inside a tmux session, and in-process otherwise. The `"tmux"` setting enables split-pane mode and auto-detects whether to use tmux or iTerm2 based on your terminal. To override, set `teammateMode` in your [settings.json](44-ClaudeCodesettings.md):
 
-```json  theme={null}
+```json
 {
   "teammateMode": "in-process"
 }
@@ -109,7 +105,7 @@ The default is `"auto"`, which uses split panes if you're already running inside
 
 To force in-process mode for a single session, pass it as a flag:
 
-```bash  theme={null}
+```bash
 claude --teammate-mode in-process
 ```
 
@@ -122,7 +118,7 @@ Split-pane mode requires either [tmux](https://github.com/tmux/tmux/wiki) or iTe
 
 Claude decides the number of teammates to spawn based on your task, or you can specify exactly what you want:
 
-```text  theme={null}
+```text
 Create a team with 4 teammates to refactor these modules in parallel.
 Use Sonnet for each teammate.
 ```
@@ -131,7 +127,7 @@ Use Sonnet for each teammate.
 
 For complex or risky tasks, you can require teammates to plan before implementing. The teammate works in read-only plan mode until the lead approves their approach:
 
-```text  theme={null}
+```text
 Spawn an architect teammate to refactor the authentication module.
 Require plan approval before they make any changes.
 ```
@@ -162,7 +158,7 @@ Task claiming uses file locking to prevent race conditions when multiple teammat
 
 To gracefully end a teammate's session:
 
-```text  theme={null}
+```text
 Ask the researcher teammate to shut down
 ```
 
@@ -172,15 +168,14 @@ The lead sends a shutdown request. The teammate can approve, exiting gracefully,
 
 When you're done, ask the lead to clean up:
 
-```text  theme={null}
+```text
 Clean up the team
 ```
 
 This removes the shared team resources. When the lead runs cleanup, it checks for active teammates and fails if any are still running, so shut them down first.
 
-<Warning>
-  Always use the lead to clean up. Teammates should not run cleanup because their team context may not resolve correctly, potentially leaving resources in an inconsistent state.
-</Warning>
+**Warning:**
+Always use the lead to clean up. Teammates should not run cleanup because their team context may not resolve correctly, potentially leaving resources in an inconsistent state.
 
 ### Enforce quality gates with hooks
 
@@ -255,7 +250,7 @@ These examples show how agent teams handle tasks where parallel exploration adds
 
 A single reviewer tends to gravitate toward one type of issue at a time. Splitting review criteria into independent domains means security, performance, and test coverage all get thorough attention simultaneously. The prompt assigns each teammate a distinct lens so they don't overlap:
 
-```text  theme={null}
+```text
 Create an agent team to review PR #142. Spawn three reviewers:
 - One focused on security implications
 - One checking performance impact
@@ -269,7 +264,7 @@ Each reviewer works from the same PR but applies a different filter. The lead sy
 
 When the root cause is unclear, a single agent tends to find one plausible explanation and stop looking. The prompt fights this by making teammates explicitly adversarial: each one's job is not only to investigate its own theory but to challenge the others'.
 
-```text  theme={null}
+```text
 Users report the app exits after one message instead of staying connected.
 Spawn 5 agent teammates to investigate different hypotheses. Have them talk to
 each other to try to disprove each other's theories, like a scientific
@@ -286,7 +281,7 @@ With multiple independent investigators actively trying to disprove each other, 
 
 Teammates load project context automatically, including CLAUDE.md, MCP servers, and skills, but they don't inherit the lead's conversation history. See [Context and communication](Getting started/02-ClaudeCodeoverview.md#context-and-communication) for details. Include task-specific details in the spawn prompt:
 
-```text  theme={null}
+```text
 Spawn a security reviewer teammate with the prompt: "Review the authentication module
 at src/auth/ for security vulnerabilities. Focus on token handling, session
 management, and input validation. The app uses JWT tokens stored in
@@ -313,15 +308,14 @@ Scale up only when the work genuinely benefits from having teammates work simult
 * **Too large**: teammates work too long without check-ins, increasing risk of wasted effort
 * **Just right**: self-contained units that produce a clear deliverable, such as a function, a test file, or a review
 
-<Tip>
-  The lead breaks work into tasks and assigns them to teammates automatically. If it isn't creating enough tasks, ask it to split the work into smaller pieces. Having 5-6 tasks per teammate keeps everyone productive and lets the lead reassign work if someone gets stuck.
-</Tip>
+**Tip:**
+The lead breaks work into tasks and assigns them to teammates automatically. If it isn't creating enough tasks, ask it to split the work into smaller pieces. Having 5-6 tasks per teammate keeps everyone productive and lets the lead reassign work if someone gets stuck.
 
 ### Wait for teammates to finish
 
 Sometimes the lead starts implementing tasks itself instead of waiting for teammates. If you notice this:
 
-```text  theme={null}
+```text
 Wait for your teammates to complete their tasks before proceeding
 ```
 
@@ -346,7 +340,7 @@ If teammates aren't appearing after you ask Claude to create a team:
 * In in-process mode, teammates may already be running but not visible. Press Shift+Down to cycle through active teammates.
 * Check that the task you gave Claude was complex enough to warrant a team. Claude decides whether to spawn teammates based on the task.
 * If you explicitly requested split panes, ensure tmux is installed and available in your PATH:
-  ```bash  theme={null}
+  ```bash
   which tmux
   ```
 * For iTerm2, verify the `it2` CLI is installed and the Python API is enabled in iTerm2 preferences.
@@ -370,7 +364,7 @@ The lead may decide the team is finished before all tasks are actually complete.
 
 If a tmux session persists after the team ends, it may not have been fully cleaned up. List sessions and kill the one created by the team:
 
-```bash  theme={null}
+```bash
 tmux ls
 tmux kill-session -t <session-name>
 ```
@@ -388,9 +382,8 @@ Agent teams are experimental. Current limitations to be aware of:
 * **Permissions set at spawn**: all teammates start with the lead's permission mode. You can change individual teammate modes after spawning, but you can't set per-teammate modes at spawn time.
 * **Split panes require tmux or iTerm2**: the default in-process mode works in any terminal. Split-pane mode isn't supported in VS Code's integrated terminal, Windows Terminal, or Ghostty.
 
-<Tip>
-  **`CLAUDE.md` works normally**: teammates read `CLAUDE.md` files from their working directory. Use this to provide project-specific guidance to all teammates.
-</Tip>
+**Tip:**
+**`CLAUDE.md` works normally**: teammates read `CLAUDE.md` files from their working directory. Use this to provide project-specific guidance to all teammates.
 
 ## Next steps
 

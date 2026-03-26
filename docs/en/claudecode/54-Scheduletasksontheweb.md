@@ -31,9 +31,8 @@ Claude Code offers three ways to schedule recurring work:
 | Customizable schedule      | Via `/schedule` in the CLI       | Yes                                             | Yes                            |
 | Minimum interval           | 1 hour                           | 1 minute                                        | 1 minute                       |
 
-<Tip>
-  Use **cloud tasks** for work that should run reliably without your machine. Use **Desktop tasks** when you need access to local files and tools. Use **`/loop`** for quick polling during a session.
-</Tip>
+**Tip:**
+Use **cloud tasks** for work that should run reliably without your machine. Use **Desktop tasks** when you need access to local files and tools. Use **`/loop`** for quick polling during a session.
 
 ## Create a scheduled task
 
@@ -47,53 +46,43 @@ The web and Desktop entry points open a form. The CLI collects the same informat
 
 The steps below walk through the web interface.
 
-<Steps>
-  <Step title="Open the creation form">
-    Visit [claude.ai/code/scheduled](https://claude.ai/code/scheduled) and click **New scheduled task**.
-  </Step>
+#### Open the creation form
+Visit [claude.ai/code/scheduled](https://claude.ai/code/scheduled) and click **New scheduled task**.
 
-  <Step title="Name the task and write the prompt">
-    Give the task a descriptive name and write the prompt Claude runs each time. The prompt is the most important part: the task runs autonomously, so the prompt must be self-contained and explicit about what to do and what success looks like.
+#### Name the task and write the prompt
+Give the task a descriptive name and write the prompt Claude runs each time. The prompt is the most important part: the task runs autonomously, so the prompt must be self-contained and explicit about what to do and what success looks like.
 
-    The prompt input includes a model selector. Claude uses this model for each run of the task.
-  </Step>
+The prompt input includes a model selector. Claude uses this model for each run of the task.
 
-  <Step title="Select repositories">
-    Add one or more GitHub repositories for Claude to work in. Each repository is cloned at the start of a run, starting from the default branch. Claude creates `claude/`-prefixed branches for its changes. To allow pushes to any branch, enable **Allow unrestricted branch pushes** for that repository.
-  </Step>
+#### Select repositories
+Add one or more GitHub repositories for Claude to work in. Each repository is cloned at the start of a run, starting from the default branch. Claude creates `claude/`-prefixed branches for its changes. To allow pushes to any branch, enable **Allow unrestricted branch pushes** for that repository.
 
-  <Step title="Select an environment">
-    Select a [cloud environment](08-ClaudeCodeontheweb.md#cloud-environment) for the task. Environments control what the cloud session has access to:
+#### Select an environment
+Select a [cloud environment](08-ClaudeCodeontheweb.md#cloud-environment) for the task. Environments control what the cloud session has access to:
 
-    * **Network access**: set the level of internet access available during each run
-    * **Environment variables**: provide API keys, tokens, or other secrets Claude can use
-    * **Setup script**: run install commands before each session starts, like installing dependencies or configuring tools
+* **Network access**: set the level of internet access available during each run
+* **Environment variables**: provide API keys, tokens, or other secrets Claude can use
+* **Setup script**: run install commands before each session starts, like installing dependencies or configuring tools
 
-    A **Default** environment is available out of the box. To use a custom environment, [create one](08-ClaudeCodeontheweb.md#cloud-environment) before creating the task.
-  </Step>
+A **Default** environment is available out of the box. To use a custom environment, [create one](08-ClaudeCodeontheweb.md#cloud-environment) before creating the task.
 
-  <Step title="Choose a schedule">
-    Pick how often the task runs from the [frequency options](Getting started/02-ClaudeCodeoverview.md#frequency-options). The default is daily at 9:00 AM in your local time zone. Tasks may run a few minutes after their scheduled time due to stagger.
+#### Choose a schedule
+Pick how often the task runs from the [frequency options](Getting started/02-ClaudeCodeoverview.md#frequency-options). The default is daily at 9:00 AM in your local time zone. Tasks may run a few minutes after their scheduled time due to stagger.
 
-    If the preset options don't fit your needs, pick the closest one and update the schedule from the CLI with `/schedule update` to set a specific schedule.
-  </Step>
+If the preset options don't fit your needs, pick the closest one and update the schedule from the CLI with `/schedule update` to set a specific schedule.
 
-  <Step title="Review connectors">
-    All of your connected [MCP connectors](30-ConnectClaudeCodetotoolsviaMCP.md) are included by default. Remove any that the task doesn't need. Connectors give Claude access to external services like Slack, Linear, or Google Drive during each run.
-  </Step>
+#### Review connectors
+All of your connected [MCP connectors](30-ConnectClaudeCodetotoolsviaMCP.md) are included by default. Remove any that the task doesn't need. Connectors give Claude access to external services like Slack, Linear, or Google Drive during each run.
 
-  <Step title="Create the task">
-    Click **Create**. The task appears in the scheduled tasks list and runs automatically at the next scheduled time. Each run creates a new session alongside your other sessions, where you can see what Claude did, review changes, and create a pull request. To trigger a run immediately, click **Run now** from the task's detail page.
-  </Step>
-</Steps>
+#### Create the task
+Click **Create**. The task appears in the scheduled tasks list and runs automatically at the next scheduled time. Each run creates a new session alongside your other sessions, where you can see what Claude did, review changes, and create a pull request. To trigger a run immediately, click **Run now** from the task's detail page.
 
 ### Frequency options
 
 The schedule picker offers preset frequencies that handle time zone conversion for you. Pick a time in your local zone and the task runs at that wall-clock time regardless of where the cloud infrastructure is located.
 
-<Note>
-  Tasks may run a few minutes after their scheduled time. The offset is consistent for each task.
-</Note>
+**Note:**
+Tasks may run a few minutes after their scheduled time. The offset is consistent for each task.
 
 | Frequency | Description                                                                |
 | :-------- | :------------------------------------------------------------------------- |

@@ -2,6 +2,7 @@ from dataclasses import replace
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from scripts.scraper_core import (
     Page,
@@ -14,6 +15,7 @@ from scripts.scraper_core import (
     generate_index,
     prepend_breadcrumb,
     postprocess,
+    scrape_all,
 )
 
 
@@ -176,6 +178,18 @@ class NavigationTests(unittest.TestCase):
         self.assertIn("# Usage", content)
         self.assertIn("- [CLI](03-CLI.md)", content)
         self.assertIn("- [Share](07-Share.md)", content)
+
+    def test_scrape_all_exits_nonzero_when_any_page_fails(self) -> None:
+        page = Page(slug="missing", title="Missing", category="", filename="01-Missing.md")
+        with tempfile.TemporaryDirectory() as tmp:
+            config = replace(self.config, output_dir=Path(tmp))
+            with (
+                patch("scripts.scraper_core.discover_pages", return_value=[page]),
+                patch("scripts.scraper_core.fetch_html", return_value=None),
+                self.assertRaises(SystemExit) as ctx,
+            ):
+                scrape_all(config)
+        self.assertEqual(ctx.exception.code, 1)
 
 
 if __name__ == "__main__":

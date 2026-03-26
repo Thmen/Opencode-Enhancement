@@ -18,9 +18,8 @@ Desktop adds these capabilities on top of the standard Claude Code experience:
 * [Connectors](Getting started/02-ClaudeCodeoverview.md#connect-external-tools) for GitHub, Slack, Linear, and more
 * Local, [SSH](Getting started/02-ClaudeCodeoverview.md#ssh-sessions), and [cloud](Getting started/02-ClaudeCodeoverview.md#run-long-running-tasks-remotely) environments
 
-<Tip>
-  New to Desktop? Start with [Get started](15-Getstartedwiththedesktopapp.md) to install the app and make your first edit.
-</Tip>
+**Tip:**
+New to Desktop? Start with [Get started](15-Getstartedwiththedesktopapp.md) to install the app and make your first edit.
 
 This page covers [working with code](Getting started/02-ClaudeCodeoverview.md#work-with-code), [computer use](Getting started/02-ClaudeCodeoverview.md#let-claude-use-your-computer), [managing sessions](Getting started/02-ClaudeCodeoverview.md#manage-sessions), [extending Claude Code](Getting started/02-ClaudeCodeoverview.md#extend-claude-code), [scheduled tasks](Getting started/02-ClaudeCodeoverview.md#schedule-recurring-tasks), and [configuration](Getting started/02-ClaudeCodeoverview.md#environment-configuration). It also includes a [CLI comparison](Getting started/02-ClaudeCodeoverview.md#coming-from-the-cli) and [troubleshooting](Getting started/02-ClaudeCodeoverview.md#troubleshooting).
 
@@ -66,9 +65,8 @@ Permission modes control how much autonomy Claude has during a session: whether 
 
 The `dontAsk` permission mode is available only in the [CLI](Use Claude Code/04-Chooseapermissionmode.md#allow-only-pre-approved-tools-with-dontask-mode).
 
-<Tip title="Best practice">
-  Start complex tasks in Plan mode so Claude maps out an approach before making changes. Once you approve the plan, switch to Auto accept edits or Ask permissions to execute it. See [explore first, then plan, then code](Use Claude Code/01-BestPracticesforClaudeCode.md#explore-first-then-plan-then-code) for more on this workflow.
-</Tip>
+**Tip (Best practice):**
+Start complex tasks in Plan mode so Claude maps out an approach before making changes. Once you approve the plan, switch to Auto accept edits or Ask permissions to execute it. See [explore first, then plan, then code](Use Claude Code/01-BestPracticesforClaudeCode.md#explore-first-then-plan-then-code) for more on this workflow.
 
 Remote sessions support Auto accept edits and Plan mode. Ask permissions is not available because remote sessions auto-accept file edits by default, and Bypass permissions is not available because the remote environment is already sandboxed.
 
@@ -118,23 +116,20 @@ After you open a pull request, a CI status bar appears in the session. Claude Co
 
 Use the **Auto-fix** and **Auto-merge** toggles in the CI status bar to enable either option. Claude Code also sends a desktop notification when CI finishes.
 
-<Note>
-  PR monitoring requires the [GitHub CLI (`gh`)](https://cli.github.com/) to be installed and authenticated on your machine. If `gh` is not installed, Desktop prompts you to install it the first time you try to create a PR.
-</Note>
+**Note:**
+PR monitoring requires the [GitHub CLI (`gh`)](https://cli.github.com/) to be installed and authenticated on your machine. If `gh` is not installed, Desktop prompts you to install it the first time you try to create a PR.
 
 ## Let Claude use your computer
 
 Computer use lets Claude open your apps, control your screen, and work directly on your machine the way you would. Ask Claude to test a native app in the iOS simulator, interact with a desktop tool that has no CLI, or automate something that only works through a GUI.
 
-<Note>
-  Computer use is a research preview on macOS that requires a Pro or Max plan. It is not available on Team or Enterprise plans. The Claude Desktop app must be running.
-</Note>
+**Note:**
+Computer use is a research preview on macOS that requires a Pro or Max plan. It is not available on Team or Enterprise plans. The Claude Desktop app must be running.
 
 Computer use is off by default. [Enable it in Settings](Getting started/02-ClaudeCodeoverview.md#enable-computer-use) and grant the required macOS permissions before Claude can control your screen.
 
-<Warning>
-  Unlike the [sandboxed Bash tool](40-Sandboxing.md), computer use runs on your actual desktop with access to whatever you approve. Claude checks each action and flags potential prompt injection from on-screen content, but the trust boundary is different. See the [computer use safety guide](https://support.claude.com/en/articles/14128542) for best practices.
-</Warning>
+**Warning:**
+Unlike the [sandboxed Bash tool](40-Sandboxing.md), computer use runs on your actual desktop with access to whatever you approve. Claude checks each action and flags potential prompt injection from on-screen content, but the trust boundary is different. See the [computer use safety guide](https://support.claude.com/en/articles/14128542) for best practices.
 
 ### When computer use applies
 
@@ -185,9 +180,8 @@ Click **+ New session** in the sidebar to work on multiple tasks in parallel. Fo
 
 Worktrees are stored in `<project-root>/.claude/worktrees/` by default. You can change this to a custom directory in Settings → Claude Code under "Worktree location". You can also set a branch prefix that gets prepended to every worktree branch name, which is useful for keeping Claude-created branches organized. To remove a worktree when you're done, hover over the session in the sidebar and click the archive icon.
 
-<Note>
-  Session isolation requires [Git](https://git-scm.com/downloads). Most Macs include Git by default. Run `git --version` in Terminal to check. On Windows, Git is required for the Code tab to work: [download Git for Windows](https://git-scm.com/downloads/win), install it, and restart the app. If you run into Git errors, try a Cowork session to help troubleshoot your setup.
-</Note>
+**Note:**
+Session isolation requires [Git](https://git-scm.com/downloads). Most Macs include Git by default. Run `git --version` in Terminal to check. On Windows, Git is required for the Code tab to work: [download Git for Windows](https://git-scm.com/downloads/win), install it, and restart the app. If you run into Git errors, try a Cowork session to help troubleshoot your setup.
 
 Use the filter icon at the top of the sidebar to filter sessions by status (Active, Archived) and environment (Local, Cloud). To rename a session or check context usage, click the session title in the toolbar at the top of the active session. When context fills up, Claude automatically summarizes the conversation and continues working. You can also type `/compact` to trigger summarization earlier and free up context space. See [the context window](Core concepts/02-HowClaudeCodeworks.md#the-context-window) for details on how compaction works.
 
@@ -252,7 +246,7 @@ Claude automatically detects your dev server setup and stores the configuration 
 
 To customize how your server starts, for example to use `yarn dev` instead of `npm run dev` or to change the port, edit the file manually or click **Edit configuration** in the Preview dropdown to open it in your code editor. The file supports JSON with comments.
 
-```json  theme={null}
+```json
 {
   "version": "0.0.1",
   "configurations": [
@@ -274,7 +268,7 @@ When `autoVerify` is enabled, Claude automatically verifies code changes after e
 
 Auto-verify is on by default. Disable it per-project by adding `"autoVerify": false` to `.claude/launch.json`, or toggle it from the **Preview** dropdown menu.
 
-```json  theme={null}
+```json
 {
   "version": "0.0.1",
   "autoVerify": false,
@@ -320,11 +314,10 @@ When Claude picks a different port, it passes the assigned port to your server v
 
 These configurations show common setups for different project types:
 
-<Tabs>
-  <Tab title="Next.js">
-    This configuration runs a Next.js app using Yarn on port 3000:
+#### Next.js
+This configuration runs a Next.js app using Yarn on port 3000:
 
-    ```json  theme={null}
+```json
     {
       "version": "0.0.1",
       "configurations": [
@@ -337,12 +330,11 @@ These configurations show common setups for different project types:
       ]
     }
     ```
-  </Tab>
 
-  <Tab title="Multiple servers">
-    For a monorepo with a frontend and an API server, define multiple configurations. The frontend uses `autoPort: true` so it picks a free port if 3000 is taken, while the API server requires port 8080 exactly:
+#### Multiple servers
+For a monorepo with a frontend and an API server, define multiple configurations. The frontend uses `autoPort: true` so it picks a free port if 3000 is taken, while the API server requires port 8080 exactly:
 
-    ```json  theme={null}
+```json
     {
       "version": "0.0.1",
       "configurations": [
@@ -366,12 +358,11 @@ These configurations show common setups for different project types:
       ]
     }
     ```
-  </Tab>
 
-  <Tab title="Node.js script">
-    To run a Node.js script directly instead of using a package manager command, use the `program` field:
+#### Node.js script
+To run a Node.js script directly instead of using a package manager command, use the `program` field:
 
-    ```json  theme={null}
+```json
     {
       "version": "0.0.1",
       "configurations": [
@@ -384,8 +375,6 @@ These configurations show common setups for different project types:
       ]
     }
     ```
-  </Tab>
-</Tabs>
 
 ## Schedule recurring tasks
 
@@ -407,9 +396,8 @@ Claude Code offers three ways to schedule recurring work:
 | Customizable schedule      | Via `/schedule` in the CLI       | Yes                                             | Yes                            |
 | Minimum interval           | 1 hour                           | 1 minute                                        | 1 minute                       |
 
-<Tip>
-  Use **cloud tasks** for work that should run reliably without your machine. Use **Desktop tasks** when you need access to local files and tools. Use **`/loop`** for quick polling during a session.
-</Tip>
+**Tip:**
+Use **cloud tasks** for work that should run reliably without your machine. Use **Desktop tasks** when you need access to local files and tools. Use **`/loop`** for quick polling during a session.
 
 The Schedule page supports two kinds of tasks:
 
@@ -420,9 +408,8 @@ Both kinds appear in the same task grid. Click **New task** to pick which kind t
 
 See [How scheduled tasks run](Getting started/02-ClaudeCodeoverview.md#how-scheduled-tasks-run) for details on missed runs and catch-up behavior for local tasks.
 
-<Note>
-  By default, local scheduled tasks run against whatever state your working directory is in, including uncommitted changes. Enable the worktree toggle in the prompt input to give each run its own isolated Git worktree, the same way [parallel sessions](Getting started/02-ClaudeCodeoverview.md#work-in-parallel-with-sessions) work.
-</Note>
+**Note:**
+By default, local scheduled tasks run against whatever state your working directory is in, including uncommitted changes. Enable the worktree toggle in the prompt input to give each run its own isolated Git worktree, the same way [parallel sessions](Getting started/02-ClaudeCodeoverview.md#work-in-parallel-with-sessions) work.
 
 To create a local scheduled task, click **Schedule** in the sidebar, click **New task**, and choose **New local task**. Configure these fields:
 
@@ -574,9 +561,8 @@ If you already use the Claude Code CLI, Desktop runs the same underlying engine 
 
 To move a CLI session into Desktop, run `/desktop` in the terminal. Claude saves your session and opens it in the desktop app, then exits the CLI. This command is available on macOS and Windows only.
 
-<Tip>
-  When to use Desktop vs CLI: use Desktop when you want visual diff review, file attachments, or session management in a sidebar. Use the CLI when you need scripting, automation, third-party providers, or prefer a terminal workflow.
-</Tip>
+**Tip:**
+When to use Desktop vs CLI: use Desktop when you want visual diff review, file attachments, or session management in a sidebar. Use the CLI when you need scripting, automation, third-party providers, or prefer a terminal workflow.
 
 ### CLI flag equivalents
 
@@ -605,9 +591,8 @@ Desktop and CLI read the same configuration files, so your setup carries over:
 * **[Settings](44-ClaudeCodesettings.md)** in `~/.claude.json` and `~/.claude/settings.json` are shared. Permission rules, allowed tools, and other settings in `settings.json` apply to Desktop sessions.
 * **Models**: Sonnet, Opus, and Haiku are available in both. In Desktop, select the model from the dropdown next to the send button before starting a session. You cannot change the model during an active session.
 
-<Note>
-  **MCP servers: desktop chat app vs Claude Code**: MCP servers configured for the Claude Desktop chat app in `claude_desktop_config.json` are separate from Claude Code and will not appear in the Code tab. To use MCP servers in Claude Code, configure them in `~/.claude.json` or your project's `.mcp.json` file. See [MCP configuration](30-ConnectClaudeCodetotoolsviaMCP.md#installing-mcp-servers) for details.
-</Note>
+**Note:**
+**MCP servers: desktop chat app vs Claude Code**: MCP servers configured for the Claude Desktop chat app in `claude_desktop_config.json` are separate from Claude Code and will not appear in the Code tab. To use MCP servers in Claude Code, configure them in `~/.claude.json` or your project's `.mcp.json` file. See [MCP configuration](30-ConnectClaudeCodetotoolsviaMCP.md#installing-mcp-servers) for details.
 
 ### Feature comparison
 
@@ -703,7 +688,7 @@ The Cowork tab requires Apple Silicon (M1 or later) on macOS. On Windows, Cowork
 
 Remote sessions can create branches that don't exist on your local machine. Click the branch name in the session toolbar to copy it, then fetch it locally:
 
-```bash  theme={null}
+```bash
 git fetch origin <branch-name>
 git checkout <branch-name>
 ```

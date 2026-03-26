@@ -15,9 +15,7 @@ Status lines are useful when you:
 
 Here's an example of a [multi-line status line](Getting started/02-ClaudeCodeoverview.md#display-multiple-lines) that displays git info on the first line and a color-coded context bar on the second.
 
-<Frame>
   <img src="https://mintcdn.com/claude-code/nibzesLaJVh4ydOq/images/statusline-multiline.png?fit=max&auto=format&n=nibzesLaJVh4ydOq&q=85&s=60f11387658acc9ff75158ae85f2ac87" alt="A multi-line status line showing model name, directory, git branch on the first line, and a context usage progress bar with cost and duration on the second line" width="776" height="212" data-path="images/statusline-multiline.png" />
-</Frame>
 
 This page walks through [setting up a basic status line](Getting started/02-ClaudeCodeoverview.md#set-up-a-status-line), explains [how the data flows](Getting started/02-ClaudeCodeoverview.md#how-status-lines-work) from Claude Code to your script, lists [all the fields you can display](Getting started/02-ClaudeCodeoverview.md#available-data), and provides [ready-to-use examples](Getting started/02-ClaudeCodeoverview.md#examples) for common patterns like git status, cost tracking, and progress bars.
 
@@ -29,7 +27,7 @@ Use the [`/statusline` command](Getting started/02-ClaudeCodeoverview.md#use-the
 
 The `/statusline` command accepts natural language instructions describing what you want displayed. Claude Code generates a script file in `~/.claude/` and updates your settings automatically:
 
-```text  theme={null}
+```text
 /statusline show model name and context percentage with a progress bar
 ```
 
@@ -37,7 +35,7 @@ The `/statusline` command accepts natural language instructions describing what 
 
 Add a `statusLine` field to your user settings (`~/.claude/settings.json`, where `~` is your home directory) or [project settings](44-ClaudeCodesettings.md#settings-files). Set `type` to `"command"` and point `command` to a script path or an inline shell command. For a full walkthrough of creating a script, see [Build a status line step by step](Getting started/02-ClaudeCodeoverview.md#build-a-status-line-step-by-step).
 
-```json  theme={null}
+```json
 {
   "statusLine": {
     "type": "command",
@@ -49,7 +47,7 @@ Add a `statusLine` field to your user settings (`~/.claude/settings.json`, where
 
 The `command` field runs in a shell, so you can also use inline commands instead of a script file. This example uses `jq` to parse the JSON input and display the model name and context percentage:
 
-```json  theme={null}
+```json
 {
   "statusLine": {
     "type": "command",
@@ -68,21 +66,18 @@ Run `/statusline` and ask it to remove or clear your status line (e.g., `/status
 
 This walkthrough shows what's happening under the hood by manually creating a status line that displays the current model, working directory, and context window usage percentage.
 
-<Note>Running [`/statusline`](Getting started/02-ClaudeCodeoverview.md#use-the-statusline-command) with a description of what you want configures all of this for you automatically.</Note>
+**Note:** Running [`/statusline`](Getting started/02-ClaudeCodeoverview.md#use-the-statusline-command) with a description of what you want configures all of this for you automatically.
 
 These examples use Bash scripts, which work on macOS and Linux. On Windows, see [Windows configuration](Getting started/02-ClaudeCodeoverview.md#windows-configuration) for PowerShell and Git Bash examples.
 
-<Frame>
   <img src="https://mintcdn.com/claude-code/nibzesLaJVh4ydOq/images/statusline-quickstart.png?fit=max&auto=format&n=nibzesLaJVh4ydOq&q=85&s=696445e59ca0059213250651ad23db6b" alt="A status line showing model name, directory, and context percentage" width="726" height="164" data-path="images/statusline-quickstart.png" />
-</Frame>
 
-<Steps>
-  <Step title="Create a script that reads JSON and prints output">
-    Claude Code sends JSON data to your script via stdin. This script uses [`jq`](https://jqlang.github.io/jq/), a command-line JSON parser you may need to install, to extract the model name, directory, and context percentage, then prints a formatted line.
+#### Create a script that reads JSON and prints output
+Claude Code sends JSON data to your script via stdin. This script uses [`jq`](https://jqlang.github.io/jq/), a command-line JSON parser you may need to install, to extract the model name, directory, and context percentage, then prints a formatted line.
 
-    Save this to `~/.claude/statusline.sh` (where `~` is your home directory, such as `/Users/username` on macOS or `/home/username` on Linux):
+Save this to `~/.claude/statusline.sh` (where `~` is your home directory, such as `/Users/username` on macOS or `/home/username` on Linux):
 
-    ```bash  theme={null}
+```bash
     #!/bin/bash
     # Read JSON data that Claude Code sends to stdin
     input=$(cat)
@@ -96,20 +91,18 @@ These examples use Bash scripts, which work on macOS and Linux. On Windows, see 
     # Output the status line - ${DIR##*/} extracts just the folder name
     echo "[$MODEL] 📁 ${DIR##*/} | ${PCT}% context"
     ```
-  </Step>
 
-  <Step title="Make it executable">
-    Mark the script as executable so your shell can run it:
+#### Make it executable
+Mark the script as executable so your shell can run it:
 
-    ```bash  theme={null}
+```bash
     chmod +x ~/.claude/statusline.sh
     ```
-  </Step>
 
-  <Step title="Add to settings">
-    Tell Claude Code to run your script as the status line. Add this configuration to `~/.claude/settings.json`, which sets `type` to `"command"` (meaning "run this shell command") and points `command` to your script:
+#### Add to settings
+Tell Claude Code to run your script as the status line. Add this configuration to `~/.claude/settings.json`, which sets `type` to `"command"` (meaning "run this shell command") and points `command` to your script:
 
-    ```json  theme={null}
+```json
     {
       "statusLine": {
         "type": "command",
@@ -118,9 +111,7 @@ These examples use Bash scripts, which work on macOS and Linux. On Windows, see 
     }
     ```
 
-    Your status line appears at the bottom of the interface. Settings reload automatically, but changes won't appear until your next interaction with Claude Code.
-  </Step>
-</Steps>
+Your status line appears at the bottom of the interface. Settings reload automatically, but changes won't appear until your next interaction with Claude Code.
 
 ## How status lines work
 
@@ -136,7 +127,7 @@ Your script runs after each new assistant message, when the permission mode chan
 * **Colors**: use [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escape_code#Colors) like `\033[32m` for green (terminal must support them). See the [git status example](Getting started/02-ClaudeCodeoverview.md#git-status-with-colors).
 * **Links**: use [OSC 8 escape sequences](https://en.wikipedia.org/wiki/ANSI_escape_code#OSC) to make text clickable (Cmd+click on macOS, Ctrl+click on Windows/Linux). Requires a terminal that supports hyperlinks like iTerm2, Kitty, or WezTerm. See the [clickable links example](Getting started/02-ClaudeCodeoverview.md#clickable-links).
 
-<Note>The status line runs locally and does not consume API tokens. It temporarily hides during certain UI interactions, including autocomplete suggestions, the help menu, and permission prompts.</Note>
+**Note:** The status line runs locally and does not consume API tokens. It temporarily hides during certain UI interactions, including autocomplete suggestions, the help menu, and permission prompts.
 
 ## Available data
 
@@ -171,10 +162,10 @@ Claude Code sends the following JSON fields to your script via stdin:
 | `worktree.original_cwd`                                                          | The directory Claude was in before entering the worktree                                                                                                                                     |
 | `worktree.original_branch`                                                       | Git branch checked out before entering the worktree. Absent for hook-based worktrees                                                                                                         |
 
-<Accordion title="Full JSON schema">
-  Your status line command receives this JSON structure via stdin:
+### Full JSON schema
+Your status line command receives this JSON structure via stdin:
 
-  ```json  theme={null}
+```json
   {
     "cwd": "/current/working/directory",
     "session_id": "abc123...",
@@ -238,20 +229,19 @@ Claude Code sends the following JSON fields to your script via stdin:
   }
   ```
 
-  **Fields that may be absent** (not present in JSON):
+**Fields that may be absent** (not present in JSON):
 
-  * `vim`: appears only when vim mode is enabled
-  * `agent`: appears only when running with the `--agent` flag or agent settings configured
-  * `worktree`: appears only during `--worktree` sessions. When present, `branch` and `original_branch` may also be absent for hook-based worktrees
-  * `rate_limits`: appears only for Claude.ai subscribers (Pro/Max) after the first API response in the session. Each window (`five_hour`, `seven_day`) may be independently absent. Use `jq -r '.rate_limits.five_hour.used_percentage // empty'` to handle absence gracefully.
+* `vim`: appears only when vim mode is enabled
+* `agent`: appears only when running with the `--agent` flag or agent settings configured
+* `worktree`: appears only during `--worktree` sessions. When present, `branch` and `original_branch` may also be absent for hook-based worktrees
+* `rate_limits`: appears only for Claude.ai subscribers (Pro/Max) after the first API response in the session. Each window (`five_hour`, `seven_day`) may be independently absent. Use `jq -r '.rate_limits.five_hour.used_percentage // empty'` to handle absence gracefully.
 
-  **Fields that may be `null`**:
+**Fields that may be `null`**:
 
-  * `context_window.current_usage`: `null` before the first API call in a session
-  * `context_window.used_percentage`, `context_window.remaining_percentage`: may be `null` early in the session
+* `context_window.current_usage`: `null` before the first API call in a session
+* `context_window.used_percentage`, `context_window.remaining_percentage`: may be `null` early in the session
 
-  Handle missing fields with conditional access and null values with fallback defaults in your scripts.
-</Accordion>
+Handle missing fields with conditional access and null values with fallback defaults in your scripts.
 
 ### Context window fields
 
@@ -287,12 +277,9 @@ The Bash examples use [`jq`](https://jqlang.github.io/jq/) to parse JSON. Python
 
 Display the current model and context window usage with a visual progress bar. Each script reads JSON from stdin, extracts the `used_percentage` field, and builds a 10-character bar where filled blocks (▓) represent usage:
 
-<Frame>
   <img src="https://mintcdn.com/claude-code/nibzesLaJVh4ydOq/images/statusline-context-window-usage.png?fit=max&auto=format&n=nibzesLaJVh4ydOq&q=85&s=15b58ab3602f036939145dde3165c6f7" alt="A status line showing model name and a progress bar with percentage" width="448" height="152" data-path="images/statusline-context-window-usage.png" />
-</Frame>
 
-<CodeGroup>
-  ```bash Bash theme={null}
+  ```bash Bash
   #!/bin/bash
   # Read all of stdin into a variable
   input=$(cat)
@@ -313,7 +300,7 @@ Display the current model and context window usage with a visual progress bar. E
   echo "[$MODEL] $BAR $PCT%"
   ```
 
-  ```python Python theme={null}
+  ```python Python
   #!/usr/bin/env python3
   import json, sys
 
@@ -330,7 +317,7 @@ Display the current model and context window usage with a visual progress bar. E
   print(f"[{model}] {bar} {pct}%")
   ```
 
-  ```javascript Node.js theme={null}
+  ```javascript Node.js
   #!/usr/bin/env node
   // Node.js reads stdin asynchronously with events
   let input = '';
@@ -348,20 +335,16 @@ Display the current model and context window usage with a visual progress bar. E
       console.log(`[${model}] ${bar} ${pct}%`);
   });
   ```
-</CodeGroup>
 
 ### Git status with colors
 
 Show git branch with color-coded indicators for staged and modified files. This script uses [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escape_code#Colors) for terminal colors: `\033[32m` is green, `\033[33m` is yellow, and `\033[0m` resets to default.
 
-<Frame>
   <img src="https://mintcdn.com/claude-code/nibzesLaJVh4ydOq/images/statusline-git-context.png?fit=max&auto=format&n=nibzesLaJVh4ydOq&q=85&s=e656f34f90d1d9a1d0e220988914345f" alt="A status line showing model, directory, git branch, and colored indicators for staged and modified files" width="742" height="178" data-path="images/statusline-git-context.png" />
-</Frame>
 
 Each script checks if the current directory is a git repository, counts staged and modified files, and displays color-coded indicators:
 
-<CodeGroup>
-  ```bash Bash theme={null}
+  ```bash Bash
   #!/bin/bash
   input=$(cat)
 
@@ -387,7 +370,7 @@ Each script checks if the current directory is a git repository, counts staged a
   fi
   ```
 
-  ```python Python theme={null}
+  ```python Python
   #!/usr/bin/env python3
   import json, sys, subprocess, os
 
@@ -413,7 +396,7 @@ Each script checks if the current directory is a git repository, counts staged a
       print(f"[{model}] 📁 {directory}")
   ```
 
-  ```javascript Node.js theme={null}
+  ```javascript Node.js
   #!/usr/bin/env node
   const { execSync } = require('child_process');
   const path = require('path');
@@ -442,7 +425,6 @@ Each script checks if the current directory is a git repository, counts staged a
       }
   });
   ```
-</CodeGroup>
 
 ### Cost and duration tracking
 
@@ -450,12 +432,9 @@ Track your session's API costs and elapsed time. The `cost.total_cost_usd` field
 
 Each script formats cost as currency and converts milliseconds to minutes and seconds:
 
-<Frame>
   <img src="https://mintcdn.com/claude-code/nibzesLaJVh4ydOq/images/statusline-cost-tracking.png?fit=max&auto=format&n=nibzesLaJVh4ydOq&q=85&s=e3444a51fe6f3440c134bd5f1f08ad29" alt="A status line showing model name, session cost, and duration" width="588" height="180" data-path="images/statusline-cost-tracking.png" />
-</Frame>
 
-<CodeGroup>
-  ```bash Bash theme={null}
+  ```bash Bash
   #!/bin/bash
   input=$(cat)
 
@@ -471,7 +450,7 @@ Each script formats cost as currency and converts milliseconds to minutes and se
   echo "[$MODEL] 💰 $COST_FMT | ⏱️ ${MINS}m ${SECS}s"
   ```
 
-  ```python Python theme={null}
+  ```python Python
   #!/usr/bin/env python3
   import json, sys
 
@@ -486,7 +465,7 @@ Each script formats cost as currency and converts milliseconds to minutes and se
   print(f"[{model}] 💰 ${cost:.2f} | ⏱️ {mins}m {secs}s")
   ```
 
-  ```javascript Node.js theme={null}
+  ```javascript Node.js
   #!/usr/bin/env node
   let input = '';
   process.stdin.on('data', chunk => input += chunk);
@@ -503,20 +482,16 @@ Each script formats cost as currency and converts milliseconds to minutes and se
       console.log(`[${model}] 💰 $${cost.toFixed(2)} | ⏱️ ${mins}m ${secs}s`);
   });
   ```
-</CodeGroup>
 
 ### Display multiple lines
 
 Your script can output multiple lines to create a richer display. Each `echo` statement produces a separate row in the status area.
 
-<Frame>
   <img src="https://mintcdn.com/claude-code/nibzesLaJVh4ydOq/images/statusline-multiline.png?fit=max&auto=format&n=nibzesLaJVh4ydOq&q=85&s=60f11387658acc9ff75158ae85f2ac87" alt="A multi-line status line showing model name, directory, git branch on the first line, and a context usage progress bar with cost and duration on the second line" width="776" height="212" data-path="images/statusline-multiline.png" />
-</Frame>
 
 This example combines several techniques: threshold-based colors (green under 70%, yellow 70-89%, red 90%+), a progress bar, and git branch info. Each `print` or `echo` statement creates a separate row:
 
-<CodeGroup>
-  ```bash Bash theme={null}
+  ```bash Bash
   #!/bin/bash
   input=$(cat)
 
@@ -547,7 +522,7 @@ This example combines several techniques: threshold-based colors (green under 70
   echo -e "${BAR_COLOR}${BAR}${RESET} ${PCT}% | ${YELLOW}${COST_FMT}${RESET} | ⏱️ ${MINS}m ${SECS}s"
   ```
 
-  ```python Python theme={null}
+  ```python Python
   #!/usr/bin/env python3
   import json, sys, subprocess, os
 
@@ -576,7 +551,7 @@ This example combines several techniques: threshold-based colors (green under 70
   print(f"{bar_color}{bar}{RESET} {pct}% | {YELLOW}${cost:.2f}{RESET} | ⏱️ {mins}m {secs}s")
   ```
 
-  ```javascript Node.js theme={null}
+  ```javascript Node.js
   #!/usr/bin/env node
   const { execSync } = require('child_process');
   const path = require('path');
@@ -610,20 +585,16 @@ This example combines several techniques: threshold-based colors (green under 70
       console.log(`${barColor}${bar}${RESET} ${pct}% | ${YELLOW}$${cost.toFixed(2)}${RESET} | ⏱️ ${mins}m ${secs}s`);
   });
   ```
-</CodeGroup>
 
 ### Clickable links
 
 This example creates a clickable link to your GitHub repository. It reads the git remote URL, converts SSH format to HTTPS with `sed`, and wraps the repo name in OSC 8 escape codes. Hold Cmd (macOS) or Ctrl (Windows/Linux) and click to open the link in your browser.
 
-<Frame>
   <img src="https://mintcdn.com/claude-code/nibzesLaJVh4ydOq/images/statusline-links.png?fit=max&auto=format&n=nibzesLaJVh4ydOq&q=85&s=4bcc6e7deb7cf52f41ab85a219b52661" alt="A status line showing a clickable link to a GitHub repository" width="726" height="198" data-path="images/statusline-links.png" />
-</Frame>
 
 Each script gets the git remote URL, converts SSH format to HTTPS, and wraps the repo name in OSC 8 escape codes. The Bash version uses `printf '%b'` which interprets backslash escapes more reliably than `echo -e` across different shells:
 
-<CodeGroup>
-  ```bash Bash theme={null}
+  ```bash Bash
   #!/bin/bash
   input=$(cat)
 
@@ -642,7 +613,7 @@ Each script gets the git remote URL, converts SSH format to HTTPS, and wraps the
   fi
   ```
 
-  ```python Python theme={null}
+  ```python Python
   #!/usr/bin/env python3
   import json, sys, subprocess, re, os
 
@@ -666,7 +637,7 @@ Each script gets the git remote URL, converts SSH format to HTTPS, and wraps the
       print(f"[{model}]")
   ```
 
-  ```javascript Node.js theme={null}
+  ```javascript Node.js
   #!/usr/bin/env node
   const { execSync } = require('child_process');
   const path = require('path');
@@ -690,7 +661,6 @@ Each script gets the git remote URL, converts SSH format to HTTPS, and wraps the
       }
   });
   ```
-</CodeGroup>
 
 ### Rate limit usage
 
@@ -698,8 +668,7 @@ Display Claude.ai subscription rate limit usage in the status line. The `rate_li
 
 This field is only present for Claude.ai subscribers (Pro/Max) after the first API response. Each script handles the absent field gracefully:
 
-<CodeGroup>
-  ```bash Bash theme={null}
+  ```bash Bash
   #!/bin/bash
   input=$(cat)
 
@@ -715,7 +684,7 @@ This field is only present for Claude.ai subscribers (Pro/Max) after the first A
   [ -n "$LIMITS" ] && echo "[$MODEL] | $LIMITS" || echo "[$MODEL]"
   ```
 
-  ```python Python theme={null}
+  ```python Python
   #!/usr/bin/env python3
   import json, sys
 
@@ -738,7 +707,7 @@ This field is only present for Claude.ai subscribers (Pro/Max) after the first A
       print(f"[{model}]")
   ```
 
-  ```javascript Node.js theme={null}
+  ```javascript Node.js
   #!/usr/bin/env node
   let input = '';
   process.stdin.on('data', chunk => input += chunk);
@@ -756,7 +725,6 @@ This field is only present for Claude.ai subscribers (Pro/Max) after the first A
       console.log(parts.length ? `[${model}] | ${parts.join(' ')}` : `[${model}]`);
   });
   ```
-</CodeGroup>
 
 ### Cache expensive operations
 
@@ -766,8 +734,7 @@ Use a stable, fixed filename for the cache file like `/tmp/statusline-git-cache`
 
 Each script checks if the cache file is missing or older than 5 seconds before running git commands:
 
-<CodeGroup>
-  ```bash Bash theme={null}
+  ```bash Bash
   #!/bin/bash
   input=$(cat)
 
@@ -803,7 +770,7 @@ Each script checks if the cache file is missing or older than 5 seconds before r
   fi
   ```
 
-  ```python Python theme={null}
+  ```python Python
   #!/usr/bin/env python3
   import json, sys, subprocess, os, time
 
@@ -842,7 +809,7 @@ Each script checks if the cache file is missing or older than 5 seconds before r
       print(f"[{model}] 📁 {directory}")
   ```
 
-  ```javascript Node.js theme={null}
+  ```javascript Node.js
   #!/usr/bin/env node
   const { execSync } = require('child_process');
   const fs = require('fs');
@@ -884,14 +851,12 @@ Each script checks if the cache file is missing or older than 5 seconds before r
       }
   });
   ```
-</CodeGroup>
 
 ### Windows configuration
 
 On Windows, Claude Code runs status line commands through Git Bash. You can invoke PowerShell from that shell:
 
-<CodeGroup>
-  ```json settings.json theme={null}
+  ```json settings.json
   {
     "statusLine": {
       "type": "command",
@@ -900,7 +865,7 @@ On Windows, Claude Code runs status line commands through Git Bash. You can invo
   }
   ```
 
-  ```powershell statusline.ps1 theme={null}
+  ```powershell statusline.ps1
   $input_json = $input | Out-String | ConvertFrom-Json
   $cwd = $input_json.cwd
   $model = $input_json.model.display_name
@@ -913,12 +878,10 @@ On Windows, Claude Code runs status line commands through Git Bash. You can invo
       Write-Host "$dirname [$model]"
   }
   ```
-</CodeGroup>
 
 Or run a Bash script directly:
 
-<CodeGroup>
-  ```json settings.json theme={null}
+  ```json settings.json
   {
     "statusLine": {
       "type": "command",
@@ -927,7 +890,7 @@ Or run a Bash script directly:
   }
   ```
 
-  ```bash statusline.sh theme={null}
+  ```bash statusline.sh
   #!/usr/bin/env bash
   input=$(cat)
   cwd=$(echo "$input" | grep -o '"cwd":"[^"]*"' | cut -d'"' -f4)
@@ -935,7 +898,6 @@ Or run a Bash script directly:
   dirname="${cwd##*[/\\]}"
   echo "$dirname [$model]"
   ```
-</CodeGroup>
 
 ## Tips
 

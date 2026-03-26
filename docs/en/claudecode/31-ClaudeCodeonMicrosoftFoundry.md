@@ -12,9 +12,8 @@ Before configuring Claude Code with Microsoft Foundry, ensure you have:
 * RBAC permissions to create Microsoft Foundry resources and deployments
 * Azure CLI installed and configured (optional - only needed if you don't have another mechanism for getting credentials)
 
-<Note>
-  If you are deploying Claude Code to multiple users, [pin your model versions](Getting started/02-ClaudeCodeoverview.md#4-pin-model-versions) to prevent breakage when Anthropic releases new models.
-</Note>
+**Note:**
+If you are deploying Claude Code to multiple users, [pin your model versions](Getting started/02-ClaudeCodeoverview.md#4-pin-model-versions) to prevent breakage when Anthropic releases new models.
 
 ## Setup
 
@@ -40,7 +39,7 @@ Claude Code supports two authentication methods for Microsoft Foundry. Choose th
 3. Copy **API Key**
 4. Set the environment variable:
 
-```bash  theme={null}
+```bash
 export ANTHROPIC_FOUNDRY_API_KEY=your-azure-api-key
 ```
 
@@ -51,19 +50,18 @@ This supports a variety of methods for authenticating local and remote workloads
 
 On local environments, you commonly may use the Azure CLI:
 
-```bash  theme={null}
+```bash
 az login
 ```
 
-<Note>
-  When using Microsoft Foundry, the `/login` and `/logout` commands are disabled since authentication is handled through Azure credentials.
-</Note>
+**Note:**
+When using Microsoft Foundry, the `/login` and `/logout` commands are disabled since authentication is handled through Azure credentials.
 
 ### 3. Configure Claude Code
 
 Set the following environment variables to enable Microsoft Foundry:
 
-```bash  theme={null}
+```bash
 # Enable Microsoft Foundry integration
 export CLAUDE_CODE_USE_FOUNDRY=1
 
@@ -75,13 +73,12 @@ export ANTHROPIC_FOUNDRY_RESOURCE={resource}
 
 ### 4. Pin model versions
 
-<Warning>
-  Pin specific model versions for every deployment. If you use model aliases (`sonnet`, `opus`, `haiku`) without pinning, Claude Code may attempt to use a newer model version that isn't available in your Foundry account, breaking existing users when Anthropic releases updates. When you create Azure deployments, select a specific model version rather than "auto-update to latest."
-</Warning>
+**Warning:**
+Pin specific model versions for every deployment. If you use model aliases (`sonnet`, `opus`, `haiku`) without pinning, Claude Code may attempt to use a newer model version that isn't available in your Foundry account, breaking existing users when Anthropic releases updates. When you create Azure deployments, select a specific model version rather than "auto-update to latest."
 
 Set the model variables to match the deployment names you created in step 1:
 
-```bash  theme={null}
+```bash
 export ANTHROPIC_DEFAULT_OPUS_MODEL='claude-opus-4-6'
 export ANTHROPIC_DEFAULT_SONNET_MODEL='claude-sonnet-4-6'
 export ANTHROPIC_DEFAULT_HAIKU_MODEL='claude-haiku-4-5'
@@ -95,7 +92,7 @@ The `Azure AI User` and `Cognitive Services User` default roles include all requ
 
 For more restrictive permissions, create a custom role with the following:
 
-```json  theme={null}
+```json
 {
   "permissions": [
     {

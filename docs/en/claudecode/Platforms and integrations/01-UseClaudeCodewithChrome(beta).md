@@ -8,9 +8,8 @@ Claude Code integrates with the Claude in Chrome browser extension to give you b
 
 Claude opens new tabs for browser tasks and shares your browser's login state, so it can access any site you're already signed into. Browser actions run in a visible Chrome window in real time. When Claude encounters a login page or CAPTCHA, it pauses and asks you to handle it manually.
 
-<Note>
-  Chrome integration is in beta and currently works with Google Chrome and Microsoft Edge. It is not yet supported on Brave, Arc, or other Chromium-based browsers. WSL (Windows Subsystem for Linux) is also not supported.
-</Note>
+**Note:**
+Chrome integration is in beta and currently works with Google Chrome and Microsoft Edge. It is not yet supported on Brave, Arc, or other Chromium-based browsers. WSL (Windows Subsystem for Linux) is also not supported.
 
 ## Capabilities
 
@@ -33,32 +32,27 @@ Before using Claude Code with Chrome, you need:
 * [Claude Code](../Getting started/03-Quickstart.md#step-1-install-claude-code) version 2.0.73 or higher
 * A direct Anthropic plan (Pro, Max, Teams, or Enterprise)
 
-<Note>
-  Chrome integration is not available through third-party providers like Amazon Bedrock, Google Cloud Vertex AI, or Microsoft Foundry. If you access Claude exclusively through a third-party provider, you need a separate claude.ai account to use this feature.
-</Note>
+**Note:**
+Chrome integration is not available through third-party providers like Amazon Bedrock, Google Cloud Vertex AI, or Microsoft Foundry. If you access Claude exclusively through a third-party provider, you need a separate claude.ai account to use this feature.
 
 ## Get started in the CLI
 
-<Steps>
-  <Step title="Launch Claude Code with Chrome">
-    Start Claude Code with the `--chrome` flag:
+#### Launch Claude Code with Chrome
+Start Claude Code with the `--chrome` flag:
 
-    ```bash  theme={null}
+```bash
     claude --chrome
     ```
 
-    You can also enable Chrome from within an existing session by running `/chrome`.
-  </Step>
+You can also enable Chrome from within an existing session by running `/chrome`.
 
-  <Step title="Ask Claude to use the browser">
-    This example navigates to a page, interacts with it, and reports what it finds, all from your terminal or editor:
+#### Ask Claude to use the browser
+This example navigates to a page, interacts with it, and reports what it finds, all from your terminal or editor:
 
-    ```text  theme={null}
+```text
     Go to code.claude.com/docs, click on the search box,
     type "hooks", and tell me what results appear
     ```
-  </Step>
-</Steps>
 
 Run `/chrome` at any time to check the connection status, manage permissions, or reconnect the extension.
 
@@ -70,9 +64,8 @@ To avoid passing `--chrome` each session, run `/chrome` and select "Enabled by d
 
 In the [VS Code extension](06-UseClaudeCodeinVSCode.md#automate-browser-tasks-with-chrome), Chrome is available whenever the Chrome extension is installed. No additional flag is needed.
 
-<Note>
-  Enabling Chrome by default in the CLI increases context usage since browser tools are always loaded. If you notice increased context consumption, disable this setting and use `--chrome` only when needed.
-</Note>
+**Note:**
+Enabling Chrome by default in the CLI increases context usage since browser tools are always loaded. If you notice increased context consumption, disable this setting and use `--chrome` only when needed.
 
 ### Manage site permissions
 
@@ -86,7 +79,7 @@ These examples show common ways to combine browser actions with coding tasks. Ru
 
 When developing a web app, ask Claude to verify your changes work correctly:
 
-```text  theme={null}
+```text
 I just updated the login form validation. Can you open localhost:3000,
 try submitting the form with invalid data, and check if the error
 messages appear correctly?
@@ -98,7 +91,7 @@ Claude navigates to your local server, interacts with the form, and reports what
 
 Claude can read console output to help diagnose problems. Tell Claude what patterns to look for rather than asking for all console output, since logs can be verbose:
 
-```text  theme={null}
+```text
 Open the dashboard page and check the console for any errors when
 the page loads.
 ```
@@ -109,7 +102,7 @@ Claude reads the console messages and can filter for specific patterns or error 
 
 Speed up repetitive data entry tasks:
 
-```text  theme={null}
+```text
 I have a spreadsheet of customer contacts in contacts.csv. For each row,
 go to the CRM at crm.example.com, click "Add Contact", and fill in the
 name, email, and phone fields.
@@ -121,7 +114,7 @@ Claude reads your local file, navigates the web interface, and enters the data f
 
 Use Claude to write directly in your documents without API setup:
 
-```text  theme={null}
+```text
 Draft a project update based on the recent commits and add it to my
 Google Doc at docs.google.com/document/d/abc123
 ```
@@ -132,7 +125,7 @@ Claude opens the document, clicks into the editor, and types the content. This w
 
 Pull structured information from websites:
 
-```text  theme={null}
+```text
 Go to the product listings page and extract the name, price, and
 availability for each item. Save the results as a CSV file.
 ```
@@ -143,7 +136,7 @@ Claude navigates to the page, reads the content, and compiles the data into a st
 
 Coordinate tasks across multiple websites:
 
-```text  theme={null}
+```text
 Check my calendar for meetings tomorrow, then for each meeting with
 an external attendee, look up their company website and add a note
 about what they do.
@@ -155,7 +148,7 @@ Claude works across tabs to gather information and complete the workflow.
 
 Create shareable recordings of browser interactions:
 
-```text  theme={null}
+```text
 Record a GIF showing how to complete the checkout flow, from adding
 an item to the cart through to the confirmation page.
 ```

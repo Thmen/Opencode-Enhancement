@@ -8,11 +8,9 @@ The desktop app gives you Claude Code with a graphical interface: visual diff re
 
 This page walks through installing the app and starting your first session. If you're already set up, see [Use Claude Code Desktop](14-UseClaudeCodeDesktop.md) for the full reference.
 
-<Frame>
   <img src="https://mintcdn.com/claude-code/CNLUpFGiXoc9mhvD/images/desktop-code-tab-light.png?fit=max&auto=format&n=CNLUpFGiXoc9mhvD&q=85&s=9a36a7a27b9f4c6f2e1c83bdb34f69ce" className="block dark:hidden" alt="The Claude Code Desktop interface showing the Code tab selected, with a prompt box, permission mode selector set to Ask permissions, model picker, folder selector, and Local environment option" width="2500" height="1376" data-path="images/desktop-code-tab-light.png" />
 
   <img src="https://mintcdn.com/claude-code/CNLUpFGiXoc9mhvD/images/desktop-code-tab-dark.png?fit=max&auto=format&n=CNLUpFGiXoc9mhvD&q=85&s=5463defe81c459fb9b1f91f6a958cfb8" className="hidden dark:block" alt="The Claude Code Desktop interface in dark mode showing the Code tab selected, with a prompt box, permission mode selector set to Ask permissions, model picker, folder selector, and Local environment option" width="2504" height="1374" data-path="images/desktop-code-tab-dark.png" />
-</Frame>
 
 The desktop app has three tabs:
 
@@ -22,39 +20,27 @@ The desktop app has three tabs:
 
 Chat and Cowork are covered in the [Claude Desktop support articles](https://support.claude.com/en/collections/16163169-claude-desktop). This page focuses on the **Code** tab.
 
-<Note>
-  Claude Code requires a [Pro, Max, Teams, or Enterprise subscription](https://claude.com/pricing?utm_source=claude_code\&utm_medium=docs\&utm_content=desktop_quickstart_pricing).
-</Note>
+**Note:**
+Claude Code requires a [Pro, Max, Teams, or Enterprise subscription](https://claude.com/pricing?utm_source=claude_code\&utm_medium=docs\&utm_content=desktop_quickstart_pricing).
 
 ## Install
 
-<Steps>
-  <Step title="Download the app">
-    Download Claude for your platform.
+#### Download the app
+Download Claude for your platform.
 
-    <CardGroup cols={2}>
-      <Card title="macOS" icon="apple" href="https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect?utm_source=claude_code&utm_medium=docs">
-        Universal build for Intel and Apple Silicon
-      </Card>
+- [macOS](https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect?utm_source=claude_code&utm_medium=docs): Universal build for Intel and Apple Silicon
 
-      <Card title="Windows" icon="windows" href="https://claude.ai/api/desktop/win32/x64/exe/latest/redirect?utm_source=claude_code&utm_medium=docs">
-        For x64 processors
-      </Card>
-    </CardGroup>
+- [Windows](https://claude.ai/api/desktop/win32/x64/exe/latest/redirect?utm_source=claude_code&utm_medium=docs): For x64 processors
 
-    For Windows ARM64, [download here](https://claude.ai/api/desktop/win32/arm64/exe/latest/redirect?utm_source=claude_code\&utm_medium=docs).
+For Windows ARM64, [download here](https://claude.ai/api/desktop/win32/arm64/exe/latest/redirect?utm_source=claude_code\&utm_medium=docs).
 
-    Linux is not currently supported.
-  </Step>
+Linux is not currently supported.
 
-  <Step title="Sign in">
-    Launch Claude from your Applications folder (macOS) or Start menu (Windows). Sign in with your Anthropic account.
-  </Step>
+#### Sign in
+Launch Claude from your Applications folder (macOS) or Start menu (Windows). Sign in with your Anthropic account.
 
-  <Step title="Open the Code tab">
-    Click the **Code** tab at the top center. If clicking Code prompts you to upgrade, you need to [subscribe to a paid plan](https://claude.com/pricing?utm_source=claude_code\&utm_medium=docs\&utm_content=desktop_quickstart_upgrade) first. If it prompts you to sign in online, complete the sign-in and restart the app. If you see a 403 error, see [authentication troubleshooting](14-UseClaudeCodeDesktop.md#403-or-authentication-errors-in-the-code-tab).
-  </Step>
-</Steps>
+#### Open the Code tab
+Click the **Code** tab at the top center. If clicking Code prompts you to upgrade, you need to [subscribe to a paid plan](https://claude.com/pricing?utm_source=claude_code\&utm_medium=docs\&utm_content=desktop_quickstart_upgrade) first. If it prompts you to sign in online, complete the sign-in and restart the app. If you see a 403 error, see [authentication troubleshooting](14-UseClaudeCodeDesktop.md#403-or-authentication-errors-in-the-code-tab).
 
 The desktop app includes Claude Code. You don't need to install Node.js or the CLI separately. To use `claude` from the terminal, install the CLI separately. See [Get started with the CLI](Getting started/03-Quickstart.md).
 
@@ -62,44 +48,37 @@ The desktop app includes Claude Code. You don't need to install Node.js or the C
 
 With the Code tab open, choose a project and give Claude something to do.
 
-<Steps>
-  <Step title="Choose an environment and folder">
-    Select **Local** to run Claude on your machine using your files directly. Click **Select folder** and choose your project directory.
+#### Choose an environment and folder
+Select **Local** to run Claude on your machine using your files directly. Click **Select folder** and choose your project directory.
 
-    <Tip>
-      Start with a small project you know well. It's the fastest way to see what Claude Code can do. On Windows, [Git](https://git-scm.com/downloads/win) must be installed for local sessions to work. Most Macs include Git by default.
-    </Tip>
+**Tip:**
+  Start with a small project you know well. It's the fastest way to see what Claude Code can do. On Windows, [Git](https://git-scm.com/downloads/win) must be installed for local sessions to work. Most Macs include Git by default.
 
-    You can also select:
+You can also select:
 
-    * **Remote**: Run sessions on Anthropic's cloud infrastructure that continue even if you close the app. Remote sessions use the same infrastructure as [Claude Code on the web](08-ClaudeCodeontheweb.md).
-    * **SSH**: Connect to a remote machine over SSH (your own servers, cloud VMs, or dev containers). Claude Code must be installed on the remote machine.
-  </Step>
+* **Remote**: Run sessions on Anthropic's cloud infrastructure that continue even if you close the app. Remote sessions use the same infrastructure as [Claude Code on the web](08-ClaudeCodeontheweb.md).
+* **SSH**: Connect to a remote machine over SSH (your own servers, cloud VMs, or dev containers). Claude Code must be installed on the remote machine.
 
-  <Step title="Choose a model">
-    Select a model from the dropdown next to the send button. See [models](32-Modelconfiguration.md#available-models) for a comparison of Opus, Sonnet, and Haiku. You cannot change the model after the session starts.
-  </Step>
+#### Choose a model
+Select a model from the dropdown next to the send button. See [models](32-Modelconfiguration.md#available-models) for a comparison of Opus, Sonnet, and Haiku. You cannot change the model after the session starts.
 
-  <Step title="Tell Claude what to do">
-    Type what you want Claude to do:
+#### Tell Claude what to do
+Type what you want Claude to do:
 
-    * `Find a TODO comment and fix it`
-    * `Add tests for the main function`
-    * `Create a CLAUDE.md with instructions for this codebase`
+* `Find a TODO comment and fix it`
+* `Add tests for the main function`
+* `Create a CLAUDE.md with instructions for this codebase`
 
-    A [session](14-UseClaudeCodeDesktop.md#work-in-parallel-with-sessions) is a conversation with Claude about your code. Each session tracks its own context and changes, so you can work on multiple tasks without them interfering with each other.
-  </Step>
+A [session](14-UseClaudeCodeDesktop.md#work-in-parallel-with-sessions) is a conversation with Claude about your code. Each session tracks its own context and changes, so you can work on multiple tasks without them interfering with each other.
 
-  <Step title="Review and accept changes">
-    By default, the Code tab starts in [Ask permissions mode](14-UseClaudeCodeDesktop.md#choose-a-permission-mode), where Claude proposes changes and waits for your approval before applying them. You'll see:
+#### Review and accept changes
+By default, the Code tab starts in [Ask permissions mode](14-UseClaudeCodeDesktop.md#choose-a-permission-mode), where Claude proposes changes and waits for your approval before applying them. You'll see:
 
-    1. A [diff view](14-UseClaudeCodeDesktop.md#review-changes-with-diff-view) showing exactly what will change in each file
-    2. Accept/Reject buttons to approve or decline each change
-    3. Real-time updates as Claude works through your request
+1. A [diff view](14-UseClaudeCodeDesktop.md#review-changes-with-diff-view) showing exactly what will change in each file
+2. Accept/Reject buttons to approve or decline each change
+3. Real-time updates as Claude works through your request
 
-    If you reject a change, Claude will ask how you'd like to proceed differently. Your files aren't modified until you accept.
-  </Step>
-</Steps>
+If you reject a change, Claude will ask how you'd like to proceed differently. Your files aren't modified until you accept.
 
 ## Now what?
 

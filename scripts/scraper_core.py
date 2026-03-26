@@ -358,3 +358,5 @@ def scrape_all(config: ScraperConfig, update_only: bool = False) -> None:
     generate_index(pages, config)
     generate_category_indexes(pages, config)
     print(f"\n完成: 成功 {success}, 跳过 {skipped}, 失败 {failed}, 共 {total} 页")
+    if failed:
+        raise SystemExit(1)

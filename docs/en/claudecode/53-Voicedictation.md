@@ -6,9 +6,8 @@
 
 Hold a key and speak to dictate your prompts. Your speech is transcribed live into the prompt input, so you can mix voice and typing in the same message. Enable dictation with `/voice`. The default push-to-talk key is `Space`; [rebind to a modifier combination](Getting started/02-ClaudeCodeoverview.md#rebind-the-push-to-talk-key) to activate on the first keypress rather than after a brief hold.
 
-<Note>
-  Voice dictation requires Claude Code v2.1.69 or later. Check your version with `claude --version`.
-</Note>
+**Note:**
+Voice dictation requires Claude Code v2.1.69 or later. Check your version with `claude --version`.
 
 ## Requirements
 
@@ -29,7 +28,7 @@ Voice mode enabled. Hold Space to record. Dictation language: en (/config to cha
 
 Voice dictation persists across sessions. Run `/voice` again to turn it off, or set it directly in your [user settings file](44-ClaudeCodesettings.md):
 
-```json  theme={null}
+```json
 {
   "voiceEnabled": true
 }
@@ -43,9 +42,8 @@ Hold `Space` to start recording. Claude Code detects a held key by watching for 
 
 The first couple of key-repeat characters type into the input during warmup and are removed automatically when recording activates. A single `Space` tap still types a space, since hold detection only triggers on rapid repeat.
 
-<Tip>
-  To skip the warmup, [rebind to a modifier combination](Getting started/02-ClaudeCodeoverview.md#rebind-the-push-to-talk-key) like `meta+k`. Modifier combos start recording on the first keypress.
-</Tip>
+**Tip:**
+To skip the warmup, [rebind to a modifier combination](Getting started/02-ClaudeCodeoverview.md#rebind-the-push-to-talk-key) like `meta+k`. Modifier combos start recording on the first keypress.
 
 Your speech appears in the prompt as you speak, dimmed until the transcript is finalized. Release `Space` to stop recording and finalize the text. The transcript is inserted at your cursor position and the cursor stays at the end of the inserted text, so you can mix typing and dictation in any order. Hold `Space` again to append another recording, or move the cursor first to insert speech elsewhere in the prompt:
 
@@ -61,34 +59,33 @@ Transcription is tuned for coding vocabulary. Common development terms like `reg
 
 Voice dictation uses the same [`language` setting](44-ClaudeCodesettings.md) that controls Claude's response language. If that setting is empty, dictation defaults to English.
 
-<Accordion title="Supported dictation languages">
-  | Language   | Code |
-  | :--------- | :--- |
-  | Czech      | `cs` |
-  | Danish     | `da` |
-  | Dutch      | `nl` |
-  | English    | `en` |
-  | French     | `fr` |
-  | German     | `de` |
-  | Greek      | `el` |
-  | Hindi      | `hi` |
-  | Indonesian | `id` |
-  | Italian    | `it` |
-  | Japanese   | `ja` |
-  | Korean     | `ko` |
-  | Norwegian  | `no` |
-  | Polish     | `pl` |
-  | Portuguese | `pt` |
-  | Russian    | `ru` |
-  | Spanish    | `es` |
-  | Swedish    | `sv` |
-  | Turkish    | `tr` |
-  | Ukrainian  | `uk` |
-</Accordion>
+### Supported dictation languages
+| Language   | Code |
+| :--------- | :--- |
+| Czech      | `cs` |
+| Danish     | `da` |
+| Dutch      | `nl` |
+| English    | `en` |
+| French     | `fr` |
+| German     | `de` |
+| Greek      | `el` |
+| Hindi      | `hi` |
+| Indonesian | `id` |
+| Italian    | `it` |
+| Japanese   | `ja` |
+| Korean     | `ko` |
+| Norwegian  | `no` |
+| Polish     | `pl` |
+| Portuguese | `pt` |
+| Russian    | `ru` |
+| Spanish    | `es` |
+| Swedish    | `sv` |
+| Turkish    | `tr` |
+| Ukrainian  | `uk` |
 
 Set the language in `/config` or directly in settings. You can use either the [BCP 47 language code](https://en.wikipedia.org/wiki/IETF_language_tag) or the language name:
 
-```json  theme={null}
+```json
 {
   "language": "japanese"
 }
@@ -100,7 +97,7 @@ If your `language` setting is not in the supported list, `/voice` warns you on e
 
 The push-to-talk key is bound to `voice:pushToTalk` in the `Chat` context and defaults to `Space`. Rebind it in [`~/.claude/keybindings.json`](27-Customizekeyboardshortcuts.md):
 
-```json  theme={null}
+```json
 {
   "bindings": [
     {

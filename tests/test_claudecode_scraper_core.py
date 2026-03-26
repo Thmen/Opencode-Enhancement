@@ -21,6 +21,7 @@ from scripts.claudecode_scraper_core import (
     parse_sidebar_categories,
     parse_sidebar_groups,
     prepend_breadcrumb,
+    scrape_all,
 )
 
 SAMPLE_LLMS = """# Claude Code Docs
@@ -68,6 +69,97 @@ SAMPLE_MARKDOWN_NO_BLANK_QUOTE = """> ## Documentation Index
 Body text.
 """
 
+SAMPLE_MARKDOWN_WITH_TABS = """# Troubleshooting
+
+<Tabs>
+  <Tab title="macOS/Linux">
+    ```bash  theme={null}
+    echo test
+    ```
+  </Tab>
+  <Tab title="Windows PowerShell">
+    ```powershell  theme={null}
+    Write-Host test
+    ```
+  </Tab>
+</Tabs>
+"""
+
+SAMPLE_CHANGELOG_UPDATE = """# Changelog
+
+<Update label="2.1.50" description="February 20, 2026">
+  * Added support for `startupTimeout`
+</Update>
+"""
+
+SAMPLE_MARKDOWN_WITH_COMMON_MDX = """# Guide
+
+<Tip>
+Use this carefully.
+</Tip>
+
+<Steps>
+  <Step title="Open the panel">
+    Click the sidebar icon.
+  </Step>
+  <Step title="Send a prompt">
+    <Note>Selected text is included automatically.</Note>
+  </Step>
+</Steps>
+
+<Accordion title="Supported languages">
+English
+</Accordion>
+"""
+
+SAMPLE_MARKDOWN_WITH_LAYOUT_COMPONENTS = """# Install
+
+<Info>
+  Install info.
+</Info>
+
+<AccordionGroup>
+  <Accordion title="Automate work" icon="wand">
+    Do the task.
+  </Accordion>
+</AccordionGroup>
+
+<CardGroup cols={2}>
+  <Card title="macOS" icon="apple" href="https://example.com/mac">
+    Universal build
+  </Card>
+  <Card title="Windows" icon="windows" href="https://example.com/win">
+    x64 only
+  </Card>
+</CardGroup>
+
+<Tip title="Best practice">
+  Start in Plan mode.
+</Tip>
+
+<Frame caption="Preview caption">
+  <img src="https://example.com/image.png" alt="Preview" />
+</Frame>
+
+<CodeGroup>
+```bash Bash
+claude
+```
+</CodeGroup>
+
+<Experiment flag="demo" treatment={<InstallConfigurator />} />
+<MCPServersTable platform="claudeCode" />
+"""
+
+SAMPLE_MARKDOWN_WITH_CODE_FENCE_TAGS = """# Example
+
+```bash
+cat <<'EOF'
+<Info>
+EOF
+```
+"""
+
 
 class ClaudeCoreTests(unittest.TestCase):
     def setUp(self) -> None:
@@ -108,6 +200,63 @@ class ClaudeCoreTests(unittest.TestCase):
     def test_clean_markdown_removes_preamble_without_blank_quote_line(self) -> None:
         cleaned = clean_markdown(SAMPLE_MARKDOWN_NO_BLANK_QUOTE)
         self.assertEqual(cleaned, "# Quickstart\n\nBody text.\n")
+
+    def test_clean_markdown_removes_theme_marker_from_code_fences(self) -> None:
+        cleaned = clean_markdown(SAMPLE_MARKDOWN_WITH_TABS)
+        self.assertNotIn("theme={null}", cleaned)
+        self.assertIn("```bash", cleaned)
+        self.assertIn("```powershell", cleaned)
+
+    def test_clean_markdown_converts_tabs_to_markdown_headings(self) -> None:
+        cleaned = clean_markdown(SAMPLE_MARKDOWN_WITH_TABS)
+        self.assertNotIn("<Tabs>", cleaned)
+        self.assertNotIn("<Tab title=", cleaned)
+        self.assertIn("#### macOS/Linux", cleaned)
+        self.assertIn("#### Windows PowerShell", cleaned)
+
+    def test_clean_markdown_converts_update_blocks_to_headings(self) -> None:
+        cleaned = clean_markdown(SAMPLE_CHANGELOG_UPDATE)
+        self.assertNotIn("<Update", cleaned)
+        self.assertNotIn("</Update>", cleaned)
+        self.assertIn("### 2.1.50 (February 20, 2026)", cleaned)
+        self.assertIn("* Added support for `startupTimeout`", cleaned)
+
+    def test_clean_markdown_converts_common_mdx_wrappers(self) -> None:
+        cleaned = clean_markdown(SAMPLE_MARKDOWN_WITH_COMMON_MDX)
+        self.assertNotIn("<Tip>", cleaned)
+        self.assertNotIn("<Steps>", cleaned)
+        self.assertNotIn("<Step title=", cleaned)
+        self.assertNotIn("<Accordion", cleaned)
+        self.assertIn("**Tip:**", cleaned)
+        self.assertIn("#### Open the panel", cleaned)
+        self.assertIn("#### Send a prompt", cleaned)
+        self.assertIn("**Note:** Selected text is included automatically.", cleaned)
+        self.assertIn("### Supported languages", cleaned)
+
+    def test_clean_markdown_converts_layout_components_and_self_closing_tags(self) -> None:
+        cleaned = clean_markdown(SAMPLE_MARKDOWN_WITH_LAYOUT_COMPONENTS)
+        self.assertNotIn("<Info>", cleaned)
+        self.assertNotIn("<AccordionGroup>", cleaned)
+        self.assertNotIn("<Accordion title=", cleaned)
+        self.assertNotIn("<CardGroup", cleaned)
+        self.assertNotIn("<Card title=", cleaned)
+        self.assertNotIn("<Tip title=", cleaned)
+        self.assertNotIn("<Frame>", cleaned)
+        self.assertNotIn("<CodeGroup>", cleaned)
+        self.assertNotIn("<Experiment", cleaned)
+        self.assertNotIn("<MCPServersTable", cleaned)
+        self.assertIn("**Info:**", cleaned)
+        self.assertIn("### Automate work", cleaned)
+        self.assertIn("- [macOS](https://example.com/mac): Universal build", cleaned)
+        self.assertIn("- [Windows](https://example.com/win): x64 only", cleaned)
+        self.assertIn("**Tip (Best practice):**", cleaned)
+        self.assertIn("*Preview caption*", cleaned)
+        self.assertIn("```bash Bash", cleaned)
+
+    def test_clean_markdown_preserves_tag_like_text_inside_code_fences(self) -> None:
+        cleaned = clean_markdown(SAMPLE_MARKDOWN_WITH_CODE_FENCE_TAGS)
+        self.assertIn("<Info>", cleaned)
+        self.assertIn("cat <<'EOF'", cleaned)
 
     def test_extract_title_reads_first_h1(self) -> None:
         cleaned = clean_markdown(SAMPLE_MARKDOWN)
@@ -229,6 +378,36 @@ class ClaudeCoreTests(unittest.TestCase):
                 pages = _build_pages(records, self.config)
 
         self.assertEqual(pages, [])
+
+    def test_build_pages_preserves_reserved_indices_when_earlier_records_fail(self) -> None:
+        records = [
+            {"slug": "missing-root", "category": ""},
+            {"slug": "present-root", "category": ""},
+            {"slug": "missing-group", "category": "Getting started"},
+            {"slug": "present-group", "category": "Getting started"},
+        ]
+
+        with patch(
+            "scripts.claudecode_scraper_core.fetch_text",
+            side_effect=[None, "# Root Present\n", None, "# Group Present\n"],
+        ):
+            with patch("scripts.claudecode_scraper_core.time.sleep"):
+                pages = _build_pages(records, self.config)
+
+        built_pages = [page for page, _ in pages]
+        self.assertEqual([page.slug for page in built_pages], ["present-root", "present-group"])
+        self.assertEqual([page.category for page in built_pages], ["", "Getting started"])
+        self.assertEqual([page.filename for page in built_pages], ["02-RootPresent.md", "02-GroupPresent.md"])
+
+    def test_scrape_all_exits_nonzero_when_any_page_fails(self) -> None:
+        records = [{"slug": "missing-page", "source_title": "Missing page", "category": ""}]
+        with tempfile.TemporaryDirectory() as tmp:
+            config = replace(self.config, output_dir=Path(tmp))
+            with patch("scripts.claudecode_scraper_core.discover_source_pages", return_value=(records, [])):
+                with patch("scripts.claudecode_scraper_core._build_pages", return_value=[]):
+                    with self.assertRaises(SystemExit) as ctx:
+                        scrape_all(config)
+        self.assertEqual(ctx.exception.code, 1)
 
 
 if __name__ == "__main__":

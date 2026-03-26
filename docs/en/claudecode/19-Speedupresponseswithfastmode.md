@@ -4,17 +4,15 @@
 
 > Get faster Opus 4.6 responses in Claude Code by toggling fast mode.
 
-<Note>
-  Fast mode is in [research preview](Getting started/02-ClaudeCodeoverview.md#research-preview). The feature, pricing, and availability may change based on feedback.
-</Note>
+**Note:**
+Fast mode is in [research preview](Getting started/02-ClaudeCodeoverview.md#research-preview). The feature, pricing, and availability may change based on feedback.
 
 Fast mode is a high-speed configuration for Claude Opus 4.6, making the model 2.5x faster at a higher cost per token. Toggle it on with `/fast` when you need speed for interactive work like rapid iteration or live debugging, and toggle it off when cost matters more than latency.
 
 Fast mode is not a different model. It uses the same Opus 4.6 with a different API configuration that prioritizes speed over cost efficiency. You get identical quality and capabilities, just faster responses.
 
-<Note>
-  Fast mode requires Claude Code v2.1.36 or later. Check your version with `claude --version`.
-</Note>
+**Note:**
+Fast mode requires Claude Code v2.1.36 or later. Check your version with `claude --version`.
 
 What to know:
 
@@ -89,15 +87,13 @@ Fast mode requires all of the following:
 * **Not available on third-party cloud providers**: fast mode is not available on Amazon Bedrock, Google Vertex AI, or Microsoft Azure Foundry. Fast mode is available through the Anthropic Console API and for Claude subscription plans using extra usage.
 * **Extra usage enabled**: your account must have extra usage enabled, which allows billing beyond your plan's included usage. For individual accounts, enable this in your [Console billing settings](https://platform.claude.com/settings/organization/billing). For Teams and Enterprise, an admin must enable extra usage for the organization.
 
-<Note>
-  Fast mode usage is billed directly to extra usage, even if you have remaining usage on your plan. This means fast mode tokens do not count against your plan's included usage and are charged at the fast mode rate from the first token.
-</Note>
+**Note:**
+Fast mode usage is billed directly to extra usage, even if you have remaining usage on your plan. This means fast mode tokens do not count against your plan's included usage and are charged at the fast mode rate from the first token.
 
 * **Admin enablement for Teams and Enterprise**: fast mode is disabled by default for Teams and Enterprise organizations. An admin must explicitly [enable fast mode](Getting started/02-ClaudeCodeoverview.md#enable-fast-mode-for-your-organization) before users can access it.
 
-<Note>
-  If your admin has not enabled fast mode for your organization, the `/fast` command will show "Fast mode has been disabled by your organization."
-</Note>
+**Note:**
+If your admin has not enabled fast mode for your organization, the `/fast` command will show "Fast mode has been disabled by your organization."
 
 ### Enable fast mode for your organization
 
@@ -112,7 +108,7 @@ Another option to disable fast mode entirely is to set `CLAUDE_CODE_DISABLE_FAST
 
 By default, fast mode persists across sessions: if a user enables fast mode, it stays on in future sessions. Administrators on [Teams](https://claude.com/pricing?utm_source=claude_code\&utm_medium=docs\&utm_content=fast_mode_teams#team-&-enterprise) or [Enterprise](https://anthropic.com/contact-sales?utm_source=claude_code\&utm_medium=docs\&utm_content=fast_mode_enterprise) plans can prevent this by setting `fastModePerSessionOptIn` to `true` in [managed settings](44-ClaudeCodesettings.md#settings-files) or [server-managed settings](43-Configureserver-managedsettings(publicbeta).md). This causes each session to start with fast mode off, requiring users to explicitly enable it with `/fast`.
 
-```json  theme={null}
+```json
 {
   "fastModePerSessionOptIn": true
 }

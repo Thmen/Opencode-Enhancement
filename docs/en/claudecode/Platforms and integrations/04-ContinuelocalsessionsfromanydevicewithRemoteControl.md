@@ -4,9 +4,8 @@
 
 > Continue a local Claude Code session from your phone, tablet, or any browser using Remote Control. Works with claude.ai/code and the Claude mobile app.
 
-<Note>
-  Remote Control is available on all plans. On Team and Enterprise, it is off by default until an admin enables the Remote Control toggle in [Claude Code admin settings](https://claude.ai/admin-settings/claude-code).
-</Note>
+**Note:**
+Remote Control is available on all plans. On Team and Enterprise, it is off by default until an admin enables the Remote Control toggle in [Claude Code admin settings](https://claude.ai/admin-settings/claude-code).
 
 Remote Control connects [claude.ai/code](https://claude.ai/code) or the Claude app for [iOS](https://apps.apple.com/us/app/claude-by-anthropic/id6473753684) and [Android](https://play.google.com/store/apps/details?id=com.anthropic.claude) to a Claude Code session running on your machine. Start a task at your desk, then pick it up from your phone on the couch or a browser on another computer.
 
@@ -18,9 +17,8 @@ When you start a Remote Control session on your machine, Claude keeps running lo
 
 Unlike [Claude Code on the web](../08-ClaudeCodeontheweb.md), which runs on cloud infrastructure, Remote Control sessions run directly on your machine and interact with your local filesystem. The web and mobile interfaces are just a window into that local session.
 
-<Note>
-  Remote Control requires Claude Code v2.1.51 or later. Check your version with `claude --version`.
-</Note>
+**Note:**
+Remote Control requires Claude Code v2.1.51 or later. Check your version with `claude --version`.
 
 This page covers setup, how to start and connect to sessions, and how Remote Control compares to Claude Code on the web.
 
@@ -36,59 +34,54 @@ Before using Remote Control, confirm that your environment meets these condition
 
 You can start a dedicated Remote Control server, start an interactive session with Remote Control enabled, or connect a session that's already running.
 
-<Tabs>
-  <Tab title="Server mode">
-    Navigate to your project directory and run:
+#### Server mode
+Navigate to your project directory and run:
 
-    ```bash  theme={null}
+```bash
     claude remote-control
     ```
 
-    The process stays running in your terminal in server mode, waiting for remote connections. It displays a session URL you can use to [connect from another device](../Getting started/02-ClaudeCodeoverview.md#connect-from-another-device), and you can press spacebar to show a QR code for quick access from your phone. While a remote session is active, the terminal shows connection status and tool activity.
+The process stays running in your terminal in server mode, waiting for remote connections. It displays a session URL you can use to [connect from another device](../Getting started/02-ClaudeCodeoverview.md#connect-from-another-device), and you can press spacebar to show a QR code for quick access from your phone. While a remote session is active, the terminal shows connection status and tool activity.
 
-    Available flags:
+Available flags:
 
-    | Flag                         | Description                                                                                                                                                                                                                                                                                                                                                                      |
-    | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-    | `--name "My Project"`        | Set a custom session title visible in the session list at claude.ai/code.                                                                                                                                                                                                                                                                                                        |
-    | `--spawn <mode>`             | How concurrent sessions are created. Press `w` at runtime to toggle.<br />• `same-dir` (default): all sessions share the current working directory, so they can conflict if editing the same files.<br />• `worktree`: each on-demand session gets its own [git worktree](../Use Claude Code/02-Commonworkflows.md#run-parallel-claude-code-sessions-with-git-worktrees). Requires a git repository. |
-    | `--capacity <N>`             | Maximum number of concurrent sessions. Default is 32.                                                                                                                                                                                                                                                                                                                            |
-    | `--verbose`                  | Show detailed connection and session logs.                                                                                                                                                                                                                                                                                                                                       |
-    | `--sandbox` / `--no-sandbox` | Enable or disable [sandboxing](../40-Sandboxing.md) for filesystem and network isolation. Off by default.                                                                                                                                                                                                                                                                             |
-  </Tab>
+| Flag                         | Description                                                                                                                                                                                                                                                                                                                                                                      |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--name "My Project"`        | Set a custom session title visible in the session list at claude.ai/code.                                                                                                                                                                                                                                                                                                        |
+| `--spawn <mode>`             | How concurrent sessions are created. Press `w` at runtime to toggle.<br />• `same-dir` (default): all sessions share the current working directory, so they can conflict if editing the same files.<br />• `worktree`: each on-demand session gets its own [git worktree](../Use Claude Code/02-Commonworkflows.md#run-parallel-claude-code-sessions-with-git-worktrees). Requires a git repository. |
+| `--capacity <N>`             | Maximum number of concurrent sessions. Default is 32.                                                                                                                                                                                                                                                                                                                            |
+| `--verbose`                  | Show detailed connection and session logs.                                                                                                                                                                                                                                                                                                                                       |
+| `--sandbox` / `--no-sandbox` | Enable or disable [sandboxing](../40-Sandboxing.md) for filesystem and network isolation. Off by default.                                                                                                                                                                                                                                                                             |
 
-  <Tab title="Interactive session">
-    To start a normal interactive Claude Code session with Remote Control enabled, use the `--remote-control` flag (or `--rc`):
+#### Interactive session
+To start a normal interactive Claude Code session with Remote Control enabled, use the `--remote-control` flag (or `--rc`):
 
-    ```bash  theme={null}
+```bash
     claude --remote-control
     ```
 
-    Optionally pass a name for the session:
+Optionally pass a name for the session:
 
-    ```bash  theme={null}
+```bash
     claude --remote-control "My Project"
     ```
 
-    This gives you a full interactive session in your terminal that you can also control from claude.ai or the Claude app. Unlike `claude remote-control` (server mode), you can type messages locally while the session is also available remotely.
-  </Tab>
+This gives you a full interactive session in your terminal that you can also control from claude.ai or the Claude app. Unlike `claude remote-control` (server mode), you can type messages locally while the session is also available remotely.
 
-  <Tab title="From an existing session">
-    If you're already in a Claude Code session and want to continue it remotely, use the `/remote-control` (or `/rc`) command:
+#### From an existing session
+If you're already in a Claude Code session and want to continue it remotely, use the `/remote-control` (or `/rc`) command:
 
-    ```text  theme={null}
+```text
     /remote-control
     ```
 
-    Pass a name as an argument to set a custom session title:
+Pass a name as an argument to set a custom session title:
 
-    ```text  theme={null}
+```text
     /remote-control My Project
     ```
 
-    This starts a Remote Control session that carries over your current conversation history and displays a session URL and QR code you can use to [connect from another device](../Getting started/02-ClaudeCodeoverview.md#connect-from-another-device). The `--verbose`, `--sandbox`, and `--no-sandbox` flags are not available with this command.
-  </Tab>
-</Tabs>
+This starts a Remote Control session that carries over your current conversation history and displays a session URL and QR code you can use to [connect from another device](../Getting started/02-ClaudeCodeoverview.md#connect-from-another-device). The `--verbose`, `--sandbox`, and `--no-sandbox` flags are not available with this command.
 
 ### Connect from another device
 
@@ -156,7 +149,7 @@ This error has three distinct causes. Run `/status` first to see which login met
 
 Claude Code could not obtain a short-lived credential from the Anthropic API to establish the connection. Re-run with `--verbose` to see the full error:
 
-```bash  theme={null}
+```bash
 claude remote-control --verbose
 ```
 

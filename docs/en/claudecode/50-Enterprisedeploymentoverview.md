@@ -124,11 +124,10 @@ The following examples show the environment variables to set in your shell or sh
 
 ### Amazon Bedrock
 
-<Tabs>
-  <Tab title="Corporate proxy">
-    Route Bedrock traffic through your corporate proxy by setting the following [environment variables](18-Environmentvariables.md):
+#### Corporate proxy
+Route Bedrock traffic through your corporate proxy by setting the following [environment variables](18-Environmentvariables.md):
 
-    ```bash  theme={null}
+```bash
     # Enable Bedrock
     export CLAUDE_CODE_USE_BEDROCK=1
     export AWS_REGION=us-east-1
@@ -136,12 +135,11 @@ The following examples show the environment variables to set in your shell or sh
     # Configure corporate proxy
     export HTTPS_PROXY='https://proxy.example.com:8080'
     ```
-  </Tab>
 
-  <Tab title="LLM Gateway">
-    Route Bedrock traffic through your LLM gateway by setting the following [environment variables](18-Environmentvariables.md):
+#### LLM Gateway
+Route Bedrock traffic through your LLM gateway by setting the following [environment variables](18-Environmentvariables.md):
 
-    ```bash  theme={null}
+```bash
     # Enable Bedrock
     export CLAUDE_CODE_USE_BEDROCK=1
 
@@ -149,16 +147,13 @@ The following examples show the environment variables to set in your shell or sh
     export ANTHROPIC_BEDROCK_BASE_URL='https://your-llm-gateway.com/bedrock'
     export CLAUDE_CODE_SKIP_BEDROCK_AUTH=1  # If gateway handles AWS auth
     ```
-  </Tab>
-</Tabs>
 
 ### Microsoft Foundry
 
-<Tabs>
-  <Tab title="Corporate proxy">
-    Route Foundry traffic through your corporate proxy by setting the following [environment variables](18-Environmentvariables.md):
+#### Corporate proxy
+Route Foundry traffic through your corporate proxy by setting the following [environment variables](18-Environmentvariables.md):
 
-    ```bash  theme={null}
+```bash
     # Enable Microsoft Foundry
     export CLAUDE_CODE_USE_FOUNDRY=1
     export ANTHROPIC_FOUNDRY_RESOURCE=your-resource
@@ -167,12 +162,11 @@ The following examples show the environment variables to set in your shell or sh
     # Configure corporate proxy
     export HTTPS_PROXY='https://proxy.example.com:8080'
     ```
-  </Tab>
 
-  <Tab title="LLM Gateway">
-    Route Foundry traffic through your LLM gateway by setting the following [environment variables](18-Environmentvariables.md):
+#### LLM Gateway
+Route Foundry traffic through your LLM gateway by setting the following [environment variables](18-Environmentvariables.md):
 
-    ```bash  theme={null}
+```bash
     # Enable Microsoft Foundry
     export CLAUDE_CODE_USE_FOUNDRY=1
 
@@ -180,16 +174,13 @@ The following examples show the environment variables to set in your shell or sh
     export ANTHROPIC_FOUNDRY_BASE_URL='https://your-llm-gateway.com'
     export CLAUDE_CODE_SKIP_FOUNDRY_AUTH=1  # If gateway handles Azure auth
     ```
-  </Tab>
-</Tabs>
 
 ### Google Vertex AI
 
-<Tabs>
-  <Tab title="Corporate proxy">
-    Route Vertex AI traffic through your corporate proxy by setting the following [environment variables](18-Environmentvariables.md):
+#### Corporate proxy
+Route Vertex AI traffic through your corporate proxy by setting the following [environment variables](18-Environmentvariables.md):
 
-    ```bash  theme={null}
+```bash
     # Enable Vertex
     export CLAUDE_CODE_USE_VERTEX=1
     export CLOUD_ML_REGION=us-east5
@@ -198,12 +189,11 @@ The following examples show the environment variables to set in your shell or sh
     # Configure corporate proxy
     export HTTPS_PROXY='https://proxy.example.com:8080'
     ```
-  </Tab>
 
-  <Tab title="LLM Gateway">
-    Route Vertex AI traffic through your LLM gateway by setting the following [environment variables](18-Environmentvariables.md):
+#### LLM Gateway
+Route Vertex AI traffic through your LLM gateway by setting the following [environment variables](18-Environmentvariables.md):
 
-    ```bash  theme={null}
+```bash
     # Enable Vertex
     export CLAUDE_CODE_USE_VERTEX=1
 
@@ -211,12 +201,9 @@ The following examples show the environment variables to set in your shell or sh
     export ANTHROPIC_VERTEX_BASE_URL='https://your-llm-gateway.com/vertex'
     export CLAUDE_CODE_SKIP_VERTEX_AUTH=1  # If gateway handles GCP auth
     ```
-  </Tab>
-</Tabs>
 
-<Tip>
-  Use `/status` in Claude Code to verify your proxy and gateway configuration is applied correctly.
-</Tip>
+**Tip:**
+Use `/status` in Claude Code to verify your proxy and gateway configuration is applied correctly.
 
 ## Best practices for organizations
 

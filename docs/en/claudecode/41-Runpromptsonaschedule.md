@@ -4,9 +4,8 @@
 
 > Use /loop and the cron scheduling tools to run prompts repeatedly, poll for status, or set one-time reminders within a Claude Code session.
 
-<Note>
-  Scheduled tasks require Claude Code v2.1.72 or later. Check your version with `claude --version`.
-</Note>
+**Note:**
+Scheduled tasks require Claude Code v2.1.72 or later. Check your version with `claude --version`.
 
 Scheduled tasks let Claude re-run a prompt automatically on an interval. Use them to poll a deployment, babysit a PR, check back on a long-running build, or remind yourself to do something later in the session. To react to events as they happen instead of polling, see [Channels](05-Pusheventsintoarunningsessionwithchannels.md): your CI can push the failure into the session directly.
 
@@ -28,15 +27,14 @@ Claude Code offers three ways to schedule recurring work:
 | Customizable schedule      | Via `/schedule` in the CLI       | Yes                                             | Yes                            |
 | Minimum interval           | 1 hour                           | 1 minute                                        | 1 minute                       |
 
-<Tip>
-  Use **cloud tasks** for work that should run reliably without your machine. Use **Desktop tasks** when you need access to local files and tools. Use **`/loop`** for quick polling during a session.
-</Tip>
+**Tip:**
+Use **cloud tasks** for work that should run reliably without your machine. Use **Desktop tasks** when you need access to local files and tools. Use **`/loop`** for quick polling during a session.
 
 ## Schedule a recurring prompt with /loop
 
 The `/loop` [bundled skill](46-ExtendClaudewithskills.md#bundled-skills) is the quickest way to schedule a recurring prompt. Pass an optional interval and a prompt, and Claude sets up a cron job that fires in the background while the session stays open.
 
-```text  theme={null}
+```text
 /loop 5m check if the deployment finished and tell me what happened
 ```
 
@@ -58,7 +56,7 @@ Supported units are `s` for seconds, `m` for minutes, `h` for hours, and `d` for
 
 The scheduled prompt can itself be a command or skill invocation. This is useful for re-running a workflow you've already packaged.
 
-```text  theme={null}
+```text
 /loop 20m /review-pr 1234
 ```
 
@@ -68,11 +66,11 @@ Each time the job fires, Claude runs `/review-pr 1234` as if you had typed it.
 
 For one-shot reminders, describe what you want in natural language instead of using `/loop`. Claude schedules a single-fire task that deletes itself after running.
 
-```text  theme={null}
+```text
 remind me at 3pm to push the release branch
 ```
 
-```text  theme={null}
+```text
 in 45 minutes, check whether the integration tests passed
 ```
 
@@ -82,11 +80,11 @@ Claude pins the fire time to a specific minute and hour using a cron expression 
 
 Ask Claude in natural language to list or cancel tasks, or reference the underlying tools directly.
 
-```text  theme={null}
+```text
 what scheduled tasks do I have?
 ```
 
-```text  theme={null}
+```text
 cancel the deploy check job
 ```
 

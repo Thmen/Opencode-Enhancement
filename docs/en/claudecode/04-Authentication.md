@@ -40,70 +40,54 @@ For teams and organizations, you can configure Claude Code access in one of thes
 * **Claude for Teams**: self-service plan with collaboration features, admin tools, and billing management. Best for smaller teams.
 * **Claude for Enterprise**: adds SSO, domain capture, role-based permissions, compliance API, and managed policy settings for organization-wide Claude Code configurations. Best for larger organizations with security and compliance requirements.
 
-<Steps>
-  <Step title="Subscribe">
-    Subscribe to [Claude for Teams](https://claude.com/pricing?utm_source=claude_code\&utm_medium=docs\&utm_content=authentication_teams_step#team-&-enterprise) or contact sales for [Claude for Enterprise](https://anthropic.com/contact-sales?utm_source=claude_code\&utm_medium=docs\&utm_content=authentication_enterprise_step).
-  </Step>
+#### Subscribe
+Subscribe to [Claude for Teams](https://claude.com/pricing?utm_source=claude_code\&utm_medium=docs\&utm_content=authentication_teams_step#team-&-enterprise) or contact sales for [Claude for Enterprise](https://anthropic.com/contact-sales?utm_source=claude_code\&utm_medium=docs\&utm_content=authentication_enterprise_step).
 
-  <Step title="Invite team members">
-    Invite team members from the admin dashboard.
-  </Step>
+#### Invite team members
+Invite team members from the admin dashboard.
 
-  <Step title="Install and log in">
-    Team members install Claude Code and log in with their Claude.ai accounts.
-  </Step>
-</Steps>
+#### Install and log in
+Team members install Claude Code and log in with their Claude.ai accounts.
 
 ### Claude Console authentication
 
 For organizations that prefer API-based billing, you can set up access through the Claude Console.
 
-<Steps>
-  <Step title="Create or use a Console account">
-    Use your existing Claude Console account or create a new one.
-  </Step>
+#### Create or use a Console account
+Use your existing Claude Console account or create a new one.
 
-  <Step title="Add users">
-    You can add users through either method:
+#### Add users
+You can add users through either method:
 
-    * Bulk invite users from within the Console: Settings -> Members -> Invite
-    * [Set up SSO](https://support.claude.com/en/articles/13132885-setting-up-single-sign-on-sso)
-  </Step>
+* Bulk invite users from within the Console: Settings -> Members -> Invite
+* [Set up SSO](https://support.claude.com/en/articles/13132885-setting-up-single-sign-on-sso)
 
-  <Step title="Assign roles">
-    When inviting users, assign one of:
+#### Assign roles
+When inviting users, assign one of:
 
-    * **Claude Code** role: users can only create Claude Code API keys
-    * **Developer** role: users can create any kind of API key
-  </Step>
+* **Claude Code** role: users can only create Claude Code API keys
+* **Developer** role: users can create any kind of API key
 
-  <Step title="Users complete setup">
-    Each invited user needs to:
+#### Users complete setup
+Each invited user needs to:
 
-    * Accept the Console invite
-    * [Check system requirements](45-Advancedsetup.md#system-requirements)
-    * [Install Claude Code](45-Advancedsetup.md#install-claude-code)
-    * Log in with Console account credentials
-  </Step>
-</Steps>
+* Accept the Console invite
+* [Check system requirements](45-Advancedsetup.md#system-requirements)
+* [Install Claude Code](45-Advancedsetup.md#install-claude-code)
+* Log in with Console account credentials
 
 ### Cloud provider authentication
 
 For teams using Amazon Bedrock, Google Vertex AI, or Microsoft Foundry:
 
-<Steps>
-  <Step title="Follow provider setup">
-    Follow the [Bedrock docs](02-ClaudeCodeonAmazonBedrock.md), [Vertex docs](22-ClaudeCodeonGoogleVertexAI.md), or [Microsoft Foundry docs](31-ClaudeCodeonMicrosoftFoundry.md).
-  </Step>
+#### Follow provider setup
+Follow the [Bedrock docs](02-ClaudeCodeonAmazonBedrock.md), [Vertex docs](22-ClaudeCodeonGoogleVertexAI.md), or [Microsoft Foundry docs](31-ClaudeCodeonMicrosoftFoundry.md).
 
-  <Step title="Distribute configuration">
-    Distribute the environment variables and instructions for generating cloud credentials to your users. Read more about how to [manage configuration here](44-ClaudeCodesettings.md).
-  </Step>
+#### Distribute configuration
+Distribute the environment variables and instructions for generating cloud credentials to your users. Read more about how to [manage configuration here](44-ClaudeCodesettings.md).
 
-  <Step title="Install Claude Code">
-    Users can [install Claude Code](45-Advancedsetup.md#install-claude-code).
-  </Step>
-</Steps>
+#### Install Claude Code
+Users can [install Claude Code](45-Advancedsetup.md#install-claude-code).
 
 ## Credential management
 

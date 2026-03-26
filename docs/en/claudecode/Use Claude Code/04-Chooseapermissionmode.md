@@ -19,19 +19,18 @@ This page covers how to:
 
 You can switch modes at any time during a session, at startup, or as a persistent default. The mechanism depends on where you're running Claude Code.
 
-<Tabs>
-  <Tab title="CLI">
-    **During a session**: press `Shift+Tab` to cycle through `default` → `acceptEdits` → `plan` → `auto`. The current mode appears in the status bar. `auto` does not appear in the cycle until you pass `--enable-auto-mode` at startup. Auto also requires a Team (or Enterprise/API once available) plan and Claude Sonnet 4.6 or Opus 4.6, so the option may remain unavailable even with the flag. If `bypassPermissions` is also enabled, it appears in the cycle between `plan` and `auto`.
+#### CLI
+**During a session**: press `Shift+Tab` to cycle through `default` → `acceptEdits` → `plan` → `auto`. The current mode appears in the status bar. `auto` does not appear in the cycle until you pass `--enable-auto-mode` at startup. Auto also requires a Team (or Enterprise/API once available) plan and Claude Sonnet 4.6 or Opus 4.6, so the option may remain unavailable even with the flag. If `bypassPermissions` is also enabled, it appears in the cycle between `plan` and `auto`.
 
-    **At startup**: pass the mode as a CLI flag:
+**At startup**: pass the mode as a CLI flag:
 
-    ```bash  theme={null}
+```bash
     claude --permission-mode plan
     ```
 
-    **As a default**: set `defaultMode` in your [settings file](../44-ClaudeCodesettings.md#settings-files):
+**As a default**: set `defaultMode` in your [settings file](../44-ClaudeCodesettings.md#settings-files):
 
-    ```json  theme={null}
+```json
     {
       "permissions": {
         "defaultMode": "acceptEdits"
@@ -39,69 +38,63 @@ You can switch modes at any time during a session, at startup, or as a persisten
     }
     ```
 
-    **Non-interactively**: the same flag works with `-p` for scripted runs:
+**Non-interactively**: the same flag works with `-p` for scripted runs:
 
-    ```bash  theme={null}
+```bash
     claude -p "refactor auth" --permission-mode acceptEdits
     ```
 
-    `dontAsk` is never in the `Shift+Tab` cycle. `bypassPermissions` appears in the cycle only if you started the session with `--permission-mode bypassPermissions`, `--dangerously-skip-permissions`, or `--allow-dangerously-skip-permissions`. The third flag adds the mode to the cycle without activating it, so you can compose it with a different starting mode like `--permission-mode plan`. Set any of these at startup or in your settings file.
-  </Tab>
+`dontAsk` is never in the `Shift+Tab` cycle. `bypassPermissions` appears in the cycle only if you started the session with `--permission-mode bypassPermissions`, `--dangerously-skip-permissions`, or `--allow-dangerously-skip-permissions`. The third flag adds the mode to the cycle without activating it, so you can compose it with a different starting mode like `--permission-mode plan`. Set any of these at startup or in your settings file.
 
-  <Tab title="JetBrains">
-    The JetBrains plugin launches Claude Code in the IDE terminal, so switching modes works the same as in the CLI: press `Shift+Tab` to cycle, or pass `--permission-mode` when launching.
-  </Tab>
+#### JetBrains
+The JetBrains plugin launches Claude Code in the IDE terminal, so switching modes works the same as in the CLI: press `Shift+Tab` to cycle, or pass `--permission-mode` when launching.
 
-  <Tab title="VS Code">
-    **During a session**: click the mode indicator at the bottom of the prompt box to switch modes.
+#### VS Code
+**During a session**: click the mode indicator at the bottom of the prompt box to switch modes.
 
-    **As a default**: set `claudeCode.initialPermissionMode` in VS Code settings, or use the Claude Code extension settings panel.
+**As a default**: set `claudeCode.initialPermissionMode` in VS Code settings, or use the Claude Code extension settings panel.
 
-    The VS Code UI uses friendly labels that map to the settings keys below:
+The VS Code UI uses friendly labels that map to the settings keys below:
 
-    | UI label           | Settings key        |
-    | :----------------- | :------------------ |
-    | Ask permissions    | `default`           |
-    | Auto accept edits  | `acceptEdits`       |
-    | Plan mode          | `plan`              |
-    | Auto               | `auto`              |
-    | Bypass permissions | `bypassPermissions` |
+| UI label           | Settings key        |
+| :----------------- | :------------------ |
+| Ask permissions    | `default`           |
+| Auto accept edits  | `acceptEdits`       |
+| Plan mode          | `plan`              |
+| Auto               | `auto`              |
+| Bypass permissions | `bypassPermissions` |
 
-    Auto and Bypass permissions appear only after you enable **Allow dangerously skip permissions** in the extension settings. Auto also requires a Team plan and Claude Sonnet 4.6 or Opus 4.6, so the option may remain unavailable even with the toggle on.
+Auto and Bypass permissions appear only after you enable **Allow dangerously skip permissions** in the extension settings. Auto also requires a Team plan and Claude Sonnet 4.6 or Opus 4.6, so the option may remain unavailable even with the toggle on.
 
-    See the [VS Code guide](../Platforms and integrations/06-UseClaudeCodeinVSCode.md) for extension-specific details.
-  </Tab>
+See the [VS Code guide](../Platforms and integrations/06-UseClaudeCodeinVSCode.md) for extension-specific details.
 
-  <Tab title="Desktop">
-    **During a session**: use the mode selector next to the send button. You can change it before or during a session.
+#### Desktop
+**During a session**: use the mode selector next to the send button. You can change it before or during a session.
 
-    The Desktop UI uses friendly labels that map to the settings keys below:
+The Desktop UI uses friendly labels that map to the settings keys below:
 
-    | UI label           | Settings key        |
-    | :----------------- | :------------------ |
-    | Ask permissions    | `default`           |
-    | Auto accept edits  | `acceptEdits`       |
-    | Plan mode          | `plan`              |
-    | Auto               | `auto`              |
-    | Bypass permissions | `bypassPermissions` |
+| UI label           | Settings key        |
+| :----------------- | :------------------ |
+| Ask permissions    | `default`           |
+| Auto accept edits  | `acceptEdits`       |
+| Plan mode          | `plan`              |
+| Auto               | `auto`              |
+| Bypass permissions | `bypassPermissions` |
 
-    Auto and Bypass permissions appear in the selector only after you enable them in Desktop settings. See the [Desktop guide](../14-UseClaudeCodeDesktop.md#choose-a-permission-mode) for details.
-  </Tab>
+Auto and Bypass permissions appear in the selector only after you enable them in Desktop settings. See the [Desktop guide](../14-UseClaudeCodeDesktop.md#choose-a-permission-mode) for details.
 
-  <Tab title="Web and mobile">
-    **During a session**: use the mode dropdown next to the prompt box on [claude.ai/code](https://claude.ai/code) or in the Claude mobile app.
+#### Web and mobile
+**During a session**: use the mode dropdown next to the prompt box on [claude.ai/code](https://claude.ai/code) or in the Claude mobile app.
 
-    For [Claude Code on the web](../08-ClaudeCodeontheweb.md) sessions running on Anthropic's cloud VMs, the dropdown offers Auto accept edits and Plan mode. Ask permissions and Auto are not available for cloud sessions.
+For [Claude Code on the web](../08-ClaudeCodeontheweb.md) sessions running on Anthropic's cloud VMs, the dropdown offers Auto accept edits and Plan mode. Ask permissions and Auto are not available for cloud sessions.
 
-    For [Remote Control](../Platforms and integrations/04-ContinuelocalsessionsfromanydevicewithRemoteControl.md) sessions running on your local machine, the dropdown offers Ask permissions, Auto accept edits, and Plan mode. You can also set the starting mode when you launch the local host:
+For [Remote Control](../Platforms and integrations/04-ContinuelocalsessionsfromanydevicewithRemoteControl.md) sessions running on your local machine, the dropdown offers Ask permissions, Auto accept edits, and Plan mode. You can also set the starting mode when you launch the local host:
 
-    ```bash  theme={null}
+```bash
     claude remote-control --permission-mode acceptEdits
     ```
 
-    Permission prompts appear in claude.ai for approval.
-  </Tab>
-</Tabs>
+Permission prompts appear in claude.ai for approval.
 
 Permission modes are set through the UI, CLI flags, or settings files. Telling Claude "stop asking for permission" in the chat does not change the mode. See [Permissions](../36-Configurepermissions.md) for how modes interact with allow, ask, and deny rules.
 
@@ -134,19 +127,19 @@ Plan mode is useful when you want Claude to research and propose an approach bef
 
 Enter plan mode for a single request by prefixing your prompt with `/plan`, or switch the whole session into plan mode by pressing `Shift+Tab` to [cycle through permission modes](../Getting started/02-ClaudeCodeoverview.md#switch-permission-modes). You can also start in plan mode from the CLI:
 
-```bash  theme={null}
+```bash
 claude --permission-mode plan
 ```
 
 This example starts a planning session for a complex refactor:
 
-```text  theme={null}
+```text
 I need to refactor our authentication system to use OAuth2. Create a detailed migration plan.
 ```
 
 Claude analyzes the current implementation and creates a plan. Refine with follow-ups:
 
-```text  theme={null}
+```text
 What about backward compatibility?
 How should we handle database migration?
 ```
@@ -166,9 +159,8 @@ Auto mode is available on Team plans, with Enterprise and API support rolling ou
 
 Auto mode lets Claude execute actions without showing permission prompts. Before each action runs, a separate classifier model reviews the conversation and decides whether the action matches what you asked for: it blocks actions that escalate beyond the task scope, target infrastructure the classifier doesn't recognize as trusted, or appear to be driven by hostile content encountered in a file or web page. For a deeper look at how the classifier is designed, see the [auto mode announcement](https://claude.com/blog/auto-mode).
 
-<Warning>
-  Auto mode is a research preview. It reduces prompts but does not guarantee safety. It provides more protection than `bypassPermissions` but is not as thorough as manually reviewing each action. Use it for tasks where you trust the general direction, not as a replacement for review on sensitive operations.
-</Warning>
+**Warning:**
+Auto mode is a research preview. It reduces prompts but does not guarantee safety. It provides more protection than `bypassPermissions` but is not as thorough as manually reviewing each action. Use it for tasks where you trust the general direction, not as a replacement for review on sensitive operations.
 
 **Model**: the classifier runs on Claude Sonnet 4.6, even if your main session uses a different model.
 
@@ -239,7 +231,7 @@ Repeated blocks usually mean one of two things: the task genuinely requires acti
 
 `dontAsk` mode auto-denies every tool that is not explicitly allowed. Only actions matching your `/permissions` allow rules or `permissions.allow` settings can execute. If a tool has an explicit `ask` rule, the action is also denied rather than prompting. This makes the mode fully non-interactive, suitable for CI pipelines or restricted environments where you pre-define exactly what Claude is permitted to do.
 
-```bash  theme={null}
+```bash
 claude --permission-mode dontAsk
 ```
 
@@ -247,19 +239,18 @@ claude --permission-mode dontAsk
 
 `bypassPermissions` mode disables all permission prompts and safety checks. Every tool call executes immediately without any verification. Only use this in isolated environments like containers, VMs, or devcontainers without internet access, where Claude Code cannot cause damage to your host system.
 
-```bash  theme={null}
+```bash
 claude --permission-mode bypassPermissions
 ```
 
 The `--dangerously-skip-permissions` flag is equivalent to `--permission-mode bypassPermissions`:
 
-```bash  theme={null}
+```bash
 claude -p "refactor the auth module" --dangerously-skip-permissions
 ```
 
-<Warning>
-  `bypassPermissions` mode offers no protection against prompt injection or unintended actions. For a safer alternative that still maintains background safety checks, use [auto mode](../Getting started/02-ClaudeCodeoverview.md#eliminate-prompts-with-auto-mode). Administrators can block this mode by setting `permissions.disableBypassPermissionsMode` to `"disable"` in [managed settings](../36-Configurepermissions.md#managed-settings).
-</Warning>
+**Warning:**
+`bypassPermissions` mode offers no protection against prompt injection or unintended actions. For a safer alternative that still maintains background safety checks, use [auto mode](../Getting started/02-ClaudeCodeoverview.md#eliminate-prompts-with-auto-mode). Administrators can block this mode by setting `permissions.disableBypassPermissionsMode` to `"disable"` in [managed settings](../36-Configurepermissions.md#managed-settings).
 
 ## Compare permission approaches
 

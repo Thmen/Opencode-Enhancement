@@ -14,17 +14,15 @@ Before configuring Claude Code with Vertex AI, ensure you have:
 * Google Cloud SDK (`gcloud`) installed and configured
 * Quota allocated in desired GCP region
 
-<Note>
-  If you are deploying Claude Code to multiple users, [pin your model versions](Getting started/02-ClaudeCodeoverview.md#5-pin-model-versions) to prevent breakage when Anthropic releases new models.
-</Note>
+**Note:**
+If you are deploying Claude Code to multiple users, [pin your model versions](Getting started/02-ClaudeCodeoverview.md#5-pin-model-versions) to prevent breakage when Anthropic releases new models.
 
 ## Region Configuration
 
 Claude Code can be used with both Vertex AI [global](https://cloud.google.com/blog/products/ai-machine-learning/global-endpoint-for-claude-models-generally-available-on-vertex-ai) and regional endpoints.
 
-<Note>
-  Vertex AI may not support the Claude Code default models in all [regions](https://cloud.google.com/vertex-ai/generative-ai/docs/learn/locations#genai-partner-models) or on [global endpoints](https://cloud.google.com/vertex-ai/generative-ai/docs/partner-models/use-partner-models#supported_models). You may need to switch to a supported region, use a regional endpoint, or specify a supported model.
-</Note>
+**Note:**
+Vertex AI may not support the Claude Code default models in all [regions](https://cloud.google.com/vertex-ai/generative-ai/docs/learn/locations#genai-partner-models) or on [global endpoints](https://cloud.google.com/vertex-ai/generative-ai/docs/partner-models/use-partner-models#supported_models). You may need to switch to a supported region, use a regional endpoint, or specify a supported model.
 
 ## Setup
 
@@ -32,7 +30,7 @@ Claude Code can be used with both Vertex AI [global](https://cloud.google.com/bl
 
 Enable the Vertex AI API in your GCP project:
 
-```bash  theme={null}
+```bash
 # Set your project ID
 gcloud config set project YOUR-PROJECT-ID
 
@@ -55,15 +53,14 @@ Claude Code uses standard Google Cloud authentication.
 
 For more information, see [Google Cloud authentication documentation](https://cloud.google.com/docs/authentication).
 
-<Note>
-  When authenticating, Claude Code will automatically use the project ID from the `ANTHROPIC_VERTEX_PROJECT_ID` environment variable. To override this, set one of these environment variables: `GCLOUD_PROJECT`, `GOOGLE_CLOUD_PROJECT`, or `GOOGLE_APPLICATION_CREDENTIALS`.
-</Note>
+**Note:**
+When authenticating, Claude Code will automatically use the project ID from the `ANTHROPIC_VERTEX_PROJECT_ID` environment variable. To override this, set one of these environment variables: `GCLOUD_PROJECT`, `GOOGLE_CLOUD_PROJECT`, or `GOOGLE_APPLICATION_CREDENTIALS`.
 
 ### 4. Configure Claude Code
 
 Set the following environment variables:
 
-```bash  theme={null}
+```bash
 # Enable Vertex AI integration
 export CLAUDE_CODE_USE_VERTEX=1
 export CLOUD_ML_REGION=global
@@ -87,13 +84,12 @@ export VERTEX_REGION_CLAUDE_4_1_OPUS=europe-west1
 
 ### 5. Pin model versions
 
-<Warning>
-  Pin specific model versions for every deployment. If you use model aliases (`sonnet`, `opus`, `haiku`) without pinning, Claude Code may attempt to use a newer model version that isn't enabled in your Vertex AI project, breaking existing users when Anthropic releases updates.
-</Warning>
+**Warning:**
+Pin specific model versions for every deployment. If you use model aliases (`sonnet`, `opus`, `haiku`) without pinning, Claude Code may attempt to use a newer model version that isn't enabled in your Vertex AI project, breaking existing users when Anthropic releases updates.
 
 Set these environment variables to specific Vertex AI model IDs:
 
-```bash  theme={null}
+```bash
 export ANTHROPIC_DEFAULT_OPUS_MODEL='claude-opus-4-6'
 export ANTHROPIC_DEFAULT_SONNET_MODEL='claude-sonnet-4-6'
 export ANTHROPIC_DEFAULT_HAIKU_MODEL='claude-haiku-4-5@20251001'
@@ -110,7 +106,7 @@ Claude Code uses these default models when no pinning variables are set:
 
 To customize models further:
 
-```bash  theme={null}
+```bash
 export ANTHROPIC_MODEL='claude-opus-4-6'
 export ANTHROPIC_DEFAULT_HAIKU_MODEL='claude-haiku-4-5@20251001'
 ```
@@ -127,9 +123,8 @@ For more restrictive permissions, create a custom role with only the permissions
 
 For details, see [Vertex IAM documentation](https://cloud.google.com/vertex-ai/docs/general/access-control).
 
-<Note>
-  Create a dedicated GCP project for Claude Code to simplify cost tracking and access control.
-</Note>
+**Note:**
+Create a dedicated GCP project for Claude Code to simplify cost tracking and access control.
 
 ## 1M token context window
 

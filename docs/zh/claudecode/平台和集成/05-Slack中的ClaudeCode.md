@@ -22,47 +22,40 @@ Slack 中的 Claude Code 将 Claude Code 的强大功能直接引入您的 Slack
 | 要求               | 详情                                                        |
 | :--------------- | :-------------------------------------------------------- |
 | Claude 计划        | Pro、Max、Team 或 Enterprise，具有 Claude Code 访问权限（高级席位）       |
-| 网络上的 Claude Code | 必须启用对[网络上的 Claude Code](../07-ClaudeCodeontheweb.md)的访问 |
+| 网络上的 Claude Code | 必须启用对[网络上的 Claude Code](../09-ClaudeCodeontheweb.md)的访问 |
 | GitHub 账户        | 连接到网络上的 Claude Code，至少有一个存储库已认证                           |
 | Slack 认证         | 您的 Slack 账户通过 Claude 应用程序链接到您的 Claude 账户                  |
 
 ## 在 Slack 中设置 Claude Code
 
-<Steps>
-  <Step title="在 Slack 中安装 Claude 应用程序">
-    工作区管理员必须从 Slack 应用程序市场安装 Claude 应用程序。访问 [Slack 应用程序市场](https://slack.com/marketplace/A08SF47R6P4)并单击"Add to Slack"开始安装过程。
-  </Step>
+#### 在 Slack 中安装 Claude 应用程序
+工作区管理员必须从 Slack 应用程序市场安装 Claude 应用程序。访问 [Slack 应用程序市场](https://slack.com/marketplace/A08SF47R6P4)并单击"Add to Slack"开始安装过程。
 
-  <Step title="连接您的 Claude 账户">
-    安装应用程序后，认证您的个人 Claude 账户：
+#### 连接您的 Claude 账户
+安装应用程序后，认证您的个人 Claude 账户：
 
-    1. 通过单击您的应用程序部分中的"Claude"在 Slack 中打开 Claude 应用程序
-    2. 导航到应用程序主页选项卡
-    3. 单击"Connect"将您的 Slack 账户与您的 Claude 账户链接
-    4. 在浏览器中完成认证流程
-  </Step>
+1. 通过单击您的应用程序部分中的"Claude"在 Slack 中打开 Claude 应用程序
+2. 导航到应用程序主页选项卡
+3. 单击"Connect"将您的 Slack 账户与您的 Claude 账户链接
+4. 在浏览器中完成认证流程
 
-  <Step title="配置网络上的 Claude Code">
-    确保您网络上的 Claude Code 已正确配置：
+#### 配置网络上的 Claude Code
+确保您网络上的 Claude Code 已正确配置：
 
-    * 访问 [claude.ai/code](https://claude.ai/code) 并使用您连接到 Slack 的同一账户登录
-    * 如果尚未连接，请连接您的 GitHub 账户
-    * 认证至少一个您希望 Claude 使用的存储库
-  </Step>
+* 访问 [claude.ai/code](https://claude.ai/code) 并使用您连接到 Slack 的同一账户登录
+* 如果尚未连接，请连接您的 GitHub 账户
+* 认证至少一个您希望 Claude 使用的存储库
 
-  <Step title="选择您的路由模式">
-    连接您的账户后，配置 Claude 如何在 Slack 中处理您的消息。导航到 Slack 中的 Claude 应用程序主页以找到**路由模式**设置。
+#### 选择您的路由模式
+连接您的账户后，配置 Claude 如何在 Slack 中处理您的消息。导航到 Slack 中的 Claude 应用程序主页以找到**路由模式**设置。
 
-    | 模式          | 行为                                                                                                    |
-    | :---------- | :---------------------------------------------------------------------------------------------------- |
-    | **仅代码**     | Claude 将所有 @mentions 路由到 Claude Code 会话。最适合仅将 Claude 用于 Slack 中开发任务的团队。                               |
-    | **代码 + 聊天** | Claude 分析每条消息并在 Claude Code（用于编码任务）和 Claude Chat（用于写作、分析和常见问题）之间智能路由。最适合希望为所有类型工作提供单一 @Claude 入口点的团队。 |
+| 模式          | 行为                                                                                                    |
+| :---------- | :---------------------------------------------------------------------------------------------------- |
+| **仅代码**     | Claude 将所有 @mentions 路由到 Claude Code 会话。最适合仅将 Claude 用于 Slack 中开发任务的团队。                               |
+| **代码 + 聊天** | Claude 分析每条消息并在 Claude Code（用于编码任务）和 Claude Chat（用于写作、分析和常见问题）之间智能路由。最适合希望为所有类型工作提供单一 @Claude 入口点的团队。 |
 
-    <Note>
-      在代码 + 聊天模式下，如果 Claude 将消息路由到聊天但您想要编码会话，您可以单击"Retry as Code"来创建 Claude Code 会话。类似地，如果它被路由到代码但您想要聊天会话，您可以在该线程中选择该选项。
-    </Note>
-  </Step>
-</Steps>
+**Note:**
+  在代码 + 聊天模式下，如果 Claude 将消息路由到聊天但您想要编码会话，您可以单击"Retry as Code"来创建 Claude Code 会话。类似地，如果它被路由到代码但您想要聊天会话，您可以在该线程中选择该选项。
 
 ## 工作原理
 
@@ -72,9 +65,8 @@ Slack 中的 Claude Code 将 Claude Code 的强大功能直接引入您的 Slack
 
 您也可以明确告诉 Claude 将请求作为编码任务处理，即使它没有自动检测到。
 
-<Note>
-  Slack 中的 Claude Code 仅在频道（公开或私有）中工作。它在直接消息 (DM) 中不起作用。
-</Note>
+**Note:**
+Slack 中的 Claude Code 仅在频道（公开或私有）中工作。它在直接消息 (DM) 中不起作用。
 
 ### 上下文收集
 
@@ -84,9 +76,8 @@ Slack 中的 Claude Code 将 Claude Code 的强大功能直接引入您的 Slack
 
 此上下文帮助 Claude 理解问题、选择适当的存储库并指导其任务方法。
 
-<Warning>
-  当在 Slack 中调用 @Claude 时，Claude 可以访问对话上下文以更好地理解您的请求。Claude 可能会遵循上下文中其他消息的指示，因此用户应确保仅在受信任的 Slack 对话中使用 Claude。
-</Warning>
+**Warning:**
+当在 Slack 中调用 @Claude 时，Claude 可以访问对话上下文以更好地理解您的请求。Claude 可能会遵循上下文中其他消息的指示，因此用户应确保仅在受信任的 Slack 对话中使用 Claude。
 
 ### 会话流程
 
@@ -189,20 +180,10 @@ Slack 工作区管理员控制 Claude 应用程序是否可以在工作区中安
 
 ## 相关资源
 
-<CardGroup>
-  <Card title="网络上的 Claude Code" icon="globe" href="/zh-CN/claude-code-on-the-web">
-    了解有关网络上的 Claude Code 的更多信息
-  </Card>
+- [网络上的 Claude Code](../09-ClaudeCodeontheweb.md): 了解有关网络上的 Claude Code 的更多信息
 
-  <Card title="Claude for Slack" icon="slack" href="https://claude.com/claude-and-slack">
-    Claude for Slack 常规文档
-  </Card>
+- [Claude for Slack](https://claude.com/claude-and-slack): Claude for Slack 常规文档
 
-  <Card title="Slack 应用程序市场" icon="store" href="https://slack.com/marketplace/A08SF47R6P4">
-    从 Slack 市场安装 Claude 应用程序
-  </Card>
+- [Slack 应用程序市场](https://slack.com/marketplace/A08SF47R6P4): 从 Slack 市场安装 Claude 应用程序
 
-  <Card title="Claude 帮助中心" icon="circle-question" href="https://support.claude.com">
-    获取额外支持
-  </Card>
-</CardGroup>
+- [Claude 帮助中心](https://support.claude.com): 获取额外支持

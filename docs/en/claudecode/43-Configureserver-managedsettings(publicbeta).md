@@ -8,9 +8,8 @@ Server-managed settings allow administrators to centrally configure Claude Code 
 
 This approach is designed for organizations that do not have device management infrastructure in place, or need to manage settings for users on unmanaged devices.
 
-<Note>
-  Server-managed settings are in public beta and available for [Claude for Teams](https://claude.com/pricing?utm_source=claude_code\&utm_medium=docs\&utm_content=server_settings_teams#team-&-enterprise) and [Claude for Enterprise](https://anthropic.com/contact-sales?utm_source=claude_code\&utm_medium=docs\&utm_content=server_settings_enterprise) customers. Features may evolve before general availability.
-</Note>
+**Note:**
+Server-managed settings are in public beta and available for [Claude for Teams](https://claude.com/pricing?utm_source=claude_code\&utm_medium=docs\&utm_content=server_settings_teams#team-&-enterprise) and [Claude for Enterprise](https://anthropic.com/contact-sales?utm_source=claude_code\&utm_medium=docs\&utm_content=server_settings_enterprise) customers. Features may evolve before general availability.
 
 ## Requirements
 
@@ -33,17 +32,15 @@ If your devices are enrolled in an MDM or endpoint management solution, endpoint
 
 ## Configure server-managed settings
 
-<Steps>
-  <Step title="Open the admin console">
-    In [Claude.ai](https://claude.ai), navigate to **Admin Settings > Claude Code > Managed settings**.
-  </Step>
+#### Open the admin console
+In [Claude.ai](https://claude.ai), navigate to **Admin Settings > Claude Code > Managed settings**.
 
-  <Step title="Define your settings">
-    Add your configuration as JSON. All [settings available in `settings.json`](44-ClaudeCodesettings.md#available-settings) are supported, including [hooks](24-Hooksreference.md), [environment variables](18-Environmentvariables.md), and [managed-only settings](36-Configurepermissions.md#managed-only-settings) like `allowManagedPermissionRulesOnly`.
+#### Define your settings
+Add your configuration as JSON. All [settings available in `settings.json`](44-ClaudeCodesettings.md#available-settings) are supported, including [hooks](24-Hooksreference.md), [environment variables](18-Environmentvariables.md), and [managed-only settings](36-Configurepermissions.md#managed-only-settings) like `allowManagedPermissionRulesOnly`.
 
-    This example enforces a permission deny list and prevents users from bypassing permissions:
+This example enforces a permission deny list and prevents users from bypassing permissions:
 
-    ```json  theme={null}
+```json
     {
       "permissions": {
         "deny": [
@@ -57,11 +54,11 @@ If your devices are enrolled in an MDM or endpoint management solution, endpoint
     }
     ```
 
-    Hooks use the same format as in `settings.json`.
+Hooks use the same format as in `settings.json`.
 
-    This example runs an audit script after every file edit across the organization:
+This example runs an audit script after every file edit across the organization:
 
-    ```json  theme={null}
+```json
     {
       "hooks": {
         "PostToolUse": [
@@ -76,9 +73,9 @@ If your devices are enrolled in an MDM or endpoint management solution, endpoint
     }
     ```
 
-    To configure the [auto mode](Use Claude Code/04-Chooseapermissionmode.md#eliminate-prompts-with-auto-mode) classifier so it knows which repos, buckets, and domains your organization trusts:
+To configure the [auto mode](Use Claude Code/04-Chooseapermissionmode.md#eliminate-prompts-with-auto-mode) classifier so it knows which repos, buckets, and domains your organization trusts:
 
-    ```json  theme={null}
+```json
     {
       "autoMode": {
         "environment": [
@@ -90,13 +87,10 @@ If your devices are enrolled in an MDM or endpoint management solution, endpoint
     }
     ```
 
-    Because hooks execute shell commands, users see a [security approval dialog](Getting started/02-ClaudeCodeoverview.md#security-approval-dialogs) before they're applied. See [Configure the auto mode classifier](36-Configurepermissions.md#configure-the-auto-mode-classifier) for how the `autoMode` entries affect what the classifier blocks and important warnings about the `allow` and `soft_deny` fields.
-  </Step>
+Because hooks execute shell commands, users see a [security approval dialog](Getting started/02-ClaudeCodeoverview.md#security-approval-dialogs) before they're applied. See [Configure the auto mode classifier](36-Configurepermissions.md#configure-the-auto-mode-classifier) for how the `autoMode` entries affect what the classifier blocks and important warnings about the `allow` and `soft_deny` fields.
 
-  <Step title="Save and deploy">
-    Save your changes. Claude Code clients receive the updated settings on their next startup or hourly polling cycle.
-  </Step>
-</Steps>
+#### Save and deploy
+Save your changes. Claude Code clients receive the updated settings on their next startup or hourly polling cycle.
 
 ### Verify settings delivery
 
@@ -152,9 +146,8 @@ Certain settings that could pose security risks require explicit user approval b
 
 When these settings are present, users see a security dialog explaining what is being configured. Users must approve to proceed. If a user rejects the settings, Claude Code exits.
 
-<Note>
-  In non-interactive mode with the `-p` flag, Claude Code skips security dialogs and applies settings without user approval.
-</Note>
+**Note:**
+In non-interactive mode with the `-p` flag, Claude Code skips security dialogs and applies settings without user approval.
 
 ## Platform availability
 

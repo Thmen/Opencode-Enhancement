@@ -33,9 +33,8 @@ Find and install the [Claude Code plugin](https://plugins.jetbrains.com/plugin/2
 
 If you haven't installed Claude Code yet, see [our quickstart guide](../Getting started/03-Quickstart.md) for installation instructions.
 
-<Note>
-  After installing the plugin, you may need to restart your IDE completely for it to take effect.
-</Note>
+**Note:**
+After installing the plugin, you may need to restart your IDE completely for it to take effect.
 
 ## Usage
 
@@ -47,11 +46,11 @@ Run `claude` from your IDE's integrated terminal, and all integration features w
 
 Use the `/ide` command in any external terminal to connect Claude Code to your JetBrains IDE and activate all features:
 
-```bash  theme={null}
+```bash
 claude
 ```
 
-```text  theme={null}
+```text
 /ide
 ```
 
@@ -78,9 +77,8 @@ Configure the Claude Code plugin by going to **Settings → Tools → Claude Cod
 * **Enable using Option+Enter for multi-line prompts** (macOS only): When enabled, Option+Enter inserts new lines in Claude Code prompts. Disable if experiencing issues with the Option key being captured unexpectedly (requires terminal restart)
 * **Enable automatic updates**: Automatically check for and install plugin updates (applied on restart)
 
-<Tip>
-  For WSL users: Set `wsl -d Ubuntu -- bash -lic "claude"` as your Claude command (replace `Ubuntu` with your WSL distribution name)
-</Tip>
+**Tip:**
+For WSL users: Set `wsl -d Ubuntu -- bash -lic "claude"` as your Claude command (replace `Ubuntu` with your WSL distribution name)
 
 #### ESC Key Configuration
 
@@ -98,17 +96,15 @@ This allows the ESC key to properly interrupt Claude Code operations.
 
 ### Remote Development
 
-<Warning>
-  When using JetBrains Remote Development, you must install the plugin in the remote host via **Settings → Plugin (Host)**.
-</Warning>
+**Warning:**
+When using JetBrains Remote Development, you must install the plugin in the remote host via **Settings → Plugin (Host)**.
 
 The plugin must be installed on the remote host, not on your local client machine.
 
 ### WSL Configuration
 
-<Warning>
-  WSL users may need additional configuration for IDE detection to work properly. See our [WSL troubleshooting guide](../52-Troubleshooting.md#jetbrains-ide-not-detected-on-wsl2) for detailed setup instructions.
-</Warning>
+**Warning:**
+WSL users may need additional configuration for IDE detection to work properly. See our [WSL troubleshooting guide](../52-Troubleshooting.md#jetbrains-ide-not-detected-on-wsl2) for detailed setup instructions.
 
 WSL configuration may require:
 

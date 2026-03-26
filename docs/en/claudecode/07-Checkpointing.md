@@ -41,9 +41,8 @@ The three restore options revert state: they undo code changes, conversation his
 
 This is similar to `/compact`, but targeted: instead of summarizing the entire conversation, you keep early context in full detail and only compress the parts that are using up space. You can type optional instructions to guide what the summary focuses on.
 
-<Note>
-  Summarize keeps you in the same session and compresses context. If you want to branch off and try a different approach while preserving the original session intact, use [fork](Core concepts/02-HowClaudeCodeworks.md#resume-or-fork-sessions) instead (`claude --continue --fork-session`).
-</Note>
+**Note:**
+Summarize keeps you in the same session and compresses context. If you want to branch off and try a different approach while preserving the original session intact, use [fork](Core concepts/02-HowClaudeCodeworks.md#resume-or-fork-sessions) instead (`claude --continue --fork-session`).
 
 ## Common use cases
 
@@ -60,7 +59,7 @@ Checkpoints are particularly useful when:
 
 Checkpointing does not track files modified by bash commands. For example, if Claude Code runs:
 
-```bash  theme={null}
+```bash
 rm file.txt
 mv old.txt new.txt
 cp source.txt dest.txt

@@ -17,9 +17,8 @@ Before installing, make sure you have:
 * VS Code 1.98.0 or higher
 * An Anthropic account (you'll sign in when you first open the extension). If you're using a third-party provider like Amazon Bedrock or Google Vertex AI, see [Use third-party providers](../Getting started/02-ClaudeCodeoverview.md#use-third-party-providers) instead.
 
-<Tip>
-  The extension includes the CLI (command-line interface), which you can access from VS Code's integrated terminal for advanced features. See [VS Code extension vs. Claude Code CLI](../Getting started/02-ClaudeCodeoverview.md#vs-code-extension-vs-claude-code-cli) for details.
-</Tip>
+**Tip:**
+The extension includes the CLI (command-line interface), which you can access from VS Code's integrated terminal for advanced features. See [VS Code extension vs. Claude Code CLI](../Getting started/02-ClaudeCodeoverview.md#vs-code-extension-vs-claude-code-cli) for details.
 
 ## Install the extension
 
@@ -30,53 +29,47 @@ Click the link for your IDE to install directly:
 
 Or in VS Code, press `Cmd+Shift+X` (Mac) or `Ctrl+Shift+X` (Windows/Linux) to open the Extensions view, search for "Claude Code", and click **Install**.
 
-<Note>If the extension doesn't appear after installation, restart VS Code or run "Developer: Reload Window" from the Command Palette.</Note>
+**Note:** If the extension doesn't appear after installation, restart VS Code or run "Developer: Reload Window" from the Command Palette.
 
 ## Get started
 
 Once installed, you can start using Claude Code through the VS Code interface:
 
-<Steps>
-  <Step title="Open the Claude Code panel">
-    Throughout VS Code, the Spark icon indicates Claude Code: <img src="https://mintcdn.com/claude-code/c5r9_6tjPMzFdDDT/images/vs-code-spark-icon.svg?fit=max&auto=format&n=c5r9_6tjPMzFdDDT&q=85&s=3ca45e00deadec8c8f4b4f807da94505" alt="Spark icon" style={{display: "inline", height: "0.85em", verticalAlign: "middle"}} width="16" height="16" data-path="images/vs-code-spark-icon.svg" />
+#### Open the Claude Code panel
+Throughout VS Code, the Spark icon indicates Claude Code: <img src="https://mintcdn.com/claude-code/c5r9_6tjPMzFdDDT/images/vs-code-spark-icon.svg?fit=max&auto=format&n=c5r9_6tjPMzFdDDT&q=85&s=3ca45e00deadec8c8f4b4f807da94505" alt="Spark icon" style={{display: "inline", height: "0.85em", verticalAlign: "middle"}} width="16" height="16" data-path="images/vs-code-spark-icon.svg" />
 
-    The quickest way to open Claude is to click the Spark icon in the **Editor Toolbar** (top-right corner of the editor). The icon only appears when you have a file open.
+The quickest way to open Claude is to click the Spark icon in the **Editor Toolbar** (top-right corner of the editor). The icon only appears when you have a file open.
 
-        <img src="https://mintcdn.com/claude-code/mfM-EyoZGnQv8JTc/images/vs-code-editor-icon.png?fit=max&auto=format&n=mfM-EyoZGnQv8JTc&q=85&s=eb4540325d94664c51776dbbfec4cf02" alt="VS Code editor showing the Spark icon in the Editor Toolbar" width="2796" height="734" data-path="images/vs-code-editor-icon.png" />
+    <img src="https://mintcdn.com/claude-code/mfM-EyoZGnQv8JTc/images/vs-code-editor-icon.png?fit=max&auto=format&n=mfM-EyoZGnQv8JTc&q=85&s=eb4540325d94664c51776dbbfec4cf02" alt="VS Code editor showing the Spark icon in the Editor Toolbar" width="2796" height="734" data-path="images/vs-code-editor-icon.png" />
 
-    Other ways to open Claude Code:
+Other ways to open Claude Code:
 
-    * **Activity Bar**: click the Spark icon in the left sidebar to open the sessions list. Click any session to open it as a full editor tab, or start a new one. This icon is always visible in the Activity Bar.
-    * **Command Palette**: `Cmd+Shift+P` (Mac) or `Ctrl+Shift+P` (Windows/Linux), type "Claude Code", and select an option like "Open in New Tab"
-    * **Status Bar**: click **✱ Claude Code** in the bottom-right corner of the window. This works even when no file is open.
+* **Activity Bar**: click the Spark icon in the left sidebar to open the sessions list. Click any session to open it as a full editor tab, or start a new one. This icon is always visible in the Activity Bar.
+* **Command Palette**: `Cmd+Shift+P` (Mac) or `Ctrl+Shift+P` (Windows/Linux), type "Claude Code", and select an option like "Open in New Tab"
+* **Status Bar**: click **✱ Claude Code** in the bottom-right corner of the window. This works even when no file is open.
 
-    When you first open the panel, a **Learn Claude Code** checklist appears. Work through each item by clicking **Show me**, or dismiss it with the X. To reopen it later, uncheck **Hide Onboarding** in VS Code settings under Extensions → Claude Code.
+When you first open the panel, a **Learn Claude Code** checklist appears. Work through each item by clicking **Show me**, or dismiss it with the X. To reopen it later, uncheck **Hide Onboarding** in VS Code settings under Extensions → Claude Code.
 
-    You can drag the Claude panel to reposition it anywhere in VS Code. See [Customize your workflow](../Getting started/02-ClaudeCodeoverview.md#customize-your-workflow) for details.
-  </Step>
+You can drag the Claude panel to reposition it anywhere in VS Code. See [Customize your workflow](../Getting started/02-ClaudeCodeoverview.md#customize-your-workflow) for details.
 
-  <Step title="Send a prompt">
-    Ask Claude to help with your code or files, whether that's explaining how something works, debugging an issue, or making changes.
+#### Send a prompt
+Ask Claude to help with your code or files, whether that's explaining how something works, debugging an issue, or making changes.
 
-    <Tip>Claude automatically sees your selected text. Press `Option+K` (Mac) / `Alt+K` (Windows/Linux) to also insert an @-mention reference (like `@file.ts#5-10`) into your prompt.</Tip>
+**Tip:** Claude automatically sees your selected text. Press `Option+K` (Mac) / `Alt+K` (Windows/Linux) to also insert an @-mention reference (like `@file.ts#5-10`) into your prompt.
 
-    Here's an example of asking about a particular line in a file:
+Here's an example of asking about a particular line in a file:
 
-        <img src="https://mintcdn.com/claude-code/FVYz38sRY-VuoGHA/images/vs-code-send-prompt.png?fit=max&auto=format&n=FVYz38sRY-VuoGHA&q=85&s=ede3ed8d8d5f940e01c5de636d009cfd" alt="VS Code editor with lines 2-3 selected in a Python file, and the Claude Code panel showing a question about those lines with an @-mention reference" width="3288" height="1876" data-path="images/vs-code-send-prompt.png" />
-  </Step>
+    <img src="https://mintcdn.com/claude-code/FVYz38sRY-VuoGHA/images/vs-code-send-prompt.png?fit=max&auto=format&n=FVYz38sRY-VuoGHA&q=85&s=ede3ed8d8d5f940e01c5de636d009cfd" alt="VS Code editor with lines 2-3 selected in a Python file, and the Claude Code panel showing a question about those lines with an @-mention reference" width="3288" height="1876" data-path="images/vs-code-send-prompt.png" />
 
-  <Step title="Review changes">
-    When Claude wants to edit a file, it shows a side-by-side comparison of the original and proposed changes, then asks for permission. You can accept, reject, or tell Claude what to do instead.
+#### Review changes
+When Claude wants to edit a file, it shows a side-by-side comparison of the original and proposed changes, then asks for permission. You can accept, reject, or tell Claude what to do instead.
 
-        <img src="https://mintcdn.com/claude-code/FVYz38sRY-VuoGHA/images/vs-code-edits.png?fit=max&auto=format&n=FVYz38sRY-VuoGHA&q=85&s=e005f9b41c541c5c7c59c082f7c4841c" alt="VS Code showing a diff of Claude's proposed changes with a permission prompt asking whether to make the edit" width="3292" height="1876" data-path="images/vs-code-edits.png" />
-  </Step>
-</Steps>
+    <img src="https://mintcdn.com/claude-code/FVYz38sRY-VuoGHA/images/vs-code-edits.png?fit=max&auto=format&n=FVYz38sRY-VuoGHA&q=85&s=e005f9b41c541c5c7c59c082f7c4841c" alt="VS Code showing a diff of Claude's proposed changes with a permission prompt asking whether to make the edit" width="3292" height="1876" data-path="images/vs-code-edits.png" />
 
 For more ideas on what you can do with Claude Code, see [Common workflows](../Use Claude Code/02-Commonworkflows.md).
 
-<Tip>
-  Run "Claude Code: Open Walkthrough" from the Command Palette for a guided tour of the basics.
-</Tip>
+**Tip:**
+Run "Claude Code: Open Walkthrough" from the Command Palette for a guided tour of the basics.
 
 ## Use the prompt box
 
@@ -92,7 +85,7 @@ The prompt box supports several features:
 
 Use @-mentions to give Claude context about specific files or folders. When you type `@` followed by a file or folder name, Claude reads that content and can answer questions about it or make changes to it. Claude Code supports fuzzy matching, so you can type partial names to find what you need:
 
-```text  theme={null}
+```text
 > Explain the logic in @auth (fuzzy matches auth.js, AuthService.ts, etc.)
 > What's in @src/components/ (include a trailing slash for folders)
 ```
@@ -111,23 +104,17 @@ Click the dropdown at the top of the Claude Code panel to access your conversati
 
 If you use [Claude Code on the web](../08-ClaudeCodeontheweb.md), you can resume those remote sessions directly in VS Code. This requires signing in with **Claude.ai Subscription**, not Anthropic Console.
 
-<Steps>
-  <Step title="Open Past Conversations">
-    Click the **Past Conversations** dropdown at the top of the Claude Code panel.
-  </Step>
+#### Open Past Conversations
+Click the **Past Conversations** dropdown at the top of the Claude Code panel.
 
-  <Step title="Select the Remote tab">
-    The dialog shows two tabs: Local and Remote. Click **Remote** to see sessions from claude.ai.
-  </Step>
+#### Select the Remote tab
+The dialog shows two tabs: Local and Remote. Click **Remote** to see sessions from claude.ai.
 
-  <Step title="Select a session to resume">
-    Browse or search your remote sessions. Click any session to download it and continue the conversation locally.
-  </Step>
-</Steps>
+#### Select a session to resume
+Browse or search your remote sessions. Click any session to download it and continue the conversation locally.
 
-<Note>
-  Only web sessions started with a GitHub repository appear in the Remote tab. Resuming loads the conversation history locally; changes are not synced back to claude.ai.
-</Note>
+**Note:**
+Only web sessions started with a GitHub repository appear in the Remote tab. Resuming loads the conversation history locally; changes are not synced back to claude.ai.
 
 ## Customize your workflow
 
@@ -141,9 +128,8 @@ You can drag the Claude panel to reposition it anywhere in VS Code. Grab the pan
 * **Primary sidebar**: the left sidebar with icons for Explorer, Search, etc.
 * **Editor area**: opens Claude as a tab alongside your files. Useful for side tasks.
 
-<Tip>
-  Use the sidebar for your main Claude session and open additional tabs for side tasks. Claude remembers your preferred location. The Activity Bar sessions list icon is separate from the Claude panel: the sessions list is always visible in the Activity Bar, while the Claude panel icon only appears there when the panel is docked to the left sidebar.
-</Tip>
+**Tip:**
+Use the sidebar for your main Claude session and open additional tabs for side tasks. Claude remembers your preferred location. The Activity Bar sessions list icon is separate from the Claude panel: the sessions list is always visible in the Activity Bar, while the Claude panel icon only appears there when the panel is docked to the left sidebar.
 
 ### Run multiple conversations
 
@@ -188,9 +174,8 @@ Switch to the **Marketplaces** tab to add or remove plugin sources:
 
 After making changes, a banner prompts you to restart Claude Code to apply the updates.
 
-<Note>
-  Plugin management in VS Code uses the same CLI commands under the hood. Plugins and marketplaces you configure in the extension are also available in the CLI, and vice versa.
-</Note>
+**Note:**
+Plugin management in VS Code uses the same CLI commands under the hood. Plugins and marketplaces you configure in the extension are also available in the CLI, and vice versa.
 
 For more about the plugin system, see [Plugins](../38-Createplugins.md) and [Plugin marketplaces](../37-Createanddistributeapluginmarketplace.md).
 
@@ -200,7 +185,7 @@ Connect Claude to your Chrome browser to test web apps, debug with console logs,
 
 Type `@browser` in the prompt box followed by what you want Claude to do:
 
-```text  theme={null}
+```text
 @browser go to localhost:3000 and check the console for errors
 ```
 
@@ -216,9 +201,8 @@ Open the Command Palette (`Cmd+Shift+P` on Mac or `Ctrl+Shift+P` on Windows/Linu
 
 Some shortcuts depend on which panel is "focused" (receiving keyboard input). When your cursor is in a code file, the editor is focused. When your cursor is in Claude's prompt box, Claude is focused. Use `Cmd+Esc` / `Ctrl+Esc` to toggle between them.
 
-<Note>
-  These are VS Code commands for controlling the extension. Not all built-in Claude Code commands are available in the extension. See [VS Code extension vs. Claude Code CLI](../Getting started/02-ClaudeCodeoverview.md#vs-code-extension-vs-claude-code-cli) for details.
-</Note>
+**Note:**
+These are VS Code commands for controlling the extension. Not all built-in Claude Code commands are available in the extension. See [VS Code extension vs. Claude Code CLI](../Getting started/02-ClaudeCodeoverview.md#vs-code-extension-vs-claude-code-cli) for details.
 
 | Command                    | Shortcut                                                 | Description                                                                          |
 | -------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------ |
@@ -232,6 +216,31 @@ Some shortcuts depend on which panel is "focused" (receiving keyboard input). Wh
 | Show Logs                  | -                                                        | View extension debug logs                                                            |
 | Logout                     | -                                                        | Sign out of your Anthropic account                                                   |
 
+### Launch a VS Code tab from other tools
+
+The extension registers a URI handler at `vscode://anthropic.claude-code/open`. Use it to open a new Claude Code tab from your own tooling: a shell alias, a browser bookmarklet, or any script that can open a URL. If VS Code isn't already running, opening the URL launches it first. If VS Code is already running, the URL opens in whichever window is currently focused.
+
+Invoke the handler with your operating system's URL opener. On macOS:
+
+```bash
+open "vscode://anthropic.claude-code/open"
+```
+
+Use `xdg-open` on Linux or `start` on Windows.
+
+The handler accepts two optional query parameters:
+
+| Parameter | Description                                                                                                                                                                                                                                                                                                                                                                    |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `prompt`  | Text to pre-fill in the prompt box. Must be URL-encoded. The prompt is pre-filled but not submitted automatically.                                                                                                                                                                                                                                                             |
+| `session` | A session ID to resume instead of starting a new conversation. The session must belong to the workspace currently open in VS Code. If the session isn't found, a fresh conversation starts instead. If the session is already open in a tab, that tab is focused. To capture a session ID programmatically, see [Continue conversations](../23-RunClaudeCodeprogrammatically.md#continue-conversations). |
+
+For example, to open a tab pre-filled with "review my changes":
+
+```text
+vscode://anthropic.claude-code/open?prompt=review%20my%20changes
+```
+
 ## Configure settings
 
 The extension has two types of settings:
@@ -239,9 +248,8 @@ The extension has two types of settings:
 * **Extension settings** in VS Code: control the extension's behavior within VS Code. Open with `Cmd+,` (Mac) or `Ctrl+,` (Windows/Linux), then go to Extensions → Claude Code. You can also type `/` and select **General Config** to open settings.
 * **Claude Code settings** in `~/.claude/settings.json`: shared between the extension and CLI. Use for allowed commands, environment variables, hooks, and MCP servers. See [Settings](../44-ClaudeCodesettings.md) for details.
 
-<Tip>
-  Add `"$schema": "https://json.schemastore.org/claude-code-settings.json"` to your `settings.json` to get autocomplete and inline validation for all available settings directly in VS Code.
-</Tip>
+**Tip:**
+Add `"$schema": "https://json.schemastore.org/claude-code-settings.json"` to your `settings.json` to get autocomplete and inline validation for all available settings directly in VS Code.
 
 ### Extension settings
 
@@ -307,7 +315,7 @@ MCP (Model Context Protocol) servers give Claude access to external tools, datab
 
 To add an MCP server, open the integrated terminal (`` Ctrl+` `` or `` Cmd+` ``) and run:
 
-```bash  theme={null}
+```bash
 claude mcp add --transport http github https://api.githubcopilot.com/mcp/
 ```
 
@@ -323,7 +331,7 @@ Claude Code integrates with git to help with version control workflows directly 
 
 Claude can stage changes, write commit messages, and create pull requests based on your work:
 
-```text  theme={null}
+```text
 > commit my changes with a descriptive message
 > create a pr for this feature
 > summarize the changes I've made to the auth module
@@ -335,7 +343,7 @@ When creating pull requests, Claude generates descriptions based on the actual c
 
 Use the `--worktree` (`-w`) flag to start Claude in an isolated worktree with its own files and branch:
 
-```bash  theme={null}
+```bash
 claude --worktree feature-auth
 ```
 
@@ -345,23 +353,19 @@ Each worktree maintains independent file state while sharing git history. This p
 
 By default, Claude Code connects directly to Anthropic's API. If your organization uses Amazon Bedrock, Google Vertex AI, or Microsoft Foundry to access Claude, configure the extension to use your provider instead:
 
-<Steps>
-  <Step title="Disable login prompt">
-    Open the [Disable Login Prompt setting](vscode://settings/claudeCode.disableLoginPrompt) and check the box.
+#### Disable login prompt
+Open the [Disable Login Prompt setting](vscode://settings/claudeCode.disableLoginPrompt) and check the box.
 
-    You can also open VS Code settings (`Cmd+,` on Mac or `Ctrl+,` on Windows/Linux), search for "Claude Code login", and check **Disable Login Prompt**.
-  </Step>
+You can also open VS Code settings (`Cmd+,` on Mac or `Ctrl+,` on Windows/Linux), search for "Claude Code login", and check **Disable Login Prompt**.
 
-  <Step title="Configure your provider">
-    Follow the setup guide for your provider:
+#### Configure your provider
+Follow the setup guide for your provider:
 
-    * [Claude Code on Amazon Bedrock](../02-ClaudeCodeonAmazonBedrock.md)
-    * [Claude Code on Google Vertex AI](../22-ClaudeCodeonGoogleVertexAI.md)
-    * [Claude Code on Microsoft Foundry](../31-ClaudeCodeonMicrosoftFoundry.md)
+* [Claude Code on Amazon Bedrock](../02-ClaudeCodeonAmazonBedrock.md)
+* [Claude Code on Google Vertex AI](../22-ClaudeCodeonGoogleVertexAI.md)
+* [Claude Code on Microsoft Foundry](../31-ClaudeCodeonMicrosoftFoundry.md)
 
-    These guides cover configuring your provider in `~/.claude/settings.json`, which ensures your settings are shared between the VS Code extension and the CLI.
-  </Step>
-</Steps>
+These guides cover configuring your provider in `~/.claude/settings.json`, which ensures your settings are shared between the VS Code extension and the CLI.
 
 ## Security and privacy
 
@@ -390,9 +394,8 @@ The server is named `ide` and is hidden from `/mcp` because there's nothing to c
 
 **Jupyter execution always asks first.** `mcp__ide__executeCode` can't run anything silently. On each call, the code is inserted as a new cell at the end of the active notebook, VS Code scrolls it into view, and a native Quick Pick asks you to **Execute** or **Cancel**. Cancelling — or dismissing the picker with `Esc` — returns an error to Claude and nothing runs. The tool also refuses outright when there's no active notebook, when the Jupyter extension (`ms-toolsai.jupyter`) isn't installed, or when the kernel isn't Python.
 
-<Note>
-  The Quick Pick confirmation is separate from `PreToolUse` hooks. An allowlist entry for `mcp__ide__executeCode` lets Claude *propose* running a cell; the Quick Pick inside VS Code is what lets it *actually* run.
-</Note>
+**Note:**
+The Quick Pick confirmation is separate from `PreToolUse` hooks. An allowlist entry for `mcp__ide__executeCode` lets Claude *propose* running a cell; the Quick Pick inside VS Code is what lets it *actually* run.
 
 ## Fix common issues
 
@@ -434,7 +437,7 @@ To uninstall the Claude Code extension:
 
 To also remove extension data and reset all settings:
 
-```bash  theme={null}
+```bash
 rm -rf ~/.vscode/globalStorage/anthropic.claude-code
 ```
 
